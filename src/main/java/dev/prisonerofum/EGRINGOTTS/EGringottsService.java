@@ -2,6 +2,7 @@ package dev.prisonerofum.EGRINGOTTS;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,28 @@ public class EGringottsService {
     }
 
     public Optional<Account> checkLogin(String username, String password){
+
         Optional<Account> account = eGringottsRepository.findByUsername(username);
         if(account.isPresent()){
             if(account.get().getPassword().equals(password)){
                 return account;
             }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Account> signup(String username, String email, String password,String DOB, String address){
+        Optional<Account> account = eGringottsRepository.findByUsername(username);
+        if(account.isEmpty()){
+            Account newAccount = new Account();
+            newAccount.setUsername(username);
+            newAccount.setPassword(password);
+            newAccount.setEmail(email);
+            newAccount.setDOB(DOB);
+            newAccount.setAddress(address);
+
+            eGringottsRepository.insert(newAccount);
+            return Optional.of(newAccount);
         }
         return Optional.empty();
     }
