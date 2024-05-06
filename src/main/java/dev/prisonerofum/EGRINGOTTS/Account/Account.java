@@ -1,5 +1,6 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.Account;
 
+import dev.prisonerofum.EGRINGOTTS.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import java.util.Date;
 
 
 @Document(collection="Account")
@@ -19,7 +22,7 @@ public class Account<E> {
     private ObjectId id;
     private String username;
     private String password;
-    private String DOB;
+    private Date DOB;
     private String email;
     private String phone;
     private String address;
