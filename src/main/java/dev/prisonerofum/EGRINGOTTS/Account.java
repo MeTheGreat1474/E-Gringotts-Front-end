@@ -1,11 +1,22 @@
 package dev.prisonerofum.EGRINGOTTS;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+
+@Document(collection="Account")
+@Data //take care of all getter and setter
+@AllArgsConstructor //constructor
+@NoArgsConstructor
 public class Account<E> {
     //hold data and all class
-
-    //login
-    //sign up
-    private String userID;
+    @Id
+    private ObjectId id;
     private String username;
     private String password;
     private String DOB;
@@ -14,21 +25,9 @@ public class Account<E> {
     private String address;
     private String accountType;
 //    private String accountStatus;
+    @DocumentReference
+    private Card cards;
 
-    public Account() {
-    }
-
-    public Account(String userID, String username, String password, String DOB, String email, String phone, String address, String accountType) {
-        this.userID = userID;
-        this.username = username;
-        this.password = password;
-        this.DOB = DOB;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.accountType = accountType;
-
-    }
 
 
 
