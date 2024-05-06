@@ -15,14 +15,13 @@ function SignUpForm({label, type, value, onChange, className, rows, cols}) {
             {/*<Input inputStyle='input--signUp' className={className} type={type} value={value} onChange={onChange} placeholder={label}/>*/}
             {type === 'textarea' ? (
                 <textarea
-                    inputStyle='input--signUp'
                     className={className}
                     value={value}
                     rows={rows}
                     cols={cols}
                     onChange={onChange}
                     placeholder={label}
-                    spellcheck="false"
+                    spellCheck="false"
                 />
             ) : (
                 <Input

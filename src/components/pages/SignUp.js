@@ -23,6 +23,12 @@ function SignUp() {
     const [dobValid, setDobValid] = useState(true);
     const [addressValid, setAddressValid] = useState(true);
 
+    const signup = async (name, email, password, dob, address) => {
+        const response = await api.post(`/Account/signup`, {name, email, password, dob, address});
+        console.log(`Name: ${name}, Email: ${email}, Password: ${password}, DOB: ${dob}, Address: ${address}`)
+        return response.data;
+    }
+
     // Handling the name change
     const handleName = (e) => {
         setName(e.target.value);
@@ -52,7 +58,7 @@ function SignUp() {
     };
 
     // Handling the form submission
-    const handleSubmit = (e) => {
+    const handleOnSubmit = async (e) => {
         e.preventDefault();
 
         // handle the error messages below the input form
@@ -68,9 +74,13 @@ function SignUp() {
             console.log('error')
         }
         else {
-            setSubmitted(true);
-            setError(false);
-            console.log(`Name: ${name}, Email: ${email}, Password: ${password}`)
+            const response = await signup(name, email, password, dob, address);
+            console.log(`Response: ${response}`);
+            if (response) {
+                navigate('/dashboard');
+            } else {
+                setError("Signup failed. Please check your input.");
+            }
         }
     };
 
@@ -82,7 +92,7 @@ function SignUp() {
                     <img className='logo' alt='hogwart' src='/images/logo.png'/>
                 </div>
                 <div className="sign-up-container">
-                    <form className='sign-up-form'>
+                    <form className='sign-up-form' onSubmit={handleOnSubmit} >
                         <SignUpForm label='Username' onChange={handleName} className='input' value={name} type='text'/>
                         <div className={`error-message ${nameValid ? "" : "visible"}`}>* Please enter your name</div>
 
@@ -97,7 +107,8 @@ function SignUp() {
 
                         <SignUpForm label='Address' type='textarea' rows='10' cols='30' onChange={handleAddress} className={`input ${addressValid ? "" : "error"}`} value={address}/>
                         <div className={`error-message ${addressValid ? "" : "visible"}`}>* Please enter your address</div>
-                        <Button onClick={handleSubmit} type='submit' buttonSize='' buttonStyle=''>Sign Up</Button>
+                        <Button type='submit' >Submit</Button>
+                        {/*<Button onClick={handleSubmit} type='submit' buttonSize='' buttonStyle=''>Sign Up</Button>*/}
                     </form>
                 </div>
                     <img className='hogwart-art' alt='hogwart' src='/images/hogwarts-vector-art5.png'/>

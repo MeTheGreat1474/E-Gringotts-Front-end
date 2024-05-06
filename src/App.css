@@ -42,6 +42,7 @@ body::-webkit-scrollbar {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    max-width: 210px;
 }
 
 .login-form .fa-user {
@@ -60,6 +61,10 @@ body::-webkit-scrollbar {
 
 .login button {
     width: 100%;
+}
+
+.login .error {
+    color: red;
 }
 
 .login .image-box, .sign-up .image-box {
@@ -148,6 +153,7 @@ body::-webkit-scrollbar {
     bottom: 3%;
     width: 100vw;
     object-fit: cover;
+    z-index: -1;
 }
 
 .sign-up .box {
