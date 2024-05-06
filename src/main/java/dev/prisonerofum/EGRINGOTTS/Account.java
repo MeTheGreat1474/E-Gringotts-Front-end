@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.Date;
+
 
 @Document(collection="Account")
 @Data //take care of all getter and setter
@@ -19,7 +21,7 @@ public class Account<E> {
     private ObjectId id;
     private String username;
     private String password;
-    private String DOB;
+    private Date DOB;
     private String email;
     private String phone;
     private String address;

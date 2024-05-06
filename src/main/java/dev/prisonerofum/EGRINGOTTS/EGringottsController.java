@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*") //to make it accessible from any domain
@@ -31,7 +32,7 @@ public class EGringottsController {
         return new ResponseEntity<Optional<Account>>(eGringottsService.checkLogin(username,password), HttpStatus.OK);
     }
     @GetMapping("/signup")
-    public ResponseEntity<Optional<Account>> signup(String username, String email, String password,String DOB, String address){
+    public ResponseEntity<Optional<Account>> signup(String username, String email, String password, Date DOB, String address){
         return new ResponseEntity<Optional<Account>>(eGringottsService.signup(username,email,password,DOB,address), HttpStatus.OK);
     }
 
