@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Card {
+
     @Id
     private ObjectId id;
     private String cardID;

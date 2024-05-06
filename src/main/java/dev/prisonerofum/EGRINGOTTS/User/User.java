@@ -1,4 +1,4 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.User;
 
 interface User {
 
