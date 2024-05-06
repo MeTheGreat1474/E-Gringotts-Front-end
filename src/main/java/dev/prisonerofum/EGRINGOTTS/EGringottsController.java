@@ -1,16 +1,13 @@
 package dev.prisonerofum.EGRINGOTTS;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Account")
 public class EGringottsController {
@@ -28,5 +25,13 @@ public class EGringottsController {
     public ResponseEntity<Optional<Account>> getUser(@PathVariable String username){
         return new ResponseEntity<Optional<Account>>(eGringottsService.singleAccount2(username), HttpStatus.OK);
     }
+
+    @GetMapping("/login")
+    public ResponseEntity<Optional<Account>> login(String username, String password){
+        return new ResponseEntity<Optional<Account>>(eGringottsService.checkLogin(username,password), HttpStatus.OK);
+    }
+
+
+
 
 }

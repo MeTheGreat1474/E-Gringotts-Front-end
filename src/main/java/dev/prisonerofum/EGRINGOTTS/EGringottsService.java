@@ -19,7 +19,17 @@ public class EGringottsService {
         return eGringottsRepository.findById(id);
     }
 
-    public Optional<Account> singleAccount2(String userID){ //optional is used to avoid null pointer exception
-        return eGringottsRepository.findByUsername(userID);
+    public Optional<Account> singleAccount2(String username){ //optional is used to avoid null pointer exception
+        return eGringottsRepository.findByUsername(username);
+    }
+
+    public Optional<Account> checkLogin(String username, String password){
+        Optional<Account> account = eGringottsRepository.findByUsername(username);
+        if(account.isPresent()){
+            if(account.get().getPassword().equals(password)){
+                return account;
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface EGringottsRepository extends MongoRepository<Account, ObjectId> {
 
     Optional<Account> findByUsername(String username);//it should be unique
+
+
 }
