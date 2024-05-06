@@ -30,8 +30,4 @@ public class Account<E> {
     @DocumentReference
     private Card cards;
 
-
-
-
-
 }

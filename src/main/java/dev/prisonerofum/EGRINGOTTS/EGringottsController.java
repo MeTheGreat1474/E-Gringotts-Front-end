@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*") //to make it accessible from any domain
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/Account")
 public class EGringottsController {
@@ -31,12 +31,10 @@ public class EGringottsController {
     public ResponseEntity<Optional<Account>> login(String username, String password){
         return new ResponseEntity<Optional<Account>>(eGringottsService.checkLogin(username,password), HttpStatus.OK);
     }
-    @GetMapping("/signup")
-    public ResponseEntity<Optional<Account>> signup(String username, String email, String password, Date DOB, String address){
-        return new ResponseEntity<Optional<Account>>(eGringottsService.signup(username,email,password,DOB,address), HttpStatus.OK);
+
+    @PostMapping("/signUp")
+    public ResponseEntity<Optional<Account>> signUp(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address){
+        return new ResponseEntity<>(eGringottsService.signUp(username, email, password, address), HttpStatus.OK);
     }
-
-
-
 
 }
