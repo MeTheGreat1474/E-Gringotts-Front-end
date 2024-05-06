@@ -3,6 +3,7 @@ import SignUpForm from "../SignUpForm";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../Button";
 import '../../App.css'
+import api from "../../api/axiosConfig";
 
 function SignUp() {
 
