@@ -1,5 +1,6 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.Account;
 
+import dev.prisonerofum.EGRINGOTTS.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,13 +12,14 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import java.util.Date;
 
 
-@Document(collection="Account")
-@Data //take care of all getter and setter
-@AllArgsConstructor //constructor
-@NoArgsConstructor
+@Document(collection="Account")            //map to collection in mongodb
+@Data                                      //take care of all getter and setter
+@AllArgsConstructor                        //constructor with all argument
+@NoArgsConstructor                         //constructor with no argument
 public class Account<E> {
     //hold data and all class
-    @Id
+
+    @Id                                    //primary key
     private ObjectId id;
     private String username;
     private String password;
@@ -29,9 +31,5 @@ public class Account<E> {
 //    private String accountStatus;
     @DocumentReference
     private Card cards;
-
-
-
-
 
 }

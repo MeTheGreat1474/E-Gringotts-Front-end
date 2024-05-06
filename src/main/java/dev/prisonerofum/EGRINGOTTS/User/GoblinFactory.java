@@ -1,4 +1,4 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.User;
 
 public class GoblinFactory extends UserFactory{
 
