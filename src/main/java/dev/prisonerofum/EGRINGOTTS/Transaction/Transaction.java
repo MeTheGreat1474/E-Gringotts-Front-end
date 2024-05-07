@@ -1,4 +1,4 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 public class Transaction {
 
@@ -9,6 +9,7 @@ public class Transaction {
     private String transactionDate;
     private String transactionTime;
     private String transactionID;
+
 
     
 }

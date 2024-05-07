@@ -7,10 +7,10 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="Card")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Document(collection="Card")            //map to collection in mongodb
+@Data                                   //take care of all getter and setter
+@AllArgsConstructor                     //constructor with all argument
+@NoArgsConstructor                      //constructor with no argument
 public class Card {
     @Id
     private ObjectId id;
