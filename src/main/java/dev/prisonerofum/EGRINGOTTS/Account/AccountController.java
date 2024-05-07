@@ -1,5 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
+import dev.prisonerofum.EGRINGOTTS.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class AccountController {
     @Autowired                                              //Auto intialize accountService
     private AccountService accountService;
+
+    @Autowired
+    private EmailService EmailService;
     @GetMapping("/home")
     public ResponseEntity<String> home(){
         return new ResponseEntity<String>("Hello, World!", HttpStatus.OK);
@@ -31,6 +35,11 @@ public class AccountController {
     @PostMapping("/signUp")
     public ResponseEntity<Optional<Account>> signUp(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address){
         return new ResponseEntity<>(accountService.signUp(username, email, password, address), HttpStatus.OK);
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<String> getEmail(@RequestParam String to,@RequestParam String subject,@RequestParam String text){
+        return new ResponseEntity<String>(EmailService.sendSimpleMessage(to,subject,text), HttpStatus.OK);
     }
 
 }

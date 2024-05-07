@@ -14,7 +14,6 @@ public class EGringottsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EGringottsApplication.class, args);
 	}
-
 	@Bean										//Bean is used to handle the request from a different origin
 	public WebMvcConfigurer configure() {		//WebMvcConfigurer is used to configure the request
 		return new WebMvcConfigurer() {
