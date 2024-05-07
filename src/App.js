@@ -3,10 +3,14 @@ import api from './api/axiosConfig'
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/pages/Login'
-import Dashboard from "./components/pages/Dashboard";
 import SignUp from "./components/pages/SignUp";
+import Home from "./components/pages/Home";
+import Account from "./components/pages/Account";
 
 function App() {
+
+    //TODO: CREATE CUSTOM CURSOR
+    //TODO: CREATE APP DEPLOYMENT FOR WEBSITE
 
     // const [users,setUsers] = useState();
     // const username = "admin"
@@ -32,8 +36,9 @@ function App() {
       <Router>
         <Routes>
             <Route path="/" exact element={<Login/>} />
-            <Route path='/dashboard' element={<Dashboard/>} />
+            <Route path="/:username" element={<Home/>} />
             <Route path='/signup' element={<SignUp/>} />
+            <Route path='/:username/Account' element={<Account/>} />
         </Routes>
       </Router>
     </>

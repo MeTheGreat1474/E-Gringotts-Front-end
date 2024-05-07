@@ -86,7 +86,7 @@ function SignUp() {
             const response = await signup(username, email, password, address);
             console.log(`Response: ${response}`);
             if (response) {
-                navigate('/dashboard');
+                navigate(`/${username}`);
             } else {
                 setError("Signup failed. Please check your input.");
             }

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './Navbar.css'
-import {Link, useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
-function Navbar(props) {
+function Navbar({username, user}) {
     const location = useLocation();
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
+    const navigate = useNavigate();
+
+    const handleNavigation = (path) => {
+        navigate(path);
     };
 
     return (
@@ -20,30 +22,22 @@ function Navbar(props) {
                     </div>
                 </div>
                 <div className="content-box">
-                        <div className={location.pathname === '/dashboard' ? "content-alt" : "content"}>
-                            <Link to='/dashboard'>
-                                <h2>Home</h2>
-                            </Link>
-                        </div>
-                        <div className={location.pathname === '/transfer' ? "content-alt" : "content"}>
-                            <Link to='/transfer'>
-                                <h2>Transfer</h2>
-                            </Link>
-                        </div>
-                        <div className={location.pathname === '/account' ? "content-alt" : "content"}>
-                            <Link to='/account'>
-                                <h2>Account</h2>
-                            </Link>
-                        </div>
-                        <div className={location.pathname === '/' ? "content-alt" : "content"}>
-                            <Link to='/dashboard'>
-                                <h2>Etc</h2>
-                            </Link>
-                        </div>
+                    <div className={location.pathname === `/${username}` ? "content-alt" : "content"}>
+                        <h2 onClick={() => handleNavigation(`/${username}`)}>Home</h2>
+                    </div>
+                    <div className={location.pathname === `/${username}/transfer` ? "content-alt" : "content"}>
+                        <h2 onClick={() => handleNavigation(`/${username}/transfer`)}>Transfer</h2>
+                    </div>
+                    <div className={location.pathname === `/${username}/account` ? "content-alt" : "content"}>
+                        <h2 onClick={() => handleNavigation(`/${username}/account`)}>Account</h2>
+                    </div>
+                    <div className={location.pathname === `/${username}/etc` ? "content-alt" : "content"}>
+                        <h2 onClick={() => handleNavigation(`/${username}/etc`)}>Etc</h2>
+                    </div>
                 </div>
             </div>
         </>
-);
+    );
 }
 
 export default Navbar;

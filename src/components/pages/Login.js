@@ -25,7 +25,7 @@ function Login() {
         console.log(`Response: ${response}`);
         // Navigate to dashboard if login is successful
         if (response) {
-            navigate('/dashboard');
+            navigate(`/${username}`);
         }
         else{
             setError("* Login failed. Please check your username and password.");

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button} from "./Button";
 
-function AccountBalance() {
+function AccountBalance({user}) {
     return (
         <>
             <div className="acc-balance-box">
@@ -10,7 +10,7 @@ function AccountBalance() {
                 </div>
                 <div className="acc-balance">
                     <div className="money">
-                        <h2>50</h2>
+                        <h3>{(user?.balance?.toFixed(2)).toString()}</h3>
                     </div>
                     <div className="currency">
                         <h3>shekel</h3>
