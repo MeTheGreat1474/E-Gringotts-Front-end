@@ -2,6 +2,7 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,17 +25,17 @@ public class AccountService {
     }
 
     public Optional<Account> checkLogin(String username, String password){
-
         Optional<Account> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
-            if(account.get().getPassword().equals(password)){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if(passwordEncoder.matches(password, account.get().getPassword())){
                 return account;
             }
         }
         return Optional.empty();
     }
 
-    public Optional<Account> signUp(String username, String email, String password, String address){
+    public Optional<Account> signUp(String username, String email, String password, String address, String pin){
         Optional<Account> account = accountRepository.findByUsername(username);
         if(account.isEmpty()){
             Account newAccount = new Account();
@@ -42,10 +43,19 @@ public class AccountService {
             newAccount.setPassword(password);
             newAccount.setEmail(email);
             newAccount.setAddress(address);
+            newAccount.setPin(pin); // Set the encrypted PIN
             accountRepository.insert(newAccount);
             return Optional.of(newAccount);
         }
         return Optional.empty();
+    }
+
+    public boolean verifyPin(String username, String pin) {
+        Optional<Account> account = accountRepository.findByUsername(username);
+        if(account.isPresent()){
+            return account.get().checkPin(pin);
+        }
+        return false;
     }
 
 }

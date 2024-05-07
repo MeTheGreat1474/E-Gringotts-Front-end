@@ -32,14 +32,19 @@ public class AccountController {
         return new ResponseEntity<Optional<Account>>(accountService.checkLogin(username,password), HttpStatus.OK);
     }
 
-    @PostMapping("/signUp")
-    public ResponseEntity<Optional<Account>> signUp(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address){
-        return new ResponseEntity<>(accountService.signUp(username, email, password, address), HttpStatus.OK);
+    @PostMapping("/signup")
+    public ResponseEntity<Optional<Account>> signUp(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address,@RequestParam String pin){
+        return new ResponseEntity<>(accountService.signUp(username, email, password, address,pin), HttpStatus.OK);
     }
 
     @GetMapping("/email")
     public ResponseEntity<String> getEmail(@RequestParam String to,@RequestParam String subject,@RequestParam String text){
         return new ResponseEntity<String>(EmailService.sendSimpleMessage(to,subject,text), HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyPin")
+    public ResponseEntity<Boolean> verifyPin(@RequestParam String username, @RequestParam String pin){
+        return new ResponseEntity<>(accountService.verifyPin(username, pin), HttpStatus.OK);
     }
 
 }
