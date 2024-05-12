@@ -58,4 +58,8 @@ public class AccountService {
         return false;
     }
 
+    public Optional<Account> findAccountByContactInfo(String contactInfo) {
+        return accountRepository.findByPhoneNumberOrEmailOrUserId(contactInfo, contactInfo, contactInfo);
+    }
+
 }
