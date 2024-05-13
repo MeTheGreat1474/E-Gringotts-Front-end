@@ -17,12 +17,14 @@ public class Transaction {
     @Id
     private ObjectId id;
     private String userID;
+    private String receiverID;
     private double amount;
     private double balance;
     private String transactionType;
     private String transactionDate;
     private String transactionTime;
     private String transactionID;
+    private TransactionCategory category;
 
 
     
