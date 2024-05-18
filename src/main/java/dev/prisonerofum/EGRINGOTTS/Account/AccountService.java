@@ -1,10 +1,12 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
+import dev.prisonerofum.EGRINGOTTS.Card;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +45,19 @@ public class AccountService {
             newAccount.setPassword(password);
             newAccount.setEmail(email);
             newAccount.setAddress(address);
-            newAccount.setPin(pin); // Set the encrypted PIN
+            newAccount.setPin(pin);         // Set the encrypted PIN
+            newAccount.generateUserId();
+            newAccount.setBalance(0.0);
+
+            // Create a new Card object
+            Card newCard = new Card();
+            newCard.generateCardNumber();
+            newCard.generateCardCVV();
+            newCard.generateCardExpiry();
+            newCard.setCardHolder(newAccount);
+            newCard.setCardId(newAccount);
+            newAccount.setCard(newCard);
+
             accountRepository.insert(newAccount);
             return Optional.of(newAccount);
         }
@@ -58,4 +72,13 @@ public class AccountService {
         return false;
     }
 
+    public String getExpiryDate(String username) {
+        Optional<Account> account = accountRepository.findByUsername(username);
+        if(account.isPresent()){
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
+            return sdf.format(account.get().getCard().getCardExpiry());
+        }
+
+        return null;
+    }
 }

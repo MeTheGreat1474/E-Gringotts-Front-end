@@ -1,5 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS;
 
+import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,21 +8,53 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="Card")            //map to collection in mongodb
-@Data                                   //take care of all getter and setter
-@AllArgsConstructor                     //constructor with all argument
-@NoArgsConstructor                      //constructor with no argument
-public class Card {
-    @Id
-    private ObjectId id;
-    private String cardID;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Card{
+
+    private String userId;
     private String cardNumber;
     private String cardHolder;
-    private String cardType;
-    private String cardExpiry;
+    private Date cardExpiry;
     private String cardCVV;
 
 
 
+    public void generateCardNumber() {
+        Random random = new Random();
+        StringBuilder cardNumber = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+            int digit = random.nextInt(10);
+            cardNumber.append(digit);
+        }
+        this.cardNumber = cardNumber.toString();
+    }
 
+    public void generateCardCVV() {
+        Random random = new Random();
+        StringBuilder cardCVV = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            int digit = random.nextInt(10);
+            cardCVV.append(digit);
+        }
+        this.cardCVV = cardCVV.toString();
+    }
+
+    public void generateCardExpiry() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 5);
+        this.cardExpiry = calendar.getTime();
+    }
+
+    public void setCardHolder(Account account) {
+        this.cardHolder = account.getFullName();
+    }
+    public void setCardId(Account account) {
+        this.userId = account.getUserId();
+    }
 }

@@ -47,4 +47,9 @@ public class AccountController {
         return new ResponseEntity<>(accountService.verifyPin(username, pin), HttpStatus.OK);
     }
 
+    @GetMapping("/exprityDate")
+    public ResponseEntity<String> getExpiryDate(@RequestParam String username){
+        return new ResponseEntity<>(accountService.getExpiryDate(username), HttpStatus.OK);
+    }
+
 }
