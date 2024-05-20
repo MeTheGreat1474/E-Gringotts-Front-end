@@ -1,0 +1,37 @@
+.balance-info-box .text {
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 83.333% */
+    text-transform: capitalize;
+}
+
+.amount-box-acc-balance {
+    display: flex;
+    flex-direction: row;
+}
+
+.amount-box-money {
+    width: fit-content;
+    height: fit-content;
+    font-size: 60px;
+    align-content: end;
+    padding: 5px;
+    padding-left: 40px;
+}
+
+.amount-box-currency {
+    flex: 40%;
+    justify-content: end;
+    align-content: end;
+    font-size: 30px;
+    padding: 10px;
+    color: #FFF;
+    font-family: Montaga;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 50px;
+}

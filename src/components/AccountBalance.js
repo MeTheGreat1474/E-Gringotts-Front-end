@@ -1,27 +1,25 @@
 import React from 'react'
 import {Button} from "./Button";
+import {Link, useNavigate} from "react-router-dom";
+import BalanceAmount from "./BalanceAmount";
 
 function AccountBalance({user}) {
+    const navigate = useNavigate();
+
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
+
     return (
         <>
             <div className="acc-balance-box">
-                <div className="text-container">
-                    <h3 className='text'>Your Balance</h3>
-                </div>
-                <div className="acc-balance">
-                    <div className="money">
-                        <h3>{(user?.balance?.toFixed(2)).toString()}</h3>
-                    </div>
-                    <div className="currency">
-                        <h3>shekel</h3>
-                    </div>
-                </div>
+                <BalanceAmount/>
                 <div className="balance-buttons">
                     <div className="button-container">
-                        <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>Transfer</Button>
+                        <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large' onClick={() => handleNavigation(`/${user.username}/transfer`)}>Transfer</Button>
                     </div>
                     <div className="button-container">
-                        <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>Reload</Button>
+                        <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large' onClick={() => handleNavigation(`/${user.username}/reload`)}>Reload</Button>
                     </div>
                 </div>
             </div>

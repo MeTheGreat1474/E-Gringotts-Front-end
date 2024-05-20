@@ -3,7 +3,7 @@
 }
 
 .input{
-
+    outline: none;
 }
 
 .input::placeholder {
@@ -45,5 +45,19 @@ input[type="date"] {
     border: 0px;
     border-bottom: 1px solid #CDB373;
     color: white;
+}
+
+.input--default {
+    border: 0px;
+    border-bottom: 1px solid #CDB373;
+    background-color: transparent;
+    padding: 7px 5px 7px 10px;
+    color: #FFFFFF;
+    width: 100%;
+    font-size: 20px;
+}
+
+.input--default::placeholder {
+    font-size: 20px;
 }
 

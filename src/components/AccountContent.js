@@ -20,7 +20,7 @@ function AccountContent({ user }) {
                     </div>
                     <div className="user-info-form-container">
                         <div className="row">
-                            <DisplayInput label='Full Name' value={user?.fullname}/>
+                            <DisplayInput label='Full Name' value={user?.fullName}/>
                         </div>
                         <div className="row">
                             <DisplayInput label='Email' value={user?.email}/>

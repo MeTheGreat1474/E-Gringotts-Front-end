@@ -3,11 +3,19 @@
 }
 
 .btn--login {
-    border-radius: 3px;
+    border-radius: 5px;
     border: 1px hidden #CDB373;
     box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.30);
     background: #2d345a;
     color: #CDB373;
+}
+
+.btn--outline {
+    border-radius: 15px;
+    border: 1px solid #CDB373;
+    box-shadow: 0px 6px 6px 2px rgba(0, 0, 0, 0.30);
+    background: rgba(45, 52, 90, 0.62);
+    color: #FFFFFF;
 }
 
 .btn--rectangle {

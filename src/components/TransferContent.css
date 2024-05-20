@@ -1,0 +1,79 @@
+.transfer-box {
+    position: relative;
+    justify-self: left;
+    align-content: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    top: 10%;
+    width: 90%;
+}
+
+.transfer-box h1{
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.transfer-to-container .title {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.transfer-to-container .filter-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.transfer-to-container .dropdown-list {
+    flex: 1;
+    width: 100%;
+}
+
+.transfer-to-container .dropdown-list select{
+    width: 100%;
+    align-items: center;
+    background-color: #323b6e; /* Replace with your desired color */
+    border: 1px solid #CDB373;
+    color: white;
+    font-size: 20px;
+}
+
+.transfer-to-container .dropdown-list option {
+    font-size: 15px;
+    background-color: #424f94;
+}
+
+.transfer-to-container .search-container{
+    flex: 2;
+    width: 70%;
+}
+
+.transfer-to-container .search-container .input{
+    font-size: 15px;
+}
+
+.transfer-to-container .logs-container{
+    padding-left: 10px;
+}
+
+.transfer-to-container .logs-box{
+    padding-top: 10px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transfer-to-container .log{
+    color: #FFFFFF;
+    border-bottom: 1px solid #CDB373;
+    padding-bottom: 1px;
+}

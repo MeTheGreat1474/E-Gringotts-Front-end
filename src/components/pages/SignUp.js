@@ -13,7 +13,7 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const [dob, setDOB] = useState("");
+    const [dob, setDOB] = useState("");
     const [address, setAddress] = useState("");
 
     // States for checking the errors
@@ -23,14 +23,13 @@ function SignUp() {
     const [usernameValid, setUsernameValid] = useState(true);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
-    // const [dobValid, setDobValid] = useState(true);
+    const [dobValid, setDobValid] = useState(true);
     const [addressValid, setAddressValid] = useState(true);
 
-    const signup = async (username, email, password, address) => {
+    const signup = async (username, email, password, address, dob) => {
         try {
-            console.log(`1:  Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}`)
-            const response = await api.post(`/Account/signUp?username=${username}&email=${email}&password=${password}&address=${address}`);
-            console.log(`2:  Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}`)
+            console.log(`1:  Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}, DOB: ${dob}`)
+            const response = await api.post(`/Account/signUp?username=${username}&email=${email}&password=${password}&dob=${dob}&address=${address}`);
             return response.data;
         } catch (error) {
             console.error('Error during signup:', error);
@@ -56,10 +55,10 @@ function SignUp() {
         setSubmitted(false);
     };
 
-    // const handleDOB = (e) => {
-    //     setDOB(e.target.value);
-    //     setSubmitted(false);
-    // };
+    const handleDOB = (e) => {
+        setDOB(e.target.value);
+        setSubmitted(false);
+    };
 
     const handleAddress = (e) => {
         setAddress(e.target.value);
@@ -74,16 +73,16 @@ function SignUp() {
         setUsernameValid(username !== "");
         setEmailValid(email !== "");
         setPasswordValid(password !== "");
-        // setDobValid(dob !== "");
+        setDobValid(dob !== "");
         setAddressValid(address !== "");
 
-        if (usernameValid===false || emailValid===false || passwordValid===false || addressValid===false)
+        if (usernameValid===false || emailValid===false || passwordValid===false || addressValid===false || dobValid===false)
         {
             setError(true);
             console.log('error')
         }
         else {
-            const response = await signup(username, email, password, address);
+            const response = await signup(username, email, password, address, dob);
             console.log(`Response: ${response}`);
             if (response) {
                 navigate(`/${username}`);
@@ -111,13 +110,12 @@ function SignUp() {
                         <SignUpForm label='Password' onChange={handlePassword} className='input' value={password} type='password'/>
                         <div className={`error-message ${passwordValid ? "" : "visible"}`}>* Please enter your password</div>
 
-                        {/*<SignUpForm label='Date of Birth' onChange={handleDOB} className='input' value={dob} type='date'/>*/}
-                        {/*<div className={`error-message ${dobValid ? "" : "visible"}`}>* Please enter your date of birth</div>*/}
+                        <SignUpForm label='Date of Birth' onChange={handleDOB} className='input' value={dob} type='date'/>
+                        <div className={`error-message ${dobValid ? "" : "visible"}`}>* Please enter your date of birth</div>
 
                         <SignUpForm label='Address' type='textarea' rows='10' cols='30' onChange={handleAddress} className={`input ${addressValid ? "" : "error"}`} value={address}/>
-                        <div className={`error-message ${addressValid ? "" : "visible"}`}>* Please enter your address</div>
+                        <div className={`error-message ${addressValid ? "" : "visible"}`}>* Please enter your address </div>
                         <Button type='submit' >Submit</Button>
-                        {/*<Button onClick={handleSubmit} type='submit' buttonSize='' buttonStyle=''>Sign Up</Button>*/}
                     </form>
                 </div>
                     <img className='hogwart-art' alt='hogwart' src='/images/hogwarts-vector-art5.png'/>

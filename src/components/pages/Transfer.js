@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react'
 import Navbar from "../Navbar";
 import {useParams} from "react-router-dom";
-import {useGetUser} from "../services/getUser";
+import {useGetUser} from "../../services/getUser";
+import TransferContent from "../TransferContent";
 
-function Layout() {
+function Transfer() {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);
 
@@ -17,7 +18,7 @@ function Layout() {
                 <Navbar username={username}/>
             </div>
             <div className="middle">
-
+                <TransferContent />
             </div>
             <div className="right">
 
@@ -26,4 +27,4 @@ function Layout() {
     )
 }
 
-export default Layout
+export default Transfer

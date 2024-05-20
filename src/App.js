@@ -6,30 +6,16 @@ import Login from './components/pages/Login'
 import SignUp from "./components/pages/SignUp";
 import Home from "./components/pages/Home";
 import Account from "./components/pages/Account";
+import Transfer from "./components/pages/Transfer";
+import Reload from "./components/pages/Reload";
+import Receipt from "./components/pages/Receipt";
+import Dashboard from "./components/pages/Dashboard";
+import Admin from "./components/pages/Admin";
 
 function App() {
 
     //TODO: CREATE CUSTOM CURSOR
     //TODO: CREATE APP DEPLOYMENT FOR WEBSITE
-
-    // const [users,setUsers] = useState();
-    // const username = "admin"
-    // const password = "admin"
-    //
-    // const getUsers = async () => {
-    //     try {
-    //         const response = await api.get("/Account/home")
-    //         setUsers(response.data)
-    //         console.log(response.data)
-    //     }
-    //     catch (err){
-    //         console.log(err)
-    //     }
-    // }
-    //
-    // useEffect(() => {
-    //     getUsers();
-    // },[])
 
   return (
     <>
@@ -38,7 +24,11 @@ function App() {
             <Route path="/" exact element={<Login/>} />
             <Route path="/:username" element={<Home/>} />
             <Route path='/signup' element={<SignUp/>} />
-            <Route path='/:username/Account' element={<Account/>} />
+            <Route path='/:username/account' element={<Account/>} />
+            <Route path='/:username/transfer' element={<Transfer/>} />
+            <Route path='/:username/reload' element={<Reload/>} />
+            <Route path='/:username/reload/receipt' element={<Receipt/>} />
+            <Route path='/:username/admin' element={<Admin/>} />
         </Routes>
       </Router>
     </>
