@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Navbar from "../Navbar";
 import {useParams} from "react-router-dom";
-import AccountBalance from "../AccountBalance";
-import TransactionHistory from "../TransactionHistory";
+import AccountBalance from "../Account/AccountBalance";
+import TransactionHistory from "../Transaction/TransactionHistory";
 import api from "../../api/axiosConfig";
 import {useGetUser} from "../../services/getUser";
 

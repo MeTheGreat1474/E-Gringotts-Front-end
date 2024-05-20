@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
-import AccountContent from "../AccountContent";
+import AccountContent from "../Account/AccountContent";
 import Cards from "../Card";
 import { useGetUser } from '../../services/getUser'
 

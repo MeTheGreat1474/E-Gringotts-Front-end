@@ -1,6 +1,6 @@
 import React from 'react'
 import './AccountContent.css'
-import DisplayInput from "./DisplayInput";
+import DisplayInput from "../DisplayInput";
 
 function AccountContent({ user }) {
     return (

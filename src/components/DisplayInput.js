@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import './AccountContent.css'
+import './Account/AccountContent.css'
 
 
 const TYPE = ['input', 'address'];

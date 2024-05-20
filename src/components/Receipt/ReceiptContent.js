@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
-import {Button} from "./Button";
+import {Button} from "../Button";
 import './ReceiptContent.css'
 import {useNavigate} from "react-router-dom";
-import {useGetUser} from "../services/getUser";
+import {useGetUser} from "../../services/getUser";
 
 function ReceiptContent() {
     const navigate = useNavigate();

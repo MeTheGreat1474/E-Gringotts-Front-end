@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useLocation, useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
-import ReceiptContent from "../ReceiptContent";
+import ReceiptContent from "../Receipt/ReceiptContent";
 import Navbar from "../Navbar";
 
 function Receipt() {

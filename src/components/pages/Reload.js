@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
 import Navbar from "../Navbar";
-import ReloadContent from "../ReloadContent";
+import ReloadContent from "../Reload/ReloadContent";
 
 function Reload() {
     const { username } = useParams();

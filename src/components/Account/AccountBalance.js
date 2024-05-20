@@ -1,7 +1,7 @@
 import React from 'react'
-import {Button} from "./Button";
+import {Button} from "../Button";
 import {Link, useNavigate} from "react-router-dom";
-import BalanceAmount from "./BalanceAmount";
+import BalanceAmount from "../BalanceAmount";
 
 function AccountBalance({user}) {
     const navigate = useNavigate();

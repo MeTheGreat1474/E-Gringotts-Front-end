@@ -64,6 +64,13 @@
     padding-left: 10px;
 }
 
+.transfer-to-container .logs-wrapper{
+    overflow-y: scroll;
+    height: 45vh;
+    scrollbar-color: #CDB373 transparent;
+    overflow-x: hidden;
+}
+
 .transfer-to-container .logs-box{
     padding-top: 10px;
     padding-left: 10px;

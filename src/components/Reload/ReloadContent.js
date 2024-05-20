@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import './ReloadContent.css'
-import BalanceAmount from "./BalanceAmount";
+import BalanceAmount from "../BalanceAmount";
 import CurrencyInput from "react-currency-input-field";
-import {Button} from "./Button";
+import {Button} from "../Button";
 import { useNavigate } from 'react-router-dom';
-import {useGetUser} from "../services/getUser";
+import {useGetUser} from "../../services/getUser";
 
 function ReloadContent({username}) {
 

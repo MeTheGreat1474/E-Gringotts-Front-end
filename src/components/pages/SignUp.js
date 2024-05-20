@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import SignUpForm from "../SignUpForm";
+import SignUpForm from "../Signup/SignUpForm";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../Button";
 import '../../App.css'

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import Navbar from "../Navbar";
 import {useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
-import TransferContent from "../TransferContent";
+import TransferContent from "../Transfer/TransferContent";
 
 function Transfer() {
     const { username } = useParams();

@@ -2,8 +2,8 @@ import React from 'react'
 
 function TransferLog({ search, filterType }) {
 
-    // Placeholder data
     const data = [
+        // Placeholder data
         { username: 'User1', phone: '1234567890' },
         { username: 'ASD', phone: '0987654321' },
         { username: 'User2', phone: '0987654321' },
@@ -15,15 +15,14 @@ function TransferLog({ search, filterType }) {
         { username: 'User1', phone: '1234567890' },
         { username: 'ASD', phone: '0987654321' },
         { username: 'User2', phone: '0987654321' },
-        { username: 'llll', phone: '0987654321' },
 
-        // Add more data as needed
     ];
 
     // Placeholder function to simulate API call
     const getFilteredData = (data, filterType, search) => {
         // Implement your filtering logic here
         // For now, just return the data as is
+
         console.log(`Filter ${filterType}, Search ${search}`)
         return data;
     }

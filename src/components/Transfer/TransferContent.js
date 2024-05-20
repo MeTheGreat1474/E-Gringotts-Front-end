@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import './TransferContent.css'
-import DisplayInput from "./DisplayInput";
-import {Button} from "./Button";
-import {Input} from "./Input";
-import BalanceAmount from "./BalanceAmount";
+import DisplayInput from "../DisplayInput";
+import {Button} from "../Button";
+import {Input} from "../Input";
+import BalanceAmount from "../BalanceAmount";
 import TransferLog from "./TransferLog";
 
 function TransferContent({ user }) {
@@ -13,7 +13,9 @@ function TransferContent({ user }) {
 
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
-        setSearch("")
+        if(e.target.value!==name){
+            setSearch(null)
+        }
     }
 
     const handleSearchChange = (e) => {
