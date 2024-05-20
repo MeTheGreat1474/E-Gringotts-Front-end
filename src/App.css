@@ -313,9 +313,10 @@ body::-webkit-scrollbar {
 
 .transac-history-box .filter-container {
     display: flex;
+    align-self: flex-start;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%;
     padding-bottom: 10px;
 }
 
