@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection="Account")            //map to collection in mongodb
+@Document(collection="Transaction")            //map to collection in mongodb
 @Data                                      //take care of all getter and setter
 @AllArgsConstructor                        //constructor with all argument
 @NoArgsConstructor
@@ -21,7 +21,6 @@ public class Transaction {
     private String userID;
     private String receiverID;
     private double amount;
-    private double balance;
     private String transactionType;
     private String transactionDate;
     private String transactionTime;

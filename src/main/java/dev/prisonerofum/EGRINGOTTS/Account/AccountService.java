@@ -13,7 +13,7 @@ public class AccountService {
     @Autowired                                  // intialized the EGringottsRepository
     private AccountRepository accountRepository;
 
-    public List<Account> createAccount(Account account) {
+public List<Account> createAccount(Account account) {
         return accountRepository.findAll();
     }
     public Optional<Account> singleAccount(ObjectId id){ //optional is used to avoid null pointer exception

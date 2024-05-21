@@ -21,6 +21,7 @@ public class TransactionService {
 
     @Autowired                                  // initialized the EGringottsRepository
     private TransactionRepository transactionRepository;
+    @Autowired
     private AccountRepository accountRepository;
 
     // create new transactions
@@ -36,7 +37,7 @@ public class TransactionService {
         Account receiver = receiverOpt.get();
 
         if (sender.getBalance() < amount) {
-            return "Insufficient balance.";
+            return "Insufficient balance. " + sender;
         }
 
         sender.setBalance(sender.getBalance() - amount);
@@ -96,14 +97,14 @@ public class TransactionService {
         Account sender = accountRepository.findById(senderUserId).orElse(null);
         Account recipient = accountRepository.findById(recipientUserId).orElse(null);
 
-        // Format transaction date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = dateFormat.format(transactionDate);
+//        // Format transaction date
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String formattedDate = dateFormat.format(transactionDate);
 
         // Generate receipt
         StringBuilder receiptBuilder = new StringBuilder();
         receiptBuilder.append("Transaction ID: ").append(transactionId).append("\n");
-        receiptBuilder.append("Date: ").append(formattedDate).append("\n");
+        receiptBuilder.append("Date: ").append(transactionDate).append("\n");
         receiptBuilder.append("Sender: ").append(sender != null ? sender.getUsername() : "Unknown").append("\n");
         receiptBuilder.append("Recipient: ").append(recipient != null ? recipient.getUsername() : "Unknown").append("\n");
         receiptBuilder.append("Amount: ").append(amount).append("\n");
