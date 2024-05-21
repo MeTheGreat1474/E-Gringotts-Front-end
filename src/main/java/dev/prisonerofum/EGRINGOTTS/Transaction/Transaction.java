@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection="Account")            //map to collection in mongodb
 @Data                                      //take care of all getter and setter
 @AllArgsConstructor                        //constructor with all argument
@@ -25,7 +27,8 @@ public class Transaction {
     private String transactionTime;
     private String transactionID;
     private TransactionCategory category;
-
+    private String remarks;
+    private Date date;
 
     
 }

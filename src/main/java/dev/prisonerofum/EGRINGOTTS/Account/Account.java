@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 
 @Document(collection="Account")            //map to collection in mongodb
@@ -22,17 +26,20 @@ public class Account<E> {
 
     @Id                                    //primary key
     private ObjectId id;
+    private String userId;
     private String username;
     private String password;
+    private String fullName;
     private Date DOB;
     private String email;
     private String phone;
     private String address;
     private String accountType;
     private String pin;
+    private double balance;
 //    private String accountStatus;
-    @DocumentReference
-    private Card cards;
+    //TODO:Linked with card and database
+    private Card card;
 
     public void setPin(String pin) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -48,5 +55,17 @@ public class Account<E> {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
     }
+
+    public void generateUserId() {
+        Random random = new Random();
+        StringBuilder userId = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+            int digit = random.nextInt(10);
+            userId.append(digit);
+        }
+        this.userId = userId.toString();
+    }
+
+
 
 }

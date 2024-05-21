@@ -59,7 +59,7 @@ public class AccountService {
     }
 
     public Optional<Account> findAccountByContactInfo(String contactInfo) {
-        return accountRepository.findByPhoneNumberOrEmailOrUserId(contactInfo, contactInfo, contactInfo);
+        return accountRepository.findByPhoneOrEmailOrUsername(contactInfo, contactInfo, contactInfo);
     }
 
 }

@@ -2,7 +2,7 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import java.util.*;
 
-public class CurrencyConversion {
+public class    CurrencyConversion {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

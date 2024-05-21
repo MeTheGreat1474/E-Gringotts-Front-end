@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends MongoRepository<Transaction, ObjectId> {
 
-    List<Transaction> findByUserId(String userID);
+    List<Transaction> findByUserID(String userID);
 
     List<Transaction> findByTransactionDateBetween(Date startDate, Date endDate);
 
@@ -21,5 +21,7 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
     List<Transaction> findTransactionsByAmountRange(double minAmount, double maxAmount);
 
     List<Transaction> findByCategory(TransactionCategory category);
+
+
 }
 
