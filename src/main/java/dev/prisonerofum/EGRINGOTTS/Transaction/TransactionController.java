@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RestController
@@ -77,4 +78,25 @@ public class TransactionController{
 
         return new ResponseEntity<>(receipt, HttpStatus.OK);
     }
+
+    @Autowired
+    private CurrencyExchangeService currencyExchangeService;
+
+    @PostMapping("/addCurrencyPair")
+    public ResponseEntity<Optional<CurrencyGraph<String>>> addCurrencyPair(@RequestBody List<String[]> currencies) {
+        Optional<CurrencyGraph<String>> graph = Optional.ofNullable(currencyExchangeService.addCurrencyPairs(currencies));
+        return new ResponseEntity<>(graph, HttpStatus.OK);
+    }
+
+    @GetMapping("/exchange")
+    public ResponseEntity<ExchangeResponse> exchangeCurrency(
+            @RequestParam String fromCurrency,
+            @RequestParam String toCurrency,
+            @RequestParam double amount) {
+
+        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
+
+

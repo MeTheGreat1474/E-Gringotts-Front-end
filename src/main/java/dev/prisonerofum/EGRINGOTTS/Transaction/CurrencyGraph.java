@@ -1,18 +1,26 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.*;
 
 // Graph class to represent the currency exchange graph
+@Document(collection="Graph")              //map to collection in mongodb
+@Data                                      //take care of all getter and setter
+@AllArgsConstructor                        //constructor with all argument
+@NoArgsConstructor
 class CurrencyGraph<T> {
+
+    @Autowired
     private List<CurrencyNode<T>> nodes;
 
-    public CurrencyGraph() {
-        nodes = new ArrayList<>();
-    }
-
-    public void addCurrency(T currency1, T currency2, double value, double processingFee) {
-        CurrencyNode<T> node1 = getNode(currency1);
-        CurrencyNode<T> node2 = getNode(currency2);
+    public void addCurrency(T fromCurrency, T toCurrency, double value, double processingFee) {
+        CurrencyNode<T> node1 = getNode(fromCurrency);
+        CurrencyNode<T> node2 = getNode(toCurrency);
 
         ExchangeRate<T> rate1 = new ExchangeRate<>(node2, value, processingFee);
         ExchangeRate<T> rate2 = new ExchangeRate<>(node1, 1.0 / value, processingFee);
@@ -67,4 +75,18 @@ class CurrencyGraph<T> {
         }
         return -1; // Cannot exchange to desired currency
     }
+
+    public double calculateProcessingFee(T from, T to, double amount) {
+        CurrencyNode<T> fromNode = getNode(from);
+        CurrencyNode<T> toNode = getNode(to);
+
+        double fee = 0;
+        for (ExchangeRate<T> rate : fromNode.exchangeRates) {
+            if (rate.targetNode.equals(toNode)) {
+                fee += amount * rate.processingFee;
+            }
+        }
+        return fee;
+    }
 }
+

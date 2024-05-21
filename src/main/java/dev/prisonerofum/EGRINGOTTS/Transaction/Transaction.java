@@ -14,7 +14,7 @@ import java.util.Date;
 @Data                                      //take care of all getter and setter
 @AllArgsConstructor                        //constructor with all argument
 @NoArgsConstructor
-public class Transaction {
+public class    Transaction {
 
     @Id
     private ObjectId id;
