@@ -15,6 +15,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
@@ -119,5 +121,49 @@ public class TransactionService {
         return transactionRepository.findById(new ObjectId(transactionId)).orElse(null);
     }
 
+    public Map<TransactionCategory, Map<String, Double>> calculateCategoryPercentages(List<Transaction> transactions) {
+        double totalExpenditure = transactions.stream().mapToDouble(Transaction::getAmount).sum();
+        Map<TransactionCategory, Double> categorySums = new HashMap<>();
+        for (Transaction transaction : transactions) {
+            categorySums.merge(transaction.getCategory(), (double) transaction.getAmount(), Double::sum);
+        }
+        Map<TransactionCategory, Map<String, Double>> categoryData = new HashMap<>();
+
+        for (Map.Entry<TransactionCategory, Double> entry : categorySums.entrySet()) {
+            Map<String, Double> data = new HashMap<>();
+            data.put("percentage", (entry.getValue() / totalExpenditure) * 100);
+            data.put("totalExpenditure", entry.getValue());
+            categoryData.put(entry.getKey(), data);
+        }
+
+        return categoryData;
+    }
+
+    public Map<String, Map<TransactionCategory, Map<String, Double>>> calculateCategoryPercentagesByFrequency(List<Transaction> transactions, String frequency) {
+        Map<String, List<Transaction>> groupedTransactions = new HashMap<>();
+        SimpleDateFormat sdf = frequency.equals("Daily") ? new SimpleDateFormat("yyyy-MM-dd") : new SimpleDateFormat("yyyy-MM");
+
+        for (Transaction transaction : transactions) {
+            String key = sdf.format(transaction.getDate());
+            groupedTransactions.computeIfAbsent(key, k -> new ArrayList<>()).add(transaction);
+        }
+
+        Map<String, Map<TransactionCategory, Map<String, Double>>> categoryPercentagesByFrequency = new HashMap<>();
+
+        for (Map.Entry<String, List<Transaction>> entry : groupedTransactions.entrySet()) {
+            String key = entry.getKey();
+            List<Transaction> groupedTransactionList = entry.getValue();
+            categoryPercentagesByFrequency.put(key, calculateCategoryPercentages(groupedTransactionList));
+        }
+
+        return categoryPercentagesByFrequency;
+    }
+
+    public List<Transaction> filterTransactions(List<Transaction> transactions, Date startDate, Date endDate, Set<String> paymentMethods) {
+        return transactions.stream()
+                .filter(t -> !t.getDate().before(startDate) && !t.getDate().after(endDate))
+                .filter(t -> paymentMethods.contains(t.getTransactionType()))
+                .collect(Collectors.toList());
+    }
 
 }
