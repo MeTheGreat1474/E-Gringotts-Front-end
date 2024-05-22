@@ -1,11 +1,13 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
 import dev.prisonerofum.EGRINGOTTS.EmailService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
@@ -57,5 +59,12 @@ public class AccountController {
         Optional<Account> account = accountService.findAccountByContactInfo(contactInfo);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
+    @GetMapping("/allAccounts")
+    public ResponseEntity<List<Account>> getAllAccount(){
+        return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.OK);
+    }
+
 
 }

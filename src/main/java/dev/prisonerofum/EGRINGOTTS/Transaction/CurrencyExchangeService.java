@@ -14,7 +14,7 @@ public class CurrencyExchangeService {
     private CurrencyGraphRepository currencyGraphRepository;
 
     public CurrencyGraph<String> addCurrencyPairs(List<String[]> currencies) {
-        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findById(new ObjectId("664d54d67e11f769e99c5382"));
+        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
 
         CurrencyGraph<String> graph = optionalGraph.orElse(new CurrencyGraph<>());
         for (String[] currency : currencies) {
@@ -24,7 +24,7 @@ public class CurrencyExchangeService {
     }
 
     public double exchangeCurrency(String fromCurrency, String toCurrency, double amount) {
-        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findById(new ObjectId("664d54d67e11f769e99c5382"));
+        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
         if (optionalGraph.isPresent()) {
             CurrencyGraph<String> graph = optionalGraph.get();
             double exchangedValue = graph.exchange(fromCurrency, toCurrency, amount);

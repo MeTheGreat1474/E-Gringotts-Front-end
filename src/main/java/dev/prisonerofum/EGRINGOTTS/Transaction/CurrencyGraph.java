@@ -3,7 +3,9 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
@@ -13,10 +15,14 @@ import java.util.*;
 @Document(collection = "CurrencyGraph")                        //constructor with all argument
 class CurrencyGraph<T> {
 
+
+    private String graphId;
+
     private List<CurrencyNode<T>> nodes;
 
     public CurrencyGraph() {
         this.nodes = new ArrayList<>();
+        generateGraphId();
     }
 
     public void addCurrency(T fromCurrency, T toCurrency, double value, double processingFee) {
@@ -88,6 +94,15 @@ class CurrencyGraph<T> {
             }
         }
         return fee;
+    }
+    public void generateGraphId() {
+        Random random = new Random();
+        StringBuilder userId = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+            int digit = random.nextInt(10);
+            userId.append(digit);
+        }
+        this.graphId = userId.toString();
     }
 
 }

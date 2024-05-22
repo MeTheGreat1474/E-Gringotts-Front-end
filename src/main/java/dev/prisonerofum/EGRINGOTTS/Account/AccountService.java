@@ -91,5 +91,8 @@ public List<Account> createAccount(Account account) {
 
         return null;
     }
+    public List<Account> getAllAccount(){
+        return accountRepository.findAll();
+    }
 
 }
