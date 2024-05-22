@@ -1,6 +1,7 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
-import dev.prisonerofum.EGRINGOTTS.Card;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +39,6 @@ public class Account<E> {
     private String pin;
     private double balance;
 //    private String accountStatus;
-    //TODO:Linked with card and database
     private Card card;
 
     public void setPin(String pin) {

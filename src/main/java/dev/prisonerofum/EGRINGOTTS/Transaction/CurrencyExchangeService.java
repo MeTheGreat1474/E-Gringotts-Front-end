@@ -1,5 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +14,21 @@ public class CurrencyExchangeService {
     private CurrencyGraphRepository currencyGraphRepository;
 
     public CurrencyGraph<String> addCurrencyPairs(List<String[]> currencies) {
-        CurrencyGraph<String> graph = new CurrencyGraph<>();
+        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findById(new ObjectId("664d54d67e11f769e99c5382"));
+
+        CurrencyGraph<String> graph = optionalGraph.orElse(new CurrencyGraph<>());
         for (String[] currency : currencies) {
             graph.addCurrency(currency[0], currency[1], Double.parseDouble(currency[2]), Double.parseDouble(currency[3]));
         }
-        return currencyGraphRepository.insert(graph);
+        return currencyGraphRepository.save(graph);
     }
 
-    public ExchangeResponse exchangeCurrency(String fromCurrency, String toCurrency, double amount) {
-        Optional<CurrencyGraph> optionalGraph = currencyGraphRepository.findAll().stream().findFirst();
+    public double exchangeCurrency(String fromCurrency, String toCurrency, double amount) {
+        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findById(new ObjectId("664d54d67e11f769e99c5382"));
         if (optionalGraph.isPresent()) {
             CurrencyGraph<String> graph = optionalGraph.get();
             double exchangedValue = graph.exchange(fromCurrency, toCurrency, amount);
-            double processingFee = graph.calculateProcessingFee(fromCurrency, toCurrency, amount);
-            return new ExchangeResponse(fromCurrency, toCurrency, amount, exchangedValue, processingFee);
+            return exchangedValue;
         } else {
             throw new RuntimeException("Currency graph not found.");
         }

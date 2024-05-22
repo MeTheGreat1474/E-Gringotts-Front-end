@@ -9,24 +9,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.*;
 
 // Graph class to represent the currency exchange graph
-@Document(collection="Graph")              //map to collection in mongodb
-@Data                                      //take care of all getter and setter
-@AllArgsConstructor                        //constructor with all argument
-@NoArgsConstructor
+
+@Document(collection = "CurrencyGraph")                        //constructor with all argument
 class CurrencyGraph<T> {
 
-    @Autowired
     private List<CurrencyNode<T>> nodes;
+
+    public CurrencyGraph() {
+        this.nodes = new ArrayList<>();
+    }
 
     public void addCurrency(T fromCurrency, T toCurrency, double value, double processingFee) {
         CurrencyNode<T> node1 = getNode(fromCurrency);
         CurrencyNode<T> node2 = getNode(toCurrency);
 
-        ExchangeRate<T> rate1 = new ExchangeRate<>(node2, value, processingFee);
-        ExchangeRate<T> rate2 = new ExchangeRate<>(node1, 1.0 / value, processingFee);
+        ExchangeRate<T> rate1 = new ExchangeRate<>(node2.getCurrency(), value, processingFee);
+        ExchangeRate<T> rate2 = new ExchangeRate<>(node1.getCurrency(), 1.0 / value, processingFee);
 
-        node1.exchangeRates.add(rate1);
-        node2.exchangeRates.add(rate2);
+        node1.addExchangeRate(rate1);
+        node2.addExchangeRate(rate2);
     }
 
     private CurrencyNode<T> getNode(T currency) {
@@ -63,7 +64,7 @@ class CurrencyGraph<T> {
             visited.add(currentNode);
 
             for (ExchangeRate<T> rate : currentNode.exchangeRates) {
-                CurrencyNode<T> neighbour = rate.targetNode;
+                CurrencyNode<T> neighbour = getNode(rate.targetNodeIdentifier);
                 double exchangeRate = rate.value;
                 double neighbourAmount = currentAmount * exchangeRate;
 
@@ -82,11 +83,12 @@ class CurrencyGraph<T> {
 
         double fee = 0;
         for (ExchangeRate<T> rate : fromNode.exchangeRates) {
-            if (rate.targetNode.equals(toNode)) {
+            if (getNode(rate.targetNodeIdentifier).equals(toNode)) {
                 fee += amount * rate.processingFee;
             }
         }
         return fee;
     }
+
 }
 

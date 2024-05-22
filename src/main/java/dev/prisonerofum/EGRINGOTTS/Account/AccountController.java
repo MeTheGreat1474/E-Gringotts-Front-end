@@ -51,7 +51,7 @@ public class AccountController {
     public ResponseEntity<String> getExpiryDate(@RequestParam String username){
         return new ResponseEntity<>(accountService.getExpiryDate(username), HttpStatus.OK);
     }
-
+    //cannot found by email , username OK
     @GetMapping("/accounts/search")
     public ResponseEntity<Account> findAccountByContactInfo(@RequestParam String contactInfo) {
         Optional<Account> account = accountService.findAccountByContactInfo(contactInfo);

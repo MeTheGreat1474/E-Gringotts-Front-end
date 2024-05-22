@@ -1,4 +1,4 @@
-package dev.prisonerofum.EGRINGOTTS;
+package dev.prisonerofum.EGRINGOTTS.Card;
 
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import lombok.AllArgsConstructor;

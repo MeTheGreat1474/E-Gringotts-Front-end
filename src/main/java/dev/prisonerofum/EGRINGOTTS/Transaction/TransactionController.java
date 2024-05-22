@@ -83,19 +83,20 @@ public class TransactionController{
     private CurrencyExchangeService currencyExchangeService;
 
     @PostMapping("/addCurrencyPair")
-    public ResponseEntity<Optional<CurrencyGraph<String>>> addCurrencyPair(@RequestBody List<String[]> currencies) {
-        Optional<CurrencyGraph<String>> graph = Optional.ofNullable(currencyExchangeService.addCurrencyPairs(currencies));
+    public ResponseEntity<CurrencyGraph<String>> addCurrencyPair(@RequestBody List<String[]> currencies) {
+
+        CurrencyGraph<String> graph = currencyExchangeService.addCurrencyPairs(currencies);
         return new ResponseEntity<>(graph, HttpStatus.OK);
     }
 
     @GetMapping("/exchange")
-    public ResponseEntity<ExchangeResponse> exchangeCurrency(
+    public ResponseEntity<Double> exchangeCurrency(
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
             @RequestParam double amount) {
 
-        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        double exchangedValue = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+        return new ResponseEntity<>(exchangedValue, HttpStatus.OK);
     }
 }
 

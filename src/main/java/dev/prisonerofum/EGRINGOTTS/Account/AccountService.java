@@ -1,6 +1,7 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
-import dev.prisonerofum.EGRINGOTTS.Card;
+import dev.prisonerofum.EGRINGOTTS.Card.Card;
+import dev.prisonerofum.EGRINGOTTS.Card.CardRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class AccountService {
     @Autowired                                  // intialized the EGringottsRepository
     private AccountRepository accountRepository;
+    private CardRepository cardRepository;
 
 public List<Account> createAccount(Account account) {
         return accountRepository.findAll();
@@ -23,7 +25,11 @@ public List<Account> createAccount(Account account) {
     }
 
     public Optional<Account> singleAccount2(String username){ //optional is used to avoid null pointer exception
-        return accountRepository.findByUsername(username);
+        Optional<Account> account = accountRepository.findByUsername(username);
+        if(account.isPresent()){
+            return account;
+        }
+        return null;
     }
 
     public Optional<Account> checkLogin(String username, String password){
