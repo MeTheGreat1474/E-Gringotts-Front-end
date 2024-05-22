@@ -21,6 +21,8 @@ public class    Transaction {
     private String userID;
     private String receiverID;
     private double amount;
+    private double convertedAmount;
+    private double processingFee;
     private String transactionType;
     private String transactionDate;
     private String transactionTime;

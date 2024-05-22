@@ -3,6 +3,8 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 import java.io.Serializable;
 import java.util.*;
 import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,56 +12,44 @@ import org.springframework.data.annotation.Id;
 
 // Utility class to represent a pair of elements
 @Data
-class Pair<T, U> {
+class Pair<F, S> {
+    private F first;
+    private S second;
 
-    private final T first;
-    private final U second;
-
-    public Pair(T first, U second) {
+    public Pair(F first, S second) {
         this.first = first;
         this.second = second;
     }
-
-    public T getFirst() {
-        return first;
-    }
-
-    public U getSecond() {
-        return second;
-    }
-
-
 }
 
 // Node class for representing currencies in the graph
 @Data
-class CurrencyNode<T>  implements Serializable{
+class CurrencyNode<T> implements Serializable {
 
-
-    T currency;
-    List<ExchangeRate<T>> exchangeRates;
+    private T currency;
+    private List<ExchangeRate<T>> exchangeRates;
 
     public CurrencyNode() {
-        exchangeRates = new ArrayList<>();
+        this.exchangeRates = new ArrayList<>();
     }
 
     public CurrencyNode(T currency) {
         this.currency = currency;
-        exchangeRates = new ArrayList<>();
+        this.exchangeRates = new ArrayList<>();
     }
 
     public void addExchangeRate(ExchangeRate<T> rate) {
-        exchangeRates.add(rate);
+        this.exchangeRates.add(rate);
     }
 }
 
 // Class to represent exchange rates between currencies
+@Data
+class ExchangeRate<T> implements Serializable {
 
-class ExchangeRate<T> implements Serializable{
-
-    T targetNodeIdentifier;
-    double value;
-    double processingFee;
+    private T targetNodeIdentifier;
+    private double value;
+    private double processingFee;
 
     public ExchangeRate(T targetNodeIdentifier, double value, double processingFee) {
         this.targetNodeIdentifier = targetNodeIdentifier;

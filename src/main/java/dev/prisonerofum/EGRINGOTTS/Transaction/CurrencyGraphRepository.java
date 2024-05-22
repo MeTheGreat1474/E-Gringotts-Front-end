@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CurrencyGraphRepository extends MongoRepository<CurrencyGraph<String>, ObjectId> {
+public interface CurrencyGraphRepository extends MongoRepository<CurrencyGraph<String>, String> {
     Optional<CurrencyGraph<String>> findByGraphId(String graphId);
 }

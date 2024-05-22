@@ -23,6 +23,8 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private CurrencyExchangeService currencyExchangeService;
 
     // create new transactions
     public String makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
@@ -46,6 +48,15 @@ public class TransactionService {
         accountRepository.save(sender);
         accountRepository.save(receiver);
 
+        // Perform the currency conversion and get the processing fee
+        ExchangeResponse exchangeResponse = currencyExchangeService.exchangeCurrency(sender.getCurrency(), receiver.getCurrency(), amount);
+        double convertedAmount = exchangeResponse.getExchangedValue();
+        double processingFee = exchangeResponse.getProcessingFee();
+
+        // Update the account balances
+        sender.setBalance(sender.getBalance() - amount - processingFee);
+        receiver.setBalance(receiver.getBalance() + convertedAmount);
+
         Transaction transaction = new Transaction();
         transaction.setUserID(senderId);
         transaction.setReceiverID(receiverId);
@@ -54,6 +65,10 @@ public class TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+
+        // Set the converted amount and processing fee
+        transaction.setConvertedAmount(convertedAmount);
+        transaction.setProcessingFee(processingFee);
 
         transactionRepository.save(transaction);
 
@@ -108,6 +123,8 @@ public class TransactionService {
         receiptBuilder.append("Sender: ").append(sender != null ? sender.getUsername() : "Unknown").append("\n");
         receiptBuilder.append("Recipient: ").append(recipient != null ? recipient.getUsername() : "Unknown").append("\n");
         receiptBuilder.append("Amount: ").append(amount).append("\n");
+        receiptBuilder.append("Converted Amount: ").append(transaction.getConvertedAmount()).append("\n");
+        receiptBuilder.append("Processing Fee: ").append(transaction.getProcessingFee()).append("\n");
         receiptBuilder.append("Thank you for using E-Gringotts! Your magical transfer has been successfully completed.\n\n" +
                 "For any inquiries or further assistance, owl us at support@egringotts.com\n\n" +
                 "May your galleons multiply like Fizzing Whizbees!");
@@ -118,6 +135,4 @@ public class TransactionService {
     public Transaction getTransactionById(String transactionId) {
         return transactionRepository.findById(new ObjectId(transactionId)).orElse(null);
     }
-
-
 }

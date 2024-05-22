@@ -38,6 +38,7 @@ public class Account<E> {
     private String accountType;
     private String pin;
     private double balance;
+    private String currency;
 //    private String accountStatus;
     private Card card;
 

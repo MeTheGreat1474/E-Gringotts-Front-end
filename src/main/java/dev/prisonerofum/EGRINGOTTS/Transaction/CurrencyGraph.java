@@ -1,28 +1,30 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Random;
 
-// Graph class to represent the currency exchange graph
+@Document(collection = "CurrencyGraph")
+@Data
+@NoArgsConstructor
+public class CurrencyGraph<T> implements Serializable {
 
-@Document(collection = "CurrencyGraph")                        //constructor with all argument
-class CurrencyGraph<T> {
-
-
+    @Id
     private String graphId;
+    private List<CurrencyNode<T>> nodes = new ArrayList<>();
 
-    private List<CurrencyNode<T>> nodes;
-
-    public CurrencyGraph() {
-        this.nodes = new ArrayList<>();
-        generateGraphId();
+    // Constructor to initialize graphId and nodes
+    public CurrencyGraph(String graphId, List<CurrencyNode<T>> nodes) {
+        this.graphId = graphId;
+        this.nodes = nodes;
     }
 
     public void addCurrency(T fromCurrency, T toCurrency, double value, double processingFee) {
@@ -38,7 +40,7 @@ class CurrencyGraph<T> {
 
     private CurrencyNode<T> getNode(T currency) {
         for (CurrencyNode<T> node : nodes) {
-            if (node.currency.equals(currency)) {
+            if (node.getCurrency().equals(currency)) {
                 return node;
             }
         }
@@ -51,50 +53,68 @@ class CurrencyGraph<T> {
         CurrencyNode<T> startNode = getNode(fromCurrency);
         CurrencyNode<T> endNode = getNode(toCurrency);
 
-        // Perform BFS traversal to find the shortest path
         Queue<Pair<CurrencyNode<T>, Double>> queue = new LinkedList<>();
-        List<Pair<CurrencyNode<T>, Double>> amounts = new LinkedList<>();
-        List<CurrencyNode<T>> visited = new LinkedList<>();
+        List<CurrencyNode<T>> visited = new ArrayList<>();
 
         queue.offer(new Pair<>(startNode, amount));
-        amounts.add(new Pair<>(startNode, amount));
 
         while (!queue.isEmpty()) {
             Pair<CurrencyNode<T>, Double> pair = queue.poll();
             CurrencyNode<T> currentNode = pair.getFirst();
             double currentAmount = pair.getSecond();
 
-            if (currentNode == endNode) {
+            if (currentNode.equals(endNode)) {
                 return currentAmount;
             }
             visited.add(currentNode);
 
-            for (ExchangeRate<T> rate : currentNode.exchangeRates) {
-                CurrencyNode<T> neighbour = getNode(rate.targetNodeIdentifier);
-                double exchangeRate = rate.value;
+            for (ExchangeRate<T> rate : currentNode.getExchangeRates()) {
+                CurrencyNode<T> neighbour = getNode(rate.getTargetNodeIdentifier());
+                double exchangeRate = rate.getValue();
                 double neighbourAmount = currentAmount * exchangeRate;
 
                 if (!visited.contains(neighbour)) {
                     queue.offer(new Pair<>(neighbour, neighbourAmount));
-                    amounts.add(new Pair<>(neighbour, neighbourAmount));
                 }
             }
         }
         return -1; // Cannot exchange to desired currency
     }
 
-    public double calculateProcessingFee(T from, T to, double amount) {
-        CurrencyNode<T> fromNode = getNode(from);
-        CurrencyNode<T> toNode = getNode(to);
+    public double calculateProcessingFee(T fromCurrency, T toCurrency, double amount) {
+        CurrencyNode<T> startNode = getNode(fromCurrency);
+        CurrencyNode<T> endNode = getNode(toCurrency);
 
-        double fee = 0;
-        for (ExchangeRate<T> rate : fromNode.exchangeRates) {
-            if (getNode(rate.targetNodeIdentifier).equals(toNode)) {
-                fee += amount * rate.processingFee;
+        Queue<Pair<CurrencyNode<T>, Double>> queue = new LinkedList<>();
+        List<CurrencyNode<T>> visited = new ArrayList<>();
+        List<Pair<CurrencyNode<T>, Double>> fees = new ArrayList<>();
+
+        queue.offer(new Pair<>(startNode, 0.0));
+        fees.add(new Pair<>(startNode, 0.0));
+
+        while (!queue.isEmpty()) {
+            Pair<CurrencyNode<T>, Double> pair = queue.poll();
+            CurrencyNode<T> currentNode = pair.getFirst();
+            double currentFee = pair.getSecond();
+
+            if (currentNode.equals(endNode)) {
+                return currentFee;
+            }
+            visited.add(currentNode);
+
+            for (ExchangeRate<T> rate : currentNode.getExchangeRates()) {
+                CurrencyNode<T> neighbour = getNode(rate.getTargetNodeIdentifier());
+                double neighbourFee = currentFee + amount * rate.getProcessingFee();
+
+                if (!visited.contains(neighbour)) {
+                    queue.offer(new Pair<>(neighbour, neighbourFee));
+                    fees.add(new Pair<>(neighbour, neighbourFee));
+                }
             }
         }
-        return fee;
+        return -1; // Cannot calculate processing fee
     }
+
     public void generateGraphId() {
         Random random = new Random();
         StringBuilder userId = new StringBuilder();
@@ -104,6 +124,7 @@ class CurrencyGraph<T> {
         }
         this.graphId = userId.toString();
     }
-
 }
+
+
 

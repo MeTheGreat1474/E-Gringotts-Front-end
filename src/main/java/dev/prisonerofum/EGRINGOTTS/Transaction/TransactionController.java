@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -83,20 +84,23 @@ public class TransactionController{
     private CurrencyExchangeService currencyExchangeService;
 
     @PostMapping("/addCurrencyPair")
-    public ResponseEntity<CurrencyGraph<String>> addCurrencyPair(@RequestBody List<String[]> currencies) {
-
-        CurrencyGraph<String> graph = currencyExchangeService.addCurrencyPairs(currencies);
-        return new ResponseEntity<>(graph, HttpStatus.OK);
+    public ResponseEntity<String> addCurrencyPair(@RequestBody List<String[]> currencies) {
+        currencyExchangeService.addCurrencyPairs(currencies);
+        return new ResponseEntity<>("Currency pairs added successfully", HttpStatus.OK);
     }
 
     @GetMapping("/exchange")
-    public ResponseEntity<Double> exchangeCurrency(
+    public ResponseEntity<String> exchangeCurrency(
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
             @RequestParam double amount) {
 
-        double exchangedValue = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
-        return new ResponseEntity<>(exchangedValue, HttpStatus.OK);
+        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+        String result = String.format("%f %s = %f %s, processing fee to charge = %f %s",
+                response.getAmount(), response.getFromCurrency(),
+                response.getExchangedValue(), response.getToCurrency(),
+                response.getProcessingFee(), response.getFromCurrency());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
 
