@@ -1,6 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS.User;
 
-interface User {
+public interface User {
 
     //implement a factory pattern with generics
 

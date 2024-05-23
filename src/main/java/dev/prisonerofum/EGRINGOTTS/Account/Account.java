@@ -1,6 +1,7 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import dev.prisonerofum.EGRINGOTTS.User.User;
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class Account<E> {
     private String username;
     private String password;
     private String fullName;
-    private Date DOB;
+    private String DOB;
     private String email;
     private String phone;
     private String address;
@@ -39,6 +40,7 @@ public class Account<E> {
     private String pin;
     private double balance;
     private String currency;
+    private User user;
 //    private String accountStatus;
     private Card card;
 
@@ -66,6 +68,8 @@ public class Account<E> {
         }
         this.userId = userId.toString();
     }
+
+
 
 
 

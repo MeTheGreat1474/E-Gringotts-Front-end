@@ -2,6 +2,7 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import dev.prisonerofum.EGRINGOTTS.Card.CardRepository;
+import dev.prisonerofum.EGRINGOTTS.User.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,9 +14,12 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
+
+
     @Autowired                                  // intialized the EGringottsRepository
     private AccountRepository accountRepository;
     private CardRepository cardRepository;
+
 
 public List<Account> createAccount(Account account) {
         return accountRepository.findAll();
@@ -37,16 +41,22 @@ public List<Account> createAccount(Account account) {
         if(account.isPresent()){
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(password, account.get().getPassword())){
+
+                if(username == "admin") ;
                 return account;
             }
         }
         return Optional.empty();
     }
 
-    public Optional<Account> signUp(String username, String email, String password, String address, String pin){
+    public Optional<Account> signUp(String fullname,String username, String phone,String email,String DOB, String password, String address, String pin){
+
         Optional<Account> account = accountRepository.findByUsername(username);
         if(account.isEmpty()){
             Account newAccount = new Account();
+            newAccount.setFullName(fullname);
+            newAccount.setPhone(phone);
+            newAccount.setDOB(DOB);
             newAccount.setUsername(username);
             newAccount.setPassword(password);
             newAccount.setEmail(email);
@@ -54,6 +64,11 @@ public List<Account> createAccount(Account account) {
             newAccount.setPin(pin);         // Set the encrypted PIN
             newAccount.generateUserId();
             newAccount.setBalance(0.0);
+
+            UserFactory userFactory = new SilverSnitchFactory();
+            User user = userFactory.createUser();
+//            newAccount.setCurrency("Knut");
+            newAccount.setUser(user);
 
             // Create a new Card object
             Card newCard = new Card();
@@ -95,4 +110,11 @@ public List<Account> createAccount(Account account) {
         return accountRepository.findAll();
     }
 
+    public long countUsers() {
+        return  accountRepository.count();
+    }
+
+    public long countCards() {
+        return  cardRepository.count();
+    }
 }

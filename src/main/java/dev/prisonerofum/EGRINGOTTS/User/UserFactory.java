@@ -7,6 +7,6 @@ public abstract class UserFactory {
         //user.method();
         return user;
     }
-    protected abstract User createUser();
+    public abstract User createUser();
 
 }

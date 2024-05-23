@@ -35,8 +35,8 @@ public class AccountController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Optional<Account>> signUp(@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address,@RequestParam String pin){
-        return new ResponseEntity<>(accountService.signUp(username, email, password, address,pin), HttpStatus.OK);
+    public ResponseEntity<Optional<Account>> signUp(@RequestParam String fullname,@RequestParam String phone,@RequestParam String DOB,@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address,@RequestParam String pin){
+        return new ResponseEntity<>(accountService.signUp(fullname,username,phone,email, DOB, password, address,pin), HttpStatus.OK);
     }
 
     @GetMapping("/email")

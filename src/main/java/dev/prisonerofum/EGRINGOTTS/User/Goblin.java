@@ -1,9 +1,16 @@
 package dev.prisonerofum.EGRINGOTTS.User;
 
+import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
+import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
+import dev.prisonerofum.EGRINGOTTS.Transaction.TransactionService;
+
 public class Goblin implements User{
 
-    private int numOfUsers;
-    private int numOfCards;
+    AccountService accountService;
+    TransactionService transactionService;
+
+    private long numOfUsers;
+    private long numOfCards;
     private int numOfTransactionsPerDay;
     private int numOfTransactionsPerMonth;
     private int numOfTransactionsPerYear;
@@ -15,6 +22,16 @@ public class Goblin implements User{
     private int numOfTransactionsPerDate;
     private int numOfTransactionsPerTime;
     private int numOfTransactionsPerID;
+
+    public void update(){
+        this.numOfCards = accountService.countUsers();
+        this.numOfUsers = accountService.countCards();
+    }
+
+
+
+
+
 
 
 

@@ -2,7 +2,7 @@ package dev.prisonerofum.EGRINGOTTS.User;
 
 public class GoldenGalleonFactory extends UserFactory{
 
-    protected User createUser(){
+    public User createUser(){
         return new GoldenGalleon();
     }
 
