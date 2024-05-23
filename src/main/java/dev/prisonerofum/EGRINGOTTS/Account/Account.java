@@ -68,6 +68,9 @@ public class Account<E> {
         }
         this.userId = userId.toString();
     }
+    public double reload(double amount){
+        return this.balance += amount;
+    }
 
 
 
@@ -75,3 +78,5 @@ public class Account<E> {
 
 
 }
+
+

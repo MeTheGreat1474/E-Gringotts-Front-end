@@ -135,5 +135,17 @@ public List<Account> createAccount(Account account) {
         goblin.setNumOfTransactionsPerYear(transactionService.countTransactionsPerYear());
     }
 
+    public double reload(String username, double amount){
+        Optional<Account> account = accountRepository.findByUsername(username);
+        if(account.isPresent()){
+            Account acc = account.get();
+            acc.reload(amount);
+            accountRepository.save(acc);
+            return acc.getBalance();
+        }
+        return -1;
+    }
+
+
 
 }

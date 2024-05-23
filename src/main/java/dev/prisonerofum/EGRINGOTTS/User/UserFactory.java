@@ -8,5 +8,4 @@ public abstract class UserFactory {
         return user;
     }
     public abstract User createUser();
-
 }
