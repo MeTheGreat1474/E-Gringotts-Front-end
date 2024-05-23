@@ -2,6 +2,7 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import dev.prisonerofum.EGRINGOTTS.Card.CardRepository;
+import dev.prisonerofum.EGRINGOTTS.EmailService;
 import dev.prisonerofum.EGRINGOTTS.Transaction.Transaction;
 import dev.prisonerofum.EGRINGOTTS.Transaction.TransactionService;
 import dev.prisonerofum.EGRINGOTTS.User.*;
@@ -23,6 +24,8 @@ public class AccountService {
     private CardRepository cardRepository;
     @Autowired
     TransactionService transactionService;
+    @Autowired
+    EmailService emailService;
 
 
 public List<Account> createAccount(Account account) {
@@ -86,6 +89,21 @@ public List<Account> createAccount(Account account) {
             newCard.setCardHolder(newAccount);
             newCard.setCardId(newAccount);
             newAccount.setCard(newCard);
+
+//            email Service is command down to avoid sending email to random email addresses
+            //TODO: edit the text using html
+//            emailService.sendSimpleMessage(email, "Welcome to EGringotts", "Hello " + fullname + ",\n\n" +
+//                    "Thank you for signing up with EGringotts. Your account has been successfully created.\n\n" +
+//                    "Your account details are as follows:\n" +
+//                    "Username: " + username + "\n" +
+//                    "Phone: " + phone + "\n" +
+//                    "Email: " + email + "\n" +
+//                    "DOB: " + DOB + "\n" +
+//                    "Address: " + address + "\n\n" +
+//                    "Please keep your account details safe and do not share them with anyone.\n\n" +
+//                    "Regards,\n" +
+//                    "EGringotts Team" +
+//                    "\n\nThis is an auto-generated email. Please do not reply to this email.");
 
             accountRepository.insert(newAccount);
             return Optional.of(newAccount);

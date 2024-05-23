@@ -8,6 +8,10 @@ TO DO  :
 
 --------------SHAHEILA TODO LIST ----------------
 1. fix graph issue
+
+--------------AQEEL TODO LIST ----------------
+1.Make send email using html
+
 --------------BACKEND UPDATE----------------
 TO BE FIXED :
 1. @Farisha , @Shaheila , @Sanjida : the make new transaction is broken somehow , please fix it
