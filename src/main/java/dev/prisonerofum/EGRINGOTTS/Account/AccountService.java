@@ -2,6 +2,8 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import dev.prisonerofum.EGRINGOTTS.Card.CardRepository;
+import dev.prisonerofum.EGRINGOTTS.Transaction.Transaction;
+import dev.prisonerofum.EGRINGOTTS.Transaction.TransactionService;
 import dev.prisonerofum.EGRINGOTTS.User.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,12 @@ import java.util.Optional;
 @Service
 public class AccountService {
 
-
     @Autowired                                  // intialized the EGringottsRepository
     private AccountRepository accountRepository;
+    @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    TransactionService transactionService;
 
 
 public List<Account> createAccount(Account account) {
@@ -42,7 +46,11 @@ public List<Account> createAccount(Account account) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(password, account.get().getPassword())){
 
-                if(username == "admin") ;
+                User user = account.get().getUser();
+                if (user instanceof Goblin) {
+                    // Perform operations specific to Goblin
+                    Goblin goblin = (Goblin) user;
+                    update(goblin);}
                 return account;
             }
         }
@@ -115,6 +123,17 @@ public List<Account> createAccount(Account account) {
     }
 
     public long countCards() {
-        return  cardRepository.count();
+//        return  cardRepository.count();
+        return countUsers();
     }
+
+    public void update(Goblin goblin){
+        goblin.setNumOfCards(countCards());
+        goblin.setNumOfUsers(countUsers());
+        goblin.setNumOfTransactionsPerDay(transactionService.countTransactionsPerDay());
+        goblin.setNumOfTransactionsPerMonth(transactionService.countTransactionsPerMonth());
+        goblin.setNumOfTransactionsPerYear(transactionService.countTransactionsPerYear());
+    }
+
+
 }

@@ -183,4 +183,20 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
+    public long countTransactionsPerDay() {
+        LocalDate today = LocalDate.now();
+        return transactionRepository.countByTransactionDateBetween(today.atStartOfDay(ZoneId.systemDefault()).toInstant(), today.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public long countTransactionsPerMonth() {
+        LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
+        LocalDate lastDayOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+        return transactionRepository.countByTransactionDateBetween(firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant(), lastDayOfMonth.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public long countTransactionsPerYear() {
+        LocalDate firstDayOfYear = LocalDate.now().withDayOfYear(1);
+        LocalDate lastDayOfYear = LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear());
+        return transactionRepository.countByTransactionDateBetween(firstDayOfYear.atStartOfDay(ZoneId.systemDefault()).toInstant(), lastDayOfYear.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+    }
 }

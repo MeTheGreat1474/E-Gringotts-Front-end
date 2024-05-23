@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -23,5 +24,6 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
     List<Transaction> findByCategory(TransactionCategory category);
 
 
+    long countByTransactionDateBetween(Instant instant, Instant instant1);
 }
 
