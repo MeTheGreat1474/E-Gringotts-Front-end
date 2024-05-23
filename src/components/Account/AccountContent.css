@@ -24,43 +24,6 @@
     width: 90%;
 }
 
-.account-detail-box .user-info-box {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    height: 100px;
-    margin-bottom: 50px;
-}
-
-.user-info-box img {
-    border-radius: 7px;
-    background: #CDB373;
-    flex: 20%;
-}
-
-.user-info-box .name {
-    flex: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.name .username {
-    flex: 50%;
-}
-
-.name .usertype {
-    flex: 20%;
-}
-
-.name .userId{
-    flex: 20%;
-}
-
-.transfer-detail-box .user-info-form-container {
-
-}
-
 .user-info-form-container h3{
     padding-bottom: 10px;
     color: #CDB373;

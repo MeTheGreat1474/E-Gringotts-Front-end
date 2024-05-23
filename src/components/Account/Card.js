@@ -1,6 +1,6 @@
 import React from 'react'
 import './Card.css'
-import DisplayInput from "./DisplayInput";
+import DisplayInput from "../DisplayInput";
 
 function Cards({ user }) {
     return (

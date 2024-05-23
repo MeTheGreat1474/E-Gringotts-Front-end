@@ -1,22 +1,34 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useGetUser} from "../../services/getUser";
+import {useGetAllUsers} from "../../services/getAllUser";
 
+//TODO: ADD PHONE DATA INTO FIELD
+//TODO: PASS USER DATA TO TRANSFERTO.JS UPON CLICK
 function TransferLog({ search, filterType }) {
+    const navigate = useNavigate();
+    const { username } = useParams();
+    const { user, getUser } = useGetUser(username);
 
-    const data = [
-        // Placeholder data
-        { username: 'User1', phone: '1234567890' },
-        { username: 'ASD', phone: '0987654321' },
-        { username: 'User2', phone: '0987654321' },
-        { username: 'llll', phone: '0987654321' },
-        { username: 'User1', phone: '1234567890' },
-        { username: 'ASD', phone: '0987654321' },
-        { username: 'User2', phone: '0987654321' },
-        { username: 'llll', phone: '0987654321' },
-        { username: 'User1', phone: '1234567890' },
-        { username: 'ASD', phone: '0987654321' },
-        { username: 'User2', phone: '0987654321' },
+    const handleClick = (path) => {
+        navigate(path);
+    };
 
-    ];
+    useEffect(() => {
+        getUser();
+    }, [getUser]);
+
+    const allUsers = useGetAllUsers();
+
+    useEffect(() => {
+        console.log(allUsers);
+    }, [allUsers]);
+
+    const data = allUsers.map(user => ({
+        username: user.username,
+        //phone: user.phone,
+
+    }));
 
     // Placeholder function to simulate API call
     const getFilteredData = (data, filterType, search) => {
@@ -29,11 +41,12 @@ function TransferLog({ search, filterType }) {
 
     const filteredData = getFilteredData(data, filterType, search);
 
+
     return (
         <div className="logs-wrapper">
             {filteredData.map((item, index) => (
                 <div className="logs-box" key={index}>
-                    <div className="log">
+                    <div onClick={() => handleClick(`/${username}/transfer/confirm`)} className="log">
                         <div className="username">
                             <h3>{item.username}</h3>
                         </div>

@@ -5,6 +5,7 @@ import {Button} from "../Button";
 import {Input} from "../Input";
 import BalanceAmount from "../BalanceAmount";
 import TransferLog from "./TransferLog";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function TransferContent({ user }) {
     const [search, setSearch] = useState("");

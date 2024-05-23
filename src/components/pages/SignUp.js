@@ -5,6 +5,8 @@ import {Button} from "../Button";
 import '../../App.css'
 import api from "../../api/axiosConfig";
 
+//TODO: ADD MORE NECESSARY FIELD TO SIGNUP FIELD
+//TODO: CONVERT SIGNUP API TO A FUNCTION IN SERVICE FOLDER
 function SignUp() {
 
     const navigate = useNavigate();

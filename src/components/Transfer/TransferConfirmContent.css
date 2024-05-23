@@ -1,0 +1,58 @@
+.transfer-confirm-box {
+    position: relative;
+    justify-self: left;
+    align-content: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    top: 10%;
+    width: 90%;
+}
+
+.transfer-confirm-box h1{
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.transfer-confirm-box h2 {
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.transfer-confirm-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.transfer-amount-box {
+    flex-direction: row;
+    display: flex;
+    gap: 30px;
+}
+
+.transfer-amount-box .currency-input {
+    border: 0px;
+    border-bottom: 1px solid #CDB373;
+    background-color: transparent;
+    padding: 7px 5px 7px 10px;
+    color: #FFFFFF;
+    width: 100%;
+    font-size: 30px;
+}
+
+.transfer-amount-box .currency {
+    display: flex;
+    font-size: 30px;
+    align-items: flex-end;
+    padding-bottom: 5px;
+}

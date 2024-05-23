@@ -4,7 +4,7 @@ import {useGetUser} from "../../services/getUser";
 import ReceiptContent from "../Receipt/ReceiptContent";
 import Navbar from "../Navbar";
 
-function Receipt() {
+function ReloadReceipt() {
     const location = useLocation();
     const amount = location.state.amount;
     console.log(amount)
@@ -30,4 +30,4 @@ function Receipt() {
     )
 }
 
-export default Receipt
+export default ReloadReceipt

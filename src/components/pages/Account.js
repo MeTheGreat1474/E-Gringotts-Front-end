@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
 import AccountContent from "../Account/AccountContent";
-import Cards from "../Card";
+import Cards from "../Account/Card";
 import { useGetUser } from '../../services/getUser'
 
 function Account() {

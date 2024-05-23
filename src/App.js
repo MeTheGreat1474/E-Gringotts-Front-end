@@ -8,9 +8,10 @@ import Home from "./components/pages/Home";
 import Account from "./components/pages/Account";
 import Transfer from "./components/pages/Transfer";
 import Reload from "./components/pages/Reload";
-import Receipt from "./components/pages/Receipt";
+import ReloadReceipt from "./components/pages/ReloadReceipt";
 import Dashboard from "./components/pages/Dashboard";
 import Admin from "./components/pages/Admin";
+import TransferConfirm from "./components/pages/TransferConfirm";
 
 function App() {
 
@@ -26,8 +27,9 @@ function App() {
             <Route path='/signup' element={<SignUp/>} />
             <Route path='/:username/account' element={<Account/>} />
             <Route path='/:username/transfer' element={<Transfer/>} />
+            <Route path='/:username/transfer/confirm' element={<TransferConfirm/>} />
             <Route path='/:username/reload' element={<Reload/>} />
-            <Route path='/:username/reload/receipt' element={<Receipt/>} />
+            <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
             <Route path='/:username/admin' element={<Admin/>} />
         </Routes>
       </Router>
