@@ -10,15 +10,17 @@ function TransferLog({ search, filterType }) {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);
 
-    const handleClick = (path) => {
+    const handleClick = (path, username, phone) => {
         navigate(path);
+        console.log(`Username: ${username}, Phone: ${phone}`);
+        // You can use the username and phone here or pass them to another function
     };
 
     useEffect(() => {
         getUser();
     }, [getUser]);
 
-    const allUsers = useGetAllUsers();
+    const allUsers = useGetAllUsers(username);
 
     useEffect(() => {
         console.log(allUsers);
@@ -26,7 +28,7 @@ function TransferLog({ search, filterType }) {
 
     const data = allUsers.map(user => ({
         username: user.username,
-        //phone: user.phone,
+        phone: user.phone,
 
     }));
 
@@ -46,7 +48,7 @@ function TransferLog({ search, filterType }) {
         <div className="logs-wrapper">
             {filteredData.map((item, index) => (
                 <div className="logs-box" key={index}>
-                    <div onClick={() => handleClick(`/${username}/transfer/confirm`)} className="log">
+                    <div onClick={() => handleClick(`/${username}/transfer/confirm`, item.username, item.phone)} className="log">
                         <div className="username">
                             <h3>{item.username}</h3>
                         </div>

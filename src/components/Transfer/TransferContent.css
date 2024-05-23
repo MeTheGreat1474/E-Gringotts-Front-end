@@ -72,15 +72,25 @@
 }
 
 .transfer-to-container .logs-box{
-    padding-top: 10px;
     padding-left: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: transform 0.3s ease; /* Add this line */
+}
+
+.transfer-to-container .logs-box :hover{
+    background-color: #424f94;
+    cursor: pointer;
 }
 
 .transfer-to-container .log{
     color: #FFFFFF;
     border-bottom: 1px solid #CDB373;
-    padding-bottom: 1px;
+    padding: 10px 0px 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
+
+

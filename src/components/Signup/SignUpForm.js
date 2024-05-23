@@ -6,7 +6,7 @@ import './SignUpForm.css'
 
 const TYPE = ['input', 'textarea'];
 
-function SignUpForm({label, type, value, onChange, className, rows, cols}) {
+function SignUpForm({label, type, value, onChange, className, rows, cols, maxlength}) {
 
     return (
 
@@ -31,6 +31,7 @@ function SignUpForm({label, type, value, onChange, className, rows, cols}) {
                     value={value}
                     onChange={onChange}
                     placeholder={label}
+                    maxlength={maxlength}
                 />
             )}
         </>

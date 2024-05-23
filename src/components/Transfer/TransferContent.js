@@ -15,7 +15,7 @@ function TransferContent({ user }) {
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
         if(e.target.value!==name){
-            setSearch(null)
+            setSearch("")
         }
     }
 
@@ -56,29 +56,6 @@ function TransferContent({ user }) {
 
                             <TransferLog search={search} filterType={filterType}/>
 
-                            {/*<div className="logs-wrapper">*/}
-                            {/*    <div className="logs-text-filter">*/}
-                            {/*        <h3>B</h3>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="logs-box">*/}
-                            {/*        <div className="log">*/}
-                            {/*            <div className="username">*/}
-                            {/*                <h3>Username</h3>*/}
-                            {/*            </div>*/}
-                            {/*            <div className="phone">*/}
-                            {/*                <h4>Phone</h4>*/}
-                            {/*            </div>*/}
-                            {/*        </div>*/}
-                            {/*        <div className="log">*/}
-                            {/*            <div className="username">*/}
-                            {/*                <h3>Username</h3>*/}
-                            {/*            </div>*/}
-                            {/*            <div className="phone">*/}
-                            {/*                <h4>Phone</h4>*/}
-                            {/*            </div>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
                         </div>
                     </div>
                 </div>

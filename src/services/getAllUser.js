@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 
-export const useGetAllUsers = () => {
+export const useGetAllUsers = (currentUsername) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -10,7 +10,8 @@ export const useGetAllUsers = () => {
                 const response = await api.get('/Account/allAccounts');
 
                 if (response.status === 200) {
-                    setUsers(response.data);
+                    const allUsersExceptCurrent = response.data.filter(user => user.username !== currentUsername);
+                    setUsers(allUsersExceptCurrent);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
                 }
@@ -20,7 +21,7 @@ export const useGetAllUsers = () => {
         };
 
         fetchUsers();
-    }, []);
+    }, [currentUsername]);
 
     return users;
 };
