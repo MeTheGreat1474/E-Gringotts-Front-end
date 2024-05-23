@@ -8,9 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RestController
@@ -102,6 +101,52 @@ public class TransactionController{
                 response.getProcessingFee(), response.getFromCurrency());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/api/analytics")
+    public Map<String, Map<TransactionCategory, Map<String, Double>>> getAnalytics(
+            @RequestParam String userId,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false, defaultValue = "Monthly") String frequency,
+            @RequestParam(required = false) Set<String> paymentMethods) throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end = endDate != null ? sdf.parse(endDate) : new Date();
+        Set<String> methods = paymentMethods != null ? paymentMethods : new HashSet<>(Arrays.asList("Credit Card", "Debit Card", "Online Transfer"));
+
+        // Determine the default start date based on the frequency
+        if (startDate != null) {
+            start = sdf.parse(startDate);
+        } else {
+            if (frequency.equals("Daily")) {
+                start = getDefaultStartDateForDaily();
+            } else {
+                start = getDefaultStartDateForMonthly();
+            }
+        }
+
+        List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
+        List<Transaction> filteredTransactions = transactionService.filterTransactions(transactions, start, end, methods);
+        Map<String, Map<TransactionCategory, Map<String, Double>>> categoryPercentages = transactionService.calculateCategoryPercentagesByFrequency(filteredTransactions, frequency);
+
+        return categoryPercentages;
+    }
+
+
+    private Date getDefaultStartDateForMonthly() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -11); // Subtract 11 months to move to the same month in the previous year
+        cal.set(Calendar.DAY_OF_MONTH, 1); // Set to the first day of that month
+        return cal.getTime();
+    }
+
+    private Date getDefaultStartDateForDaily() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
+        return cal.getTime();
+    }
+
 }
 
 
