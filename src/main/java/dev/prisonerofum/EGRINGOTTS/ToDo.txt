@@ -1,18 +1,18 @@
 HI everyone this is a todo list to make our lives easier.
 
 --------------FARISHA TODO LIST ----------------
-1. @Taufiq : please add return transaction history in reverse order ( latest transaction first )
-2. @Taufiq : Filter for Pensive Past and Transaction History
-3. @Taufiq : create api that will take {userId} and {filterType} as parameter and return the filtered data
+1. @Taufiq : please add return transaction history in reverse order ( so that we can get list of user by latest transaction first aka Recent )
+2. @Taufiq : Filter for Pensive Past and Marauders Map
+(create api that will take {filterType} as parameter and return the filtered data)
 
 --------------SHAHEILA TODO LIST ----------------
 1. fix graph issue
 2. @Taufiq : create reload api that take in {amount} parameter and return transaction id
-2. @Taufiq : make new transactions api to return transaction id
+2. @Taufiq : make the makeNewTransaction api return transaction id
 3. @Taufiq : make new transactionType 'RELOAD'
 
 --------------AQEEL TODO LIST ----------------
-1. @Taufiq : Make account database hold account type
+1. @Taufiq : Make account database hold account type (Platinum Patronus, etc... )
 
 --------------BACKEND UPDATE----------------
 TO BE FIXED :
