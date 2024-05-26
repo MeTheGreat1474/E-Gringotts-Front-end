@@ -64,8 +64,8 @@ TO BE FIXED :
         - Reload
         - Transaction History
         - Admin Dashboard
-        - Ai Chat
+        - Ai Chat 🆖❌
 
     b. security pin upon log in ✅
     c. password hashing ✅
-    d. email notification ❎
+    d. email notification
