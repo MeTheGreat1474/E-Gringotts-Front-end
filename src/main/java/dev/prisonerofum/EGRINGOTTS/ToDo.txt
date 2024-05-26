@@ -52,10 +52,20 @@ TO BE FIXED :
     b. include visual aids
     c. analytics filter
 
-7) Hogwarts Library (Usage of Database – 1%)
+7) Hogwarts Library (Usage of Database – 1%) ✅
 
 8) Extra features (4%)
     a. GUI
-    b. security pin upon log in
-    c. password hashing
-    d. email notification
+        - Login ✅
+        - Sign up ✅
+        - Display Account
+        - Display Balance ✅
+        - Transfer
+        - Reload
+        - Transaction History
+        - Admin Dashboard
+        - Ai Chat
+
+    b. security pin upon log in ✅
+    c. password hashing ✅
+    d. email notification ❎
