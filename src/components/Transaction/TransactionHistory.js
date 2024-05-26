@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button} from "../Button";
 import {Input} from "../Input";
-import FilterLogContainer from "./FilterLogContainer";
+import TransactionFilterLogContainer from "./TransactionFilterLogContainer";
 
 function TransactionHistory() {
     const [search, setSearch] = useState("");
@@ -30,8 +30,6 @@ function TransactionHistory() {
         console.log(`Filter ${filterType}, Search ${search}`);
     }, [filterType, search]);
 
-    //TODO: REPAIR TRANSACTION HISTORY
-
     return (
         <>
             <div className="transac-history-box">
@@ -45,9 +43,6 @@ function TransactionHistory() {
                             <option value="name">Name</option>
                         </select>
                     </div>
-                    {/*<Button value="recent" onClick={(e) => {handleFilterChange(e, 'recent'); }} className='btns' buttonStyle='rectangle' buttonSize='small'>Recent</Button>*/}
-                    {/*<Button value="recent" onClick={(e) => {handleFilterChange(e, 'category'); }} className='btns' buttonStyle='rectangle' buttonSize='small'>Category</Button>*/}
-                    {/*<Button value="recent" onClick={(e) => {handleFilterChange(e, 'amount'); }} className='btns' buttonStyle='rectangle' buttonSize='small'>Amount</Button>*/}
                     <div className="search-container">
                         <Input inputStyle='input--filter' inputSize='input--medium' type='text'
                                placeholder="Search by Name..." value={search}
@@ -56,7 +51,7 @@ function TransactionHistory() {
                 </div>
                 <div className="transac-log-container">
 
-                    <FilterLogContainer search={search} filterType={filterType}/>
+                    <TransactionFilterLogContainer search={search} filterType={filterType}/>
 
                     {/*<div className="filter-log">*/}
                     {/*    <h3 className='filter-name'>Today</h3>*/}

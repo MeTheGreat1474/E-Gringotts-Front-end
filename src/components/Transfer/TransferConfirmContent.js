@@ -8,11 +8,11 @@ import CurrencyInput from "react-currency-input-field";
 import MoneyInput from "../MoneyInput";
 import {Button} from "../Button";
 
-function TransferConfirmContent() {
+function TransferConfirmContent({toUser}) {
     const navigate = useNavigate();
     const { username } = useParams();
-    const { user, getUser } = useGetUser(username);
 
+    const { user, getUser } = useGetUser(toUser);
     useEffect(() => {
         getUser();
     }, [getUser]);
@@ -25,7 +25,7 @@ function TransferConfirmContent() {
         console.log(e.target.value)
     }
 
-    function handleValueChange(value, name) {
+    function handleValueChange(value) {
         // Ensure the event object exists and has a value property
         if (value !== undefined) {
             setAmount(value)
@@ -36,7 +36,10 @@ function TransferConfirmContent() {
     }
 
     const handleAmountSubmit = () => {
-        navigate(`/${username}/reload/receipt`, { state: { amount: amount } });
+
+        //TODO: MAKE NEW TRANSFER API AND CREATE RECEIPT PAGE
+
+        navigate(`/${username}/transfer/receipt`, { state: { amount: amount } });
     }
 
     return (
@@ -55,7 +58,6 @@ function TransferConfirmContent() {
                             <MoneyInput
                                 onChange={handleValueChange}
                                 amount={amount}
-                                setAmount={setAmount}
                                 placeholder='0.00'
                             />
                             <div className='currency'>

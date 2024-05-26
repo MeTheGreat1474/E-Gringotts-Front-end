@@ -5,10 +5,9 @@ import CurrencyInput from "react-currency-input-field";
 import {Button} from "../Button";
 import { useNavigate } from 'react-router-dom';
 import {useGetUser} from "../../services/getUser";
+import {reload} from "../../services/reload";
 
 function ReloadContent({username}) {
-
-    //TODO: PUSH AMOUNT TO ADD BALANCE AND STORE RECEIPT IN TRANSACTION HISTORY
 
     const [amount, setAmount] = useState(0.00);
     const navigate = useNavigate();
@@ -20,7 +19,9 @@ function ReloadContent({username}) {
     }, [getUser]);
 
     const handleAmountSubmit = () => {
-        navigate(`/${username}/reload/receipt`, { state: { amount: amount } });
+        reload(username, amount);
+        console.log(`Username: ${username}, Amount: ${amount}`)
+        navigate(`/${username}/reload/receipt`, { state: { amount: amount, username: username } });
     }
 
     return (

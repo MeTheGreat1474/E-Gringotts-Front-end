@@ -25,7 +25,8 @@ function Login() {
         console.log(`Response: ${response}`);
         // Navigate to dashboard if login is successful
         if (response) {
-            navigate(`/${username}`);
+            navigate(`/auth`);
+            navigate(`/auth`, { state: { username: username } });
         }
         else{
             setError("* Login failed. Please check your username and password.");
@@ -55,7 +56,7 @@ function Login() {
                     <Input type='text' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
                     <FontAwesomeIcon className='icon' icon={faLock}/>
                     <Input type='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    <Button type='submit' onClick={handleOnSubmit}>Submit</Button>
+                    <Button type='submit' onClick={handleOnSubmit}>Log In</Button>
                     <Button onClick={onSignUp}>Sign Up</Button>
                     {error && <p className="error">{error}</p>}
                 </form>

@@ -12,6 +12,7 @@ import ReloadReceipt from "./components/pages/ReloadReceipt";
 import Dashboard from "./components/pages/Dashboard";
 import Admin from "./components/pages/Admin";
 import TransferConfirm from "./components/pages/TransferConfirm";
+import LoginAuth from "./components/pages/LoginAuth";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Router>
         <Routes>
             <Route path="/" exact element={<Login/>} />
+            <Route path="/auth" element={<LoginAuth/>} />
             <Route path="/:username" element={<Home/>} />
             <Route path='/signup' element={<SignUp/>} />
             <Route path='/:username/account' element={<Account/>} />

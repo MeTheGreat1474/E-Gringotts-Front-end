@@ -7,12 +7,13 @@ import Navbar from "../Navbar";
 function ReloadReceipt() {
     const location = useLocation();
     const amount = location.state.amount;
+    const username = location.state.username;
     console.log(amount)
-    const { username } = useParams();
+
     const { user, getUser } = useGetUser(username);
 
     useEffect(() => {
-        getUser();
+    getUser();
     }, [getUser]);
 
     return (
@@ -21,7 +22,7 @@ function ReloadReceipt() {
                 <Navbar username={username}/>
             </div>
             <div className="middle">
-                <ReceiptContent />
+                <ReceiptContent username={username} amount={amount}/>
             </div>
             <div className="right">
 

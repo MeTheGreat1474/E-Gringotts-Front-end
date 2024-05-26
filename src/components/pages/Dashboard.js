@@ -7,8 +7,6 @@ import {useParams} from "react-router-dom";
 function Dashboard() {
     const { username } = useParams();
 
-    //TODO: TAKE USER INFO BASED ON USER DATA
-
     return (
         <>
             <div className="dashboard">

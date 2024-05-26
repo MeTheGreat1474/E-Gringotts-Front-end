@@ -5,7 +5,6 @@ import {Button} from "../Button";
 import '../../App.css'
 import api from "../../api/axiosConfig";
 
-//TODO: ADD MORE NECESSARY FIELD TO SIGNUP FIELD
 //TODO: CONVERT SIGNUP API TO A FUNCTION IN SERVICE FOLDER
 function SignUp() {
 
@@ -42,10 +41,8 @@ function SignUp() {
 
     const signup = async (username, email, password, address, DOB, phone, pin, fullName) => {
         try {
-            // console.log(`1:  Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}, DOB: ${DOB}`)
-            const response = await api.post(`/Account/signUp?username=${username}&email=${email}
-                                                                    &password=${password}&DOB=${DOB}&address=${address}
-                                                                    &phone=${phone}&pin=${pin}&fullname=${fullName}`);
+            console.log(`Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}, Phone=${phone}, Pin=${pin}, Fullname=${fullName}, DOB=${DOB}`)
+            const response = await api.post(`/Account/signup?username=${username}&password=${password}&email=${email}&address=${address}&pin=${pin}&fullname=${fullName}&phone=${phone}&DOB=${DOB}`);
             return response.data;
         } catch (error) {
             console.error('Error during signup:', error);
@@ -74,7 +71,6 @@ function SignUp() {
     const handleDOB = (e) => {
         setDOB(e.target.value);
         setSubmitted(false);
-        console.log(e.target.value)
     };
 
     const handleAddress = (e) => {

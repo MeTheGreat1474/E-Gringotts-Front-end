@@ -1,14 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Navbar from "../Navbar";
 import AccountBalance from "../Account/AccountBalance";
 import TransactionHistory from "../Transaction/TransactionHistory";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import TransferConfirmContent from "../Transfer/TransferConfirmContent";
+import {useGetUser} from "../../services/getUser";
 
 function TransferConfirm() {
     const { username } = useParams();
 
-    //TODO: TAKE USER INFO BASED ON USER DATA
+    const location = useLocation();
+    const { toUser } = location.state;
 
     return (
         <>
@@ -17,7 +19,7 @@ function TransferConfirm() {
                     <Navbar username={username}/>
                 </div>
                 <div className="middle">
-                    <TransferConfirmContent/>
+                    <TransferConfirmContent toUser={toUser}/>
                 </div>
                 <div className="right">
 

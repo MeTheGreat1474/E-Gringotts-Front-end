@@ -31,7 +31,7 @@ function Navbar({username, user}) {
                     <div className={location.pathname === `/${username}/account` ? "content-alt" : "content"}>
                         <h2 onClick={() => handleNavigation(`/${username}/account`)}>Account</h2>
                     </div>
-                    {location.pathname.startsWith(`/admin`) && (
+                    {location.pathname.startsWith(`/Goblin`) && (
                         <div className={location.pathname === `/${username}/admin` ? "content-alt" : "content"}>
                             <h2 onClick={() => handleNavigation(`/${username}/admin`)}>Admin</h2>
                         </div>

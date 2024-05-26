@@ -11,7 +11,6 @@ export const useGetUser = (username) => {
             if (response.status === 200) {
                 const data = response.data;
                 setUser(data);
-                console.log(data);
             } else {
                 console.log('Oops, we haven\'t got JSON!');
             }
@@ -29,3 +28,8 @@ export const useGetUser = (username) => {
 // useEffect(() => {
 //     getUser();
 // }, [getUser]);
+
+//if use navigation
+//const {variable} = location.state.{variable};
+//if use passing
+//<Pages username={username} />

@@ -7,7 +7,7 @@ function TransactionLog({data}) {
                 <div className="log" key={index}>
                     <div className="details">
                         <h4 className='username'>{item.username}</h4>
-                        <p className='category'>{item.category}</p>
+                        <p className='category'>{item.phone}</p>
                     </div>
                     <p className='amount'>{item.amount}</p>
                 </div>

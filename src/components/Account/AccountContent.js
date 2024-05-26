@@ -3,6 +3,8 @@ import './AccountContent.css'
 import DisplayInput from "../DisplayInput";
 import DisplayUserProfile from "../DisplayUserProfile";
 
+//TODO: MAKE THE USER IMAGE AND INFO CHANGEABLE
+
 function AccountContent({ user }) {
     return (
         <>
