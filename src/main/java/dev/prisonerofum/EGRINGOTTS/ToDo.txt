@@ -16,5 +16,6 @@ HI everyone this is a todo list to make our lives easier.
 
 --------------BACKEND UPDATE----------------
 TO BE FIXED :
-1. @Farisha , @Shaheila , @Sanjida : the make new transaction is broken somehow , please fix it
+1. @Farisha , @Shaheila , @Sanjida => the make new transaction is broken somehow , please fix it
+2. @Taufiq : Use userId(10 numbers) instead of database auto-assign ObjectId for transaction
 
