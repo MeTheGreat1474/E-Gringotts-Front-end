@@ -28,6 +28,9 @@ public class CurrencyGraph<T> implements Serializable {
     }
 
     public void addCurrency(T fromCurrency, T toCurrency, double value, double processingFee) {
+        if (fromCurrency == null || toCurrency == null) {
+            throw new IllegalArgumentException("Currency cannot be null");
+        }
         CurrencyNode<T> node1 = getNode(fromCurrency);
         CurrencyNode<T> node2 = getNode(toCurrency);
 
@@ -39,6 +42,10 @@ public class CurrencyGraph<T> implements Serializable {
     }
 
     private CurrencyNode<T> getNode(T currency) {
+        if (currency == null) {
+            throw new IllegalArgumentException("Currency cannot be null");
+        }
+
         for (CurrencyNode<T> node : nodes) {
             if (node.getCurrency().equals(currency)) {
                 return node;
@@ -50,6 +57,9 @@ public class CurrencyGraph<T> implements Serializable {
     }
 
     public double exchange(T fromCurrency, T toCurrency, double amount) {
+        if (fromCurrency == null || toCurrency == null) {
+            throw new IllegalArgumentException("Currency cannot be null");
+        }
         CurrencyNode<T> startNode = getNode(fromCurrency);
         CurrencyNode<T> endNode = getNode(toCurrency);
 
@@ -82,6 +92,9 @@ public class CurrencyGraph<T> implements Serializable {
     }
 
     public double calculateProcessingFee(T fromCurrency, T toCurrency, double amount) {
+        if (fromCurrency == null || toCurrency == null) {
+            throw new IllegalArgumentException("Currency cannot be null");
+        }
         CurrencyNode<T> startNode = getNode(fromCurrency);
         CurrencyNode<T> endNode = getNode(toCurrency);
 

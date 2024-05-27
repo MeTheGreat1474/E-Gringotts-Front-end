@@ -30,19 +30,19 @@ public class TransactionService {
     private CurrencyExchangeService currencyExchangeService;
 
     // create new transactions
-    public String makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
+    public TransactionResponse makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
         Optional<Account<User>> senderOpt = accountRepository.findById(senderId);
         Optional<Account<User>> receiverOpt = accountRepository.findById(receiverId);
 
         if (!senderOpt.isPresent() || !receiverOpt.isPresent()) {
-            return "Sender or receiver account not found.";
+            throw new IllegalArgumentException("Sender or receiver account not found.");
         }
 
         Account<User> sender = senderOpt.get();
         Account<User> receiver = receiverOpt.get();
 
         if (sender.getBalance() < amount) {
-            return "Insufficient balance. " + sender;
+            throw new IllegalArgumentException("Insufficient balance.");
         }
 
         sender.setBalance(sender.getBalance() - amount);
@@ -73,12 +73,38 @@ public class TransactionService {
         transaction.setConvertedAmount(convertedAmount);
         transaction.setProcessingFee(processingFee);
 
-        transactionRepository.save(transaction);
+        Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Generate receipt
-        String receipt = generateReceipt(transaction);
+        String receipt = generateReceipt(savedTransaction);
 
-        return "Transaction successful. Receipt: " + receipt;
+        return new TransactionResponse(savedTransaction.getId().toString(), receipt);
+    }
+
+    // Create a method to handle reloading an account
+    public String reloadAccount(String userId, Double amount, String remarks) {
+        Optional<Account<User>> optionalAccount = accountRepository.findById(userId);
+        if (!optionalAccount.isPresent()) {
+            throw new RuntimeException("Account is not found");
+        }
+        Account<User> account = optionalAccount.get();
+        account.setBalance(account.getBalance() + amount);
+        accountRepository.save(account);
+
+        Transaction transaction = new Transaction();
+        transaction.setUserID(userId);
+        transaction.setReceiverID(userId);
+        transaction.setAmount(amount);
+        transaction.setConvertedAmount(amount);
+        transaction.setProcessingFee(0); // No processing fee for reload
+        transaction.setTransactionType("RELOAD");
+        transaction.setCategory(TransactionCategory.RELOAD);
+        transaction.setRemarks(remarks);
+        transaction.setDate(new Date());
+
+        transaction = transactionRepository.save(transaction);
+
+        return transaction.getId().toString();
     }
 
     // getTransactionHistory method

@@ -1,5 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +16,23 @@ public class CurrencyExchangeService {
 
     private CurrencyGraph<String> graph;
 
+    @PostConstruct
+    public void init() {
+        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
+        if (optionalGraph.isPresent()) {
+            graph = optionalGraph.get();
+        } else {
+            graph = new CurrencyGraph<>("0312269844554901", new ArrayList<>());
+            currencyGraphRepository.save(graph);
+        }
+    }
+
     public CurrencyGraph<String> getGraph() {
         return graph;
     }
 
     public CurrencyGraph<String> addCurrencyPairs(List<String[]> currencies) {
-        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
-
-        if (optionalGraph.isPresent()) {
-            graph = optionalGraph.get();
-        } else {
+        if (graph == null) {
             graph = new CurrencyGraph<>("0312269844554901", new ArrayList<>());
         }
 
@@ -36,15 +44,18 @@ public class CurrencyExchangeService {
     }
 
     public ExchangeResponse exchangeCurrency(String fromCurrency, String toCurrency, double amount) {
-        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
-        if (optionalGraph.isPresent()) {
-            CurrencyGraph<String> graph = optionalGraph.get();
-            double exchangedValue = graph.exchange(fromCurrency, toCurrency, amount);
-            double processingFee = graph.calculateProcessingFee(fromCurrency, toCurrency, amount);
-            return new ExchangeResponse(fromCurrency, toCurrency, amount, exchangedValue, processingFee);
-        } else {
-            throw new RuntimeException("Currency graph not found.");
+        if (graph == null) {
+            throw new RuntimeException("Currency graph not initialized.");
         }
+
+        double exchangedValue = graph.exchange(fromCurrency, toCurrency, amount);
+        double processingFee = graph.calculateProcessingFee(fromCurrency, toCurrency, amount);
+
+        if (exchangedValue == -1 || processingFee == -1) {
+            throw new IllegalArgumentException("Unable to perform exchange or calculate processing fee.");
+        }
+
+        return new ExchangeResponse(fromCurrency, toCurrency, amount, exchangedValue, processingFee);
     }
 }
 

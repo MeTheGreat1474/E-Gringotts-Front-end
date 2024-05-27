@@ -15,10 +15,12 @@ import java.text.SimpleDateFormat;
 @RestController
 @RequestMapping("/Transaction")
 public class TransactionController{
+
     @Autowired                                              //Auto intialize accountService
     private TransactionService transactionService;
+
     @PostMapping("/transactions/new")
-    public ResponseEntity<String> makeNewTransaction(
+    public ResponseEntity<TransactionResponse> makeNewTransaction(
             @RequestParam String senderId,
             @RequestParam String receiverId,
             @RequestParam Double amount,
@@ -26,11 +28,25 @@ public class TransactionController{
             @RequestParam String transactionType,
             @RequestParam String remarks) {
 
-        String result = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
-        if (result.startsWith("Transaction successful.")) {
-            return ResponseEntity.ok(result);
-        } else {
-            return ResponseEntity.badRequest().body(result);
+        try {
+            TransactionResponse response = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new TransactionResponse(null, e.getMessage()));
+        }
+    }
+
+    @PostMapping("/reload")
+    public ResponseEntity<String> reloadAccount(
+            @RequestParam String userId,
+            @RequestParam Double amount,
+            @RequestParam String remarks) {
+
+        try {
+            String transactionId = transactionService.reloadAccount(userId, amount, remarks);
+            return ResponseEntity.ok("Reload successful. Transaction ID: " + transactionId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -132,7 +148,6 @@ public class TransactionController{
 
         return categoryPercentages;
     }
-
 
     private Date getDefaultStartDateForMonthly() {
         Calendar cal = Calendar.getInstance();

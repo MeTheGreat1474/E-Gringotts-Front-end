@@ -34,6 +34,9 @@ class CurrencyNode<T> implements Serializable {
     }
 
     public CurrencyNode(T currency) {
+        if (currency == null) {
+            throw new IllegalArgumentException("Currency cannot be null");
+        }
         this.currency = currency;
         this.exchangeRates = new ArrayList<>();
     }
