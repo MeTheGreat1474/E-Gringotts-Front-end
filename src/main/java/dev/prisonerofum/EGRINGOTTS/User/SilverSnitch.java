@@ -8,7 +8,7 @@ public class SilverSnitch implements User{
 
     //TODO: replace someOtherField
     @JsonProperty
-    private String someOtherField;
+    private String accountType = "Silver Snitch";
 
     private final static double  INTEREST_RATE = 0.05;
 }

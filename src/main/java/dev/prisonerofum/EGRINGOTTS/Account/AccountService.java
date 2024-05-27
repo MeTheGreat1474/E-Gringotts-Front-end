@@ -19,7 +19,7 @@ import java.util.Optional;
 public class AccountService {
 
     @Autowired                                  // intialized the EGringottsRepository
-    private AccountRepository accountRepository;
+    private AccountRepository<User> accountRepository;
     @Autowired
     private CardRepository cardRepository;
     @Autowired
@@ -28,31 +28,29 @@ public class AccountService {
     EmailService emailService;
 
 
-public List<Account> createAccount(Account account) {
+    public List<Account<User>> createAccount(Account<User> account) {
         return accountRepository.findAll();
     }
-    public Optional<Account> singleAccount(ObjectId id){ //optional is used to avoid null pointer exception
+    public Optional<Account<User>> singleAccount(ObjectId id){ //optional is used to avoid null pointer exception
         return accountRepository.findById(id);
     }
 
-    public Optional<Account> singleAccount2(String username){ //optional is used to avoid null pointer exception
-        Optional<Account> account = accountRepository.findByUsername(username);
+    public Optional<Account<User>> singleAccount2(String username){ //optional is used to avoid null pointer exception
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
             return account;
         }
         return null;
     }
 
-    public Optional<Account> checkLogin(String username, String password){
-        Optional<Account> account = accountRepository.findByUsername(username);
+    public Optional<Account<User>> checkLogin(String username, String password){
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(password, account.get().getPassword())){
 
                 User user = account.get().getUser();
-                if (user instanceof Goblin) {
-                    // Perform operations specific to Goblin
-                    Goblin goblin = (Goblin) user;
+                if (user instanceof Goblin goblin) {
                     update(goblin);}
                 return account;
             }
@@ -60,11 +58,11 @@ public List<Account> createAccount(Account account) {
         return Optional.empty();
     }
 
-    public Optional<Account> signUp(String fullname,String username, String phone,String email,String DOB, String password, String address, String pin){
+    public Optional<Account<User>> signUp(String fullname,String username, String phone,String email,String DOB, String password, String address, String pin){
 
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isEmpty()){
-            Account newAccount = new Account();
+            Account<User> newAccount = new Account<User>();
             newAccount.setFullName(fullname);
             newAccount.setPhone(phone);
             newAccount.setDOB(DOB);
@@ -112,19 +110,19 @@ public List<Account> createAccount(Account account) {
     }
 
     public boolean verifyPin(String username, String pin) {
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
             return account.get().checkPin(pin);
         }
         return false;
     }
 
-    public Optional<Account> findAccountByContactInfo(String contactInfo) {
+    public Optional<Account<User>> findAccountByContactInfo(String contactInfo) {
         return accountRepository.findByPhoneOrEmailOrUsername(contactInfo, contactInfo, contactInfo);
     }
 
     public String getExpiryDate(String username) {
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
             SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
             return sdf.format(account.get().getCard().getCardExpiry());
@@ -132,7 +130,7 @@ public List<Account> createAccount(Account account) {
 
         return null;
     }
-    public List<Account> getAllAccount(){
+    public List<Account<User>> getAllAccount(){
         return accountRepository.findAll();
     }
 
@@ -154,9 +152,9 @@ public List<Account> createAccount(Account account) {
     }
 
     public double reload(String username, double amount){
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account<User>> account = accountRepository.findByUsername(username);
         if(account.isPresent()){
-            Account acc = account.get();
+            Account<User> acc = account.get();
             acc.reload(amount);
             accountRepository.save(acc);
             return acc.getBalance();

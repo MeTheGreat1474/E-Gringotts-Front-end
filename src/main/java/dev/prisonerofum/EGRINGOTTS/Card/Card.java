@@ -1,6 +1,7 @@
 package dev.prisonerofum.EGRINGOTTS.Card;
 
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
+import dev.prisonerofum.EGRINGOTTS.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,10 +52,10 @@ public class Card{
         this.cardExpiry = calendar.getTime();
     }
 
-    public void setCardHolder(Account account) {
+    public void setCardHolder(Account<User> account) {
         this.cardHolder = account.getFullName();
     }
-    public void setCardId(Account account) {
+    public void setCardId(Account<User> account) {
         this.userId = account.getUserId();
     }
 }

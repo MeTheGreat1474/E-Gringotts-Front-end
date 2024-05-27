@@ -3,6 +3,7 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
+import dev.prisonerofum.EGRINGOTTS.User.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,21 @@ public class TransactionService {
     @Autowired                                  // initialized the EGringottsRepository
     private TransactionRepository transactionRepository;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository<User> accountRepository;
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
 
     // create new transactions
     public String makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
-        Optional<Account> senderOpt = accountRepository.findById(senderId);
-        Optional<Account> receiverOpt = accountRepository.findById(receiverId);
+        Optional<Account<User>> senderOpt = accountRepository.findById(senderId);
+        Optional<Account<User>> receiverOpt = accountRepository.findById(receiverId);
 
         if (!senderOpt.isPresent() || !receiverOpt.isPresent()) {
             return "Sender or receiver account not found.";
         }
 
-        Account sender = senderOpt.get();
-        Account receiver = receiverOpt.get();
+        Account<User> sender = senderOpt.get();
+        Account<User> receiver = receiverOpt.get();
 
         if (sender.getBalance() < amount) {
             return "Insufficient balance. " + sender;
@@ -111,8 +112,8 @@ public class TransactionService {
         double amount = transaction.getAmount();
 
         // Get sender and recipient information
-        Account sender = accountRepository.findById(senderUserId).orElse(null);
-        Account recipient = accountRepository.findById(recipientUserId).orElse(null);
+        Account<User> sender = accountRepository.findById(senderUserId).orElse(null);
+        Account<User> recipient =  accountRepository.findById(recipientUserId).orElse(null);
 
 //        // Format transaction date
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

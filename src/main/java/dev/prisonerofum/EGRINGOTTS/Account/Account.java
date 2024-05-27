@@ -1,21 +1,14 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import dev.prisonerofum.EGRINGOTTS.User.User;
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 
@@ -36,12 +29,10 @@ public class Account<E> {
     private String email;
     private String phone;
     private String address;
-    private String accountType;
     private String pin;
     private double balance;
     private String currency;
-    private User user;
-//    private String accountStatus;
+    private E user;
     private Card card;
 
     public void setPin(String pin) {
@@ -68,8 +59,8 @@ public class Account<E> {
         }
         this.userId = userId.toString();
     }
-    public double reload(double amount){
-        return this.balance += amount;
+    public void reload(double amount){
+        this.balance += amount;
     }
 
 

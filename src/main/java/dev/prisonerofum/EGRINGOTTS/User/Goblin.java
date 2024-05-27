@@ -1,5 +1,6 @@
 package dev.prisonerofum.EGRINGOTTS.User;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
@@ -12,6 +13,9 @@ import java.util.Optional;
 
 @Data
 public class Goblin implements User{
+
+    @JsonProperty
+    private String accountType = "Goblin";
 
     private long numOfUsers;
     private long numOfCards;

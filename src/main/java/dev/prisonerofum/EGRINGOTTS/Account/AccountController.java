@@ -1,6 +1,7 @@
 package dev.prisonerofum.EGRINGOTTS.Account;
 
 import dev.prisonerofum.EGRINGOTTS.EmailService;
+import dev.prisonerofum.EGRINGOTTS.User.User;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,17 +26,17 @@ public class AccountController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<Optional<Account>> getUser(@PathVariable String username){
-        return new ResponseEntity<Optional<Account>>(accountService.singleAccount2(username), HttpStatus.OK);
+    public ResponseEntity<Optional<Account<User>>> getUser(@PathVariable String username){
+        return new ResponseEntity<Optional<Account<User>>>(accountService.singleAccount2(username), HttpStatus.OK);
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Optional<Account>> login(String username, String password){
-        return new ResponseEntity<Optional<Account>>(accountService.checkLogin(username,password), HttpStatus.OK);
+    public ResponseEntity<Optional<Account<User>>> login(String username, String password){
+        return new ResponseEntity<Optional<Account<User>>>(accountService.checkLogin(username,password), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Optional<Account>> signUp(@RequestParam String fullname,@RequestParam String phone,@RequestParam String DOB,@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address,@RequestParam String pin){
+    public ResponseEntity<Optional<Account<User>>> signUp(@RequestParam String fullname,@RequestParam String phone,@RequestParam String DOB,@RequestParam String username, @RequestParam String email, @RequestParam String password, @RequestParam String address,@RequestParam String pin){
         return new ResponseEntity<>(accountService.signUp(fullname,username,phone,email, DOB, password, address,pin), HttpStatus.OK);
     }
 
@@ -55,14 +56,14 @@ public class AccountController {
     }
     //cannot found by email , username OK
     @GetMapping("/accounts/search")
-    public ResponseEntity<Account> findAccountByContactInfo(@RequestParam String contactInfo) {
-        Optional<Account> account = accountService.findAccountByContactInfo(contactInfo);
+    public ResponseEntity<Account<User>> findAccountByContactInfo(@RequestParam String contactInfo) {
+        Optional<Account<User>> account = accountService.findAccountByContactInfo(contactInfo);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
     @GetMapping("/allAccounts")
-    public ResponseEntity<List<Account>> getAllAccount(){
+    public ResponseEntity<List<Account<User>>> getAllAccount(){
         return new ResponseEntity<>(accountService.getAllAccount(), HttpStatus.OK);
     }
     @GetMapping("/{username}/reload")
