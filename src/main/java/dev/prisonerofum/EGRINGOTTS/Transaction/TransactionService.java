@@ -29,37 +29,9 @@ public class TransactionService {
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
 
-    // create new transactions
-    public String makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
-        Optional<Account<User>> senderOpt = accountRepository.findByUserId(senderId);
-        Optional<Account<User>> receiverOpt = accountRepository.findByUserId(receiverId);
-
-        if (!senderOpt.isPresent() || !receiverOpt.isPresent()) {
-            throw new IllegalArgumentException("Sender or receiver account not found.");
-        }
-
-        Account<User> sender = senderOpt.get();
-        Account<User> receiver = receiverOpt.get();
-
-        if (sender.getBalance() < amount) {
-            throw new IllegalArgumentException("Insufficient balance.");
-        }
-
-        sender.setBalance(sender.getBalance() - amount);
-        receiver.setBalance(receiver.getBalance() + amount);
-
-        accountRepository.save(sender);
-        accountRepository.save(receiver);
-
-        // Perform the currency conversion and get the processing fee
-        ExchangeResponse exchangeResponse = currencyExchangeService.exchangeCurrency(sender.getCurrency(), receiver.getCurrency(), amount);
-        double convertedAmount = exchangeResponse.getExchangedValue();
-        double processingFee = exchangeResponse.getProcessingFee();
-
-        // Update the account balances
-        sender.setBalance(sender.getBalance() - amount - processingFee);
-        receiver.setBalance(receiver.getBalance() + convertedAmount);
-
+    public String makeNewTransaction(String senderId, String receiverId, Double amount,
+                                     TransactionCategory category, String transactionType, String remarks) {
+        // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(senderId);
         transaction.setReceiverID(receiverId);
@@ -67,18 +39,67 @@ public class TransactionService {
         transaction.setCategory(category);
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
-        transaction.setDate(new Date());
 
-        // Set the converted amount and processing fee
-        transaction.setConvertedAmount(convertedAmount);
-        transaction.setProcessingFee(processingFee);
-
+        // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
 
-        return new savedTransaction.getId().toString());
+        // Return the generated transaction ID
+        return savedTransaction.getId().toString();
+    }
+
+    public String createTransaction(String userId, String fromCurrency, String toCurrency, double amount,
+                                    double exchangedValue, double processingFee) {
+        // Create and save the transaction
+        Transaction transaction = new Transaction();
+        transaction.setUserID(userId);
+        transaction.setAmount(amount);
+        transaction.setCategory(TransactionCategory.EXCHANGE);
+        transaction.setTransactionType("Currency Exchange");
+        transaction.setRemarks(String.format("Exchanged %s to %s", fromCurrency, toCurrency));
+        transaction.setProcessingFee(processingFee);
+        transaction.setExchangedValue(exchangedValue);
+        transaction.generateTransactionID();
+
+        // Save the transaction to the database
+        Transaction savedTransaction = transactionRepository.save(transaction);
+
+        // Return the generated transaction ID
+        return savedTransaction.getTransactionID();
+    }
+
+    public ExchangeResponse exchangeCurrency(String userId, String fromCurrency, String toCurrency, double amount) {
+        // Perform currency exchange
+        ExchangeResponse response = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
+
+        // Deduct the exchanged amount and processing fee from the user's account
+        Account userAccount = accountRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        double totalDeduction = amount + response.getProcessingFee();
+
+        if (userAccount.getBalance() < totalDeduction) {
+            throw new RuntimeException("Insufficient balance");
+        }
+
+        userAccount.setBalance(userAccount.getBalance() - totalDeduction);
+        accountRepository.save(userAccount);
+
+        // Create and save the transaction
+        Transaction transaction = new Transaction();
+        transaction.setUserID(userId);
+        transaction.setReceiverID(null);  // For currency exchange, receiverId can be null
+        transaction.setAmount(totalDeduction);
+        transaction.setCategory(TransactionCategory.EXCHANGE);
+        transaction.setTransactionType("Currency Exchange");
+        transaction.setRemarks(String.format("Exchanged %f %s to %f %s", amount, fromCurrency, response.getExchangedValue(), toCurrency));
+        Transaction savedTransaction = transactionRepository.save(transaction);
+
+        // Update response with transaction details
+        response.setTransactionId(savedTransaction.getId().toString());
+        response.setBalance(userAccount.getBalance());
+
+        return response;
     }
 
     // Create a method to handle reloading an account
