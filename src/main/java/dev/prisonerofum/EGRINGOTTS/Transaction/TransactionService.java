@@ -185,7 +185,7 @@ public class TransactionService {
 
     public Map<String, Map<TransactionCategory, Map<String, Double>>> calculateCategoryPercentagesByFrequency(List<Transaction> transactions, String frequency) {
         Map<String, List<Transaction>> groupedTransactions = new HashMap<>();
-        SimpleDateFormat sdf = frequency.equals("Daily") ? new SimpleDateFormat("yyyy-MM-dd") : new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat sdf = frequency.equalsIgnoreCase("DAILY") ? new SimpleDateFormat("yyyy-MM-dd") : new SimpleDateFormat("yyyy-MM");
 
         for (Transaction transaction : transactions) {
             String key = sdf.format(transaction.getDate());
