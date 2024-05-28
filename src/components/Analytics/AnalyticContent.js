@@ -14,8 +14,8 @@ function AnalyticContent({username}) {
     const [filterType, setFilterType] = useState("default");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [frequency, setFrequency] = useState("");
-    const [category, setCategory] = useState("");
+    const [frequency, setFrequency] = useState("monthly");
+    const [category, setCategory] = useState([]);
 
     const analyticsDataDefault = useGetAnalytics(username);
     const analyticsDataDate = useGetAnalyticsDate(username, startDate, endDate);
@@ -23,7 +23,7 @@ function AnalyticContent({username}) {
     const analyticsDataCategory = useGetAnalyticsCategory(username, category);
 
 
-    console.log('username:', username);
+    /*console.log('username:', username);
     console.log('filterRef:', filterRef);
     console.log('analyticsData:', analyticsData);
     console.log('filterType:', filterType);
@@ -34,7 +34,7 @@ function AnalyticContent({username}) {
     console.log('analyticsDataDefault:', analyticsDataDefault);
     console.log('analyticsDataDate:', analyticsDataDate);
     console.log('analyticsDataFrequency:', analyticsDataFrequency);
-    console.log('analyticsDataCategory:', analyticsDataCategory);
+    console.log('analyticsDataCategory:', analyticsDataCategory);*/
 
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
@@ -49,7 +49,9 @@ function AnalyticContent({username}) {
         setFrequency(e.target.value);
     }
     const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
+        setCategory(prev =>
+            prev.includes(value) ? prev.filter(cat => cat !== value) : [...prev, value]
+        );
     }
 
     useEffect(() => {
@@ -78,46 +80,46 @@ function AnalyticContent({username}) {
     }, [filterType, startDate, endDate, frequency, category, analyticsDataDefault, analyticsDataDate, analyticsDataFrequency, analyticsDataCategory]);
 
     return (
-        <div className='admin-box'>
+        <div className='analytic-box'>
             <div className="title">
-                <h1>ANALYTIC</h1>
+                <h1>Analytics Of Expenditure</h1>
             </div>
             <div className="filter-container">
-                <div className="dropdown-list">
-                    <select onChange={handleFilterChange} ref={filterRef}>
-                        <option value="default">Default</option>
-                        <option value="date">Date</option>
-                        <option value="frequency">Frequency</option>
-                        <option value="category">Category</option>
-                    </select>
+            <div className="date-filters">
+                    <input type="date" value={startDate} onChange={handleStartDateChange} placeholder="Start Date" />
+                    <input type="date" value={endDate} onChange={handleEndDateChange} placeholder="End Date" />
                 </div>
-                {filterType === "date" && (
-                    <div>
-                        <input type="date" value={startDate} onChange={handleStartDateChange} />
-                        <input type="date" value={endDate} onChange={handleEndDateChange} />
-                    </div>
-                )}
-                {filterType === "frequency" && (
-                    <select onChange={handleFrequencyChange}>
+                <div className="frequency-filter">
+                    <select onChange={handleFrequencyChange} value={frequency}>
                         <option value="daily">Daily</option>
                         <option value="monthly">Monthly</option>
                         <option value="yearly">Yearly</option>
                     </select>
-                )}
-                {filterType === "category" && (
-                    <select onChange={handleCategoryChange}>
-                        <option value="credit-card">Credit Card</option>
-                        <option value="debit-card">Debit Card</option>
-                        <option value="transfer">Transfer</option>
-                        <option value="reload">Reload</option>
-                    </select>
-                )}
+                </div>
+                <div className="category-filters">
+                    <label>
+                        <input type="checkbox" value="credit-card" onChange={handleCategoryChange} />
+                        Credit Card
+                    </label>
+                    <label>
+                        <input type="checkbox" value="debit-card" onChange={handleCategoryChange} />
+                        Debit Card
+                    </label>
+                    <label>
+                        <input type="checkbox" value="transfer" onChange={handleCategoryChange} />
+                        Transfer
+                    </label>
+                    <label>
+                        <input type="checkbox" value="reload" onChange={handleCategoryChange} />
+                        Reload
+                    </label>
+                </div>
             </div>
-            <div className="admin-content-box">
+            <div className="analytic-content-box">
                 <AnalyticContentLog analyticsData={analyticsData}/>
             </div>
         </div>
-    )
+    );
 }
 
 export default AnalyticContent

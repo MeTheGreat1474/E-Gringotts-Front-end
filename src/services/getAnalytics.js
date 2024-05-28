@@ -29,7 +29,7 @@ export const useGetAnalytics = (username) => {
         };
 
         fetchAnalytic();
-    }, [username]);
+    }, [user]);
 
     return data;
 };
@@ -47,8 +47,8 @@ export const useGetAnalyticsDate = (username, startDate, endDate) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                // const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&startDate=${startDate}&endDate=${endDate}`);
-                const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a&startDate=${startDate}&endDate=${endDate}`);
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&startDate=${startDate}&endDate=${endDate}`);
+                //const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a&startDate=${startDate}&endDate=${endDate}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -61,7 +61,7 @@ export const useGetAnalyticsDate = (username, startDate, endDate) => {
         };
 
         fetchAnalytic();
-    }, [username, startDate, endDate]);
+    }, [user, startDate, endDate]);
 
     return data;
 };
@@ -98,7 +98,7 @@ export const useGetAnalyticsFrequency = (username, frequency) => {
         };
 
         fetchAnalytic();
-    }, [username, frequency]);
+    }, [user, frequency]);
 
     return data;
 };
@@ -135,7 +135,7 @@ export const useGetAnalyticsCategory = (username, category) => {
         };
 
         fetchAnalytic();
-    }, [username, category]);
+    }, [user, category]);
 
     return data;
 };

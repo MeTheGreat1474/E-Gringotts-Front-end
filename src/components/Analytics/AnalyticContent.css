@@ -1,81 +1,45 @@
-.admin-box {
-    position: relative;
-    justify-self: left;
-    align-content: center;
-    padding-left: 40px;
-    padding-right: 40px;
-    top: 10%;
-    width: 90%;
-}
-
-.admin-content-box{
+.analytic-box {
+    padding: 20px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 0px 0px 0px 20px;
-    max-height: 77vh;
-    overflow-y: scroll;
-    scrollbar-color: #CDB373 transparent;
+    align-items: center;
 }
 
-.admin-box h1{
+.title {
     margin-bottom: 20px;
     color: #CDB373;
     font-family: Montaga;
     font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
 }
 
-.admin-box h2{
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 20px;
-    color: #CDB373;
-    font-family: Montaga;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
 }
 
-.admin-box h3{
-    margin-bottom: 20px;
+.date-filters, .frequency-filter, .category-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-filters label {
     color: #FFFFFF;
-    font-size: 25px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
-    border-bottom: 1px solid #CDB373;
 }
 
-.admin-box h4{
-    padding: 0px 0px 0px 30px;
-    color: #CDB373;
-    font-family: Montaga;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
+.analytic-content-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.admin-box p{
-    padding: 0px 0px 10px 30px;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-}
-
-.admin-content-container {
-    margin: 20px 0px 0px 30px;
+.analytic-content-container {
     background-color: #424f94;
     border-radius: 10px;
     border: 1px solid #CDB373;
     padding: 10px;
-}
-
-.admin-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: end;
 }

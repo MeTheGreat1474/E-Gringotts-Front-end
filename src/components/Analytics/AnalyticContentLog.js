@@ -7,7 +7,7 @@ function AnalyticContentLog({ analyticsData }) {
                 <div key={date}>
                     <h4>{date}:</h4>
                     {Object.entries(data).map(([category, categoryData]) => (
-                        <div key={category} className="admin-content-container">
+                        <div key={category} className="analytic-content-container">
                             <h3>{category}</h3>
                             <p>Percentage: {categoryData.Percentage}</p>
                             <p>Total Expenditure: {categoryData["Total Expenditure"]}</p>
