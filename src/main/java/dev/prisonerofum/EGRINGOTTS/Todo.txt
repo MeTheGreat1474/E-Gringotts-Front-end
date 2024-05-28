@@ -30,7 +30,7 @@ TO BE FIXED :
     d. class User
     e. class Admin
 
-2) Pensieve Past (Transaction History - 1%)
+2) Pensive Past (Transaction History - 1%)
     a. transaction history function
 
 3) Sorting Hat Select (Transaction filter – 1%)
