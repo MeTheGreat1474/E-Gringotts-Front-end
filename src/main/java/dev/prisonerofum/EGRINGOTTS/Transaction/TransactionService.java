@@ -108,10 +108,34 @@ public class TransactionService {
     }
 
     // getTransactionHistory method
-    public List<Transaction> getTransactionsHistory(String userID) {
-        return transactionRepository.findByUserID(userID);
+    public List<Transaction> getTransactionsHistory(String userId) {
+        List<Transaction> transactions = transactionRepository.findByUserID(userId);
+        transactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
+        return transactions;
     }
 
+    public List<Transaction> getFilteredTransactionsHistory(String userId, String filterType) {
+        List<Transaction> transactions = transactionRepository.findByUserID(userId);
+
+        switch (filterType.toLowerCase()) {
+            case "recent":
+                transactions.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
+                break;
+            case "amount":
+                transactions.sort((t1, t2) -> Double.compare(t2.getAmount(), t1.getAmount()));
+                break;
+            case "category":
+                transactions.sort(Comparator.comparing(Transaction::getCategory));
+                break;
+            case "type":
+                transactions.sort(Comparator.comparing(Transaction::getTransactionType));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid filter type: " + filterType);
+        }
+
+        return transactions;
+    }
 
     // filter method for date in specific range
     public List<Transaction> getTransactionsByDateRange(Date startDate, Date endDate) {

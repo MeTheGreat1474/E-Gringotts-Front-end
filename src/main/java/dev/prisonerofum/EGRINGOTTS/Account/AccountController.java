@@ -50,7 +50,7 @@ public class AccountController {
         return new ResponseEntity<>(accountService.verifyPin(username, pin), HttpStatus.OK);
     }
 
-    @GetMapping("/exprityDate")
+    @GetMapping("/expiryDate")
     public ResponseEntity<String> getExpiryDate(@RequestParam String username){
         return new ResponseEntity<>(accountService.getExpiryDate(username), HttpStatus.OK);
     }
@@ -59,6 +59,12 @@ public class AccountController {
     public ResponseEntity<Account<User>> findAccountByContactInfo(@RequestParam String contactInfo) {
         Optional<Account<User>> account = accountService.findAccountByContactInfo(contactInfo);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Account<User>>> getFilteredAccounts(@RequestParam String filterType, @RequestParam String value) {
+        List<Account<User>> accounts = accountService.getFilteredAccounts(filterType, value);
+        return ResponseEntity.ok(accounts);
     }
 
 

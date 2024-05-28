@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,6 +120,26 @@ public class AccountService {
 
     public Optional<Account<User>> findAccountByContactInfo(String contactInfo) {
         return accountRepository.findByPhoneOrEmailOrUsername(contactInfo, contactInfo, contactInfo);
+    }
+
+    public List<Account<User>> getFilteredAccounts(String filterType, String value) {
+        List<Account<User>> accounts = new ArrayList<>();
+
+        switch (filterType.toLowerCase()) {
+            case "email":
+                accountRepository.findByEmail(value).ifPresent(accounts::add);
+                break;
+            case "phone":
+                accountRepository.findByPhone(value).ifPresent(accounts::add);
+                break;
+            case "username":
+                accountRepository.findByUsername(value).ifPresent(accounts::add);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid filter type: " + filterType);
+        }
+
+        return accounts;
     }
 
     public String getExpiryDate(String username) {
