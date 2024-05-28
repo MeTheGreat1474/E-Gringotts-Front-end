@@ -175,8 +175,8 @@ public class TransactionService {
 
         for (Map.Entry<TransactionCategory, Double> entry : categorySums.entrySet()) {
             Map<String, Double> data = new HashMap<>();
-            data.put("percentage", (entry.getValue() / totalExpenditure) * 100);
-            data.put("totalExpenditure", entry.getValue());
+            data.put("Percentage", (entry.getValue() / totalExpenditure) * 100);
+            data.put("Total Expenditure", entry.getValue());
             categoryData.put(entry.getKey(), data);
         }
 
