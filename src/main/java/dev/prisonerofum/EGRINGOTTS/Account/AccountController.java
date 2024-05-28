@@ -56,17 +56,13 @@ public class AccountController {
     }
     //cannot found by email , username OK
     @GetMapping("/accounts/search")
-    public ResponseEntity<Account<User>> findAccountByContactInfo(@RequestParam String contactInfo) {
-        Optional<Account<User>> account = accountService.findAccountByContactInfo(contactInfo);
-        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<List<Account<User>>> getFilteredAccounts(@RequestParam String filterType, @RequestParam String value) {
-        List<Account<User>> accounts = accountService.getFilteredAccounts(filterType, value);
+    public ResponseEntity<List<Account<User>>> findAccountsByContactInfo(@RequestParam String contactInfo) {
+        List<Account<User>> accounts = accountService.findAccountsByContactInfo(contactInfo);
+        if (accounts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(accounts);
     }
-
 
     @GetMapping("/allAccounts")
     public ResponseEntity<List<Account<User>>> getAllAccount(){

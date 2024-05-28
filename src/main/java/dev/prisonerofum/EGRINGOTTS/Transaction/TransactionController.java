@@ -3,6 +3,7 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,34 +57,31 @@ public class TransactionController{
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
-    @GetMapping("/history/{userId}")
-    public ResponseEntity<List<Transaction>> getTransactionsHistory(
-            @PathVariable String userId,
-            @RequestParam String filterType) {
-        List<Transaction> transactions = transactionService.getFilteredTransactionsHistory(userId, filterType);
-        return ResponseEntity.ok(transactions);
-    }
 
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
-            @RequestParam("startDate") Date startDate,
-            @RequestParam("endDate") Date endDate) {
-        List<Transaction> transactions = transactionService.getTransactionsByDateRange(startDate, endDate);
+            @RequestParam("userID") String userID,
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        List<Transaction> transactions = transactionService.getTransactionsByDateRange(userID, startDate, endDate);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/amount-range")
     public ResponseEntity<List<Transaction>> getTransactionsByAmountRange(
+            @RequestParam("userID") String userID,
             @RequestParam("minAmount") double minAmount,
             @RequestParam("maxAmount") double maxAmount) {
-        List<Transaction> transactions = transactionService.getTransactionsByAmountRange(minAmount, maxAmount);
+        List<Transaction> transactions = transactionService.getTransactionsByAmountRange(userID, minAmount, maxAmount);
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/category")
-    public ResponseEntity<List<Transaction>> getTransactionsByCategory(@RequestParam("category") TransactionCategory category) {
-        List<Transaction> transactions = transactionService.getTransactionsByCategory(category);
+    public ResponseEntity<List<Transaction>> getTransactionsByCategory(
+            @RequestParam("userID") String userID,
+            @RequestParam("category") TransactionCategory category) {
+        List<Transaction> transactions = Collections.unmodifiableList(transactionService.getTransactionsByCategory(userID, category));
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
