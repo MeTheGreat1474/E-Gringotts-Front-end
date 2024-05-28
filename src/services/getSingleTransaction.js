@@ -4,24 +4,24 @@ import {useGetUser} from "./getUser";
 
 //TODO: REPAIR TRANSACTION HISTORY
 
-export const useGetTransacHistory = (username) => {
+export const useGetSingleTransacHistory = (username) => {
     const { user, getUser } = useGetUser(username);
 
     useEffect(() => {
         getUser();
     }, [getUser]);
 
-    const [transacs, setTransacs] = useState([]);
+    const [transac, setTransac] = useState();
     const userId = user?.userId
     console.log(userId)
 
     useEffect(() => {
-        const fetchUsers = async (username) => {
+        const fetchTransac = async (username) => {
             try {
                 const response = await api.get(`/Transaction/history/${userId}`);
 
                 if (response.status === 200) {
-                    setTransacs(response.data);
+                    setTransac(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
                 }
@@ -30,8 +30,8 @@ export const useGetTransacHistory = (username) => {
             }
         };
 
-        fetchUsers(username);
+        fetchTransac(username);
     }, [username]);
 
-    return transacs;
+    return transac;
 };

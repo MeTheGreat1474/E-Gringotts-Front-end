@@ -13,6 +13,9 @@ import Dashboard from "./components/pages/Dashboard";
 import Admin from "./components/pages/Admin";
 import TransferConfirm from "./components/pages/TransferConfirm";
 import LoginAuth from "./components/pages/LoginAuth";
+import Analytic from "./components/pages/Analytic";
+import TransactionHistory from "./components/Transaction/TransactionHistory";
+import TransactionHistoryReceipt from "./components/pages/TransactionHistoryReceipt";
 
 function App() {
 
@@ -33,6 +36,8 @@ function App() {
             <Route path='/:username/reload' element={<Reload/>} />
             <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
             <Route path='/:username/admin' element={<Admin/>} />
+            <Route path='/:username/analytic' element={<Analytic/>} />
+            <Route path='/:username/transaction/receipt' element={<TransactionHistoryReceipt/>} />
         </Routes>
       </Router>
     </>

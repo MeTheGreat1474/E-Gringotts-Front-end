@@ -4,7 +4,7 @@ import './ReceiptContent.css'
 import {useNavigate} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
 
-function ReceiptContent({username, amount}) {
+function ReloadReceiptContent({username, amount}) {
     const navigate = useNavigate();
     const { user, getUser } = useGetUser(username);
 
@@ -33,4 +33,4 @@ function ReceiptContent({username, amount}) {
     )
 }
 
-export default ReceiptContent
+export default ReloadReceiptContent

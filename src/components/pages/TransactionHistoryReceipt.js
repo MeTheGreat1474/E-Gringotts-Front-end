@@ -3,6 +3,8 @@ import {useLocation, useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
 import ReloadReceiptContent from "../Receipt/ReloadReceiptContent";
 import Navbar from "../Navbar";
+import TransferConfirmContent from "../Transfer/TransferConfirmContent";
+import TransactionReceiptContent from "../Receipt/TransactionReceiptContent";
 
 function ReloadReceipt() {
     const location = useLocation();
@@ -13,7 +15,7 @@ function ReloadReceipt() {
     const { user, getUser } = useGetUser(username);
 
     useEffect(() => {
-    getUser();
+        getUser();
     }, [getUser]);
 
     return (
@@ -22,7 +24,7 @@ function ReloadReceipt() {
                 <Navbar username={username}/>
             </div>
             <div className="middle">
-                <ReloadReceiptContent username={username} amount={amount}/>
+                <TransactionReceiptContent username={username} amount={amount}/>
             </div>
             <div className="right">
 

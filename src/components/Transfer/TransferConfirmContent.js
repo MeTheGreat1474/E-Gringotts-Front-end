@@ -30,6 +30,7 @@ function TransferConfirmContent({toUser}) {
         if (value !== undefined) {
             setAmount(value)
             console.log(value)
+
         } else {
             console.error('Value is undefined');
         }

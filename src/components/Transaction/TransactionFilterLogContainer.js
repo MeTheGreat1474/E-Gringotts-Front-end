@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import TransactionLog from "./TransactionLog";
 import {useGetAllUsers} from "../../services/getAllUser";
 import {useParams} from "react-router-dom";
+import {useGetTransacHistory} from "../../services/getUserTransacHistory";
+import {useGetUser} from "../../services/getUser";
 
 function TransactionFilterLogContainer({search, filterType}) {
     const { username } = useParams();
