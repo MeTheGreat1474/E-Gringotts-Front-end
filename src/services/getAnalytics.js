@@ -80,13 +80,7 @@ export const useGetAnalyticsFrequency = (username, frequency) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                const params = {
-                    userId: user?.userId,
-                    frequency: frequency
-                };
-                const queryString = toQueryString(params);
-                const response = await api.get(`/Transaction/api/analytics${queryString}`);
-
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&frequency=${frequency}`);
                 if (response.status === 200) {
                     setData(response.data);
                 } else {
@@ -117,12 +111,8 @@ export const useGetAnalyticsCategory = (username, category) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                const params = {
-                    userId: user?.userId,
-                    category: category
-                };
-                const queryString = toQueryString(params);
-                const response = await api.get(`/Transaction/api/analytics${queryString}`);
+                const categoryParams = category.map(cat => `category=${cat}`).join("&");
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&${categoryParams}`);
 
                 if (response.status === 200) {
                     setData(response.data);
