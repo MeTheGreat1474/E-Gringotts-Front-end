@@ -15,7 +15,7 @@ public class EGringottsApplication {
 		SpringApplication.run(EGringottsApplication.class, args);
 	}
 	@Bean										//Bean is used to handle the request from a different origin
-	public WebMvcConfigurer configure() {		//WebMvcConfigurer is used to configure the request
+	public WebMvcConfigurer configure() {		//WebMvcConfigure is used to configure the request
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry reg) {

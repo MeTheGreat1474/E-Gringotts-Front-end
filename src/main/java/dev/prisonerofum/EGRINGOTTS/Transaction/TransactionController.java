@@ -129,7 +129,7 @@ public class TransactionController{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end = endDate != null ? sdf.parse(endDate) : new Date();
-        Set<String> methods = paymentMethods != null ? paymentMethods : new HashSet<>(Arrays.asList("Credit Card", "Debit Card", "Online Transfer"));
+        Set<String> methods = paymentMethods != null ? paymentMethods : new HashSet<>(Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER", "RELOAD"));
 
         // Determine the default start date based on the frequency
         if (startDate != null) {
