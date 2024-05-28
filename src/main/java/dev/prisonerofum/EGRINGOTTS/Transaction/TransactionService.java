@@ -30,9 +30,9 @@ public class TransactionService {
     private CurrencyExchangeService currencyExchangeService;
 
     // create new transactions
-    public TransactionResponse makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
-        Optional<Account<User>> senderOpt = accountRepository.findById(senderId);
-        Optional<Account<User>> receiverOpt = accountRepository.findById(receiverId);
+    public String makeNewTransaction(String senderId, String receiverId, double amount, TransactionCategory category, String transactionType, String remarks) {
+        Optional<Account<User>> senderOpt = accountRepository.findByUserId(senderId);
+        Optional<Account<User>> receiverOpt = accountRepository.findByUserId(receiverId);
 
         if (!senderOpt.isPresent() || !receiverOpt.isPresent()) {
             throw new IllegalArgumentException("Sender or receiver account not found.");
@@ -78,12 +78,12 @@ public class TransactionService {
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
 
-        return new TransactionResponse(savedTransaction.getId().toString(), receipt);
+        return new savedTransaction.getId().toString());
     }
 
     // Create a method to handle reloading an account
     public String reloadAccount(String userId, Double amount, String remarks) {
-        Optional<Account<User>> optionalAccount = accountRepository.findById(userId);
+        Optional<Account<User>> optionalAccount = accountRepository.findByUserId(userId);
         if (!optionalAccount.isPresent()) {
             throw new RuntimeException("Account is not found");
         }
@@ -162,8 +162,8 @@ public class TransactionService {
         double amount = transaction.getAmount();
 
         // Get sender and recipient information
-        Account<User> sender = accountRepository.findById(senderUserId).orElse(null);
-        Account<User> recipient =  accountRepository.findById(recipientUserId).orElse(null);
+        Account<User> sender = accountRepository.findByUserId(senderUserId).orElse(null);
+        Account<User> recipient =  accountRepository.findByUserId(recipientUserId).orElse(null);
 
 //        // Format transaction date
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
