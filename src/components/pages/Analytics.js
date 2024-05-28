@@ -1,7 +1,7 @@
 // components/pages/Analytics.js
 import React, { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
-import { fetchAnalyticsData } from '../services/analyticsService';
+import { fetchAnalyticsData } from '../../services/analyticsService';
 
 const Analytics = ({ data, userId, startDate, endDate, frequency, setFrequency, setStartDate, setEndDate, paymentMethods, setPaymentMethods }) => {
   const [selectedMonth, setSelectedMonth] = useState('');

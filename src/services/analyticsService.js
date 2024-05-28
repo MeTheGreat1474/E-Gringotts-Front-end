@@ -1,5 +1,5 @@
 // components/services/analyticsService.js
-import api from "../../api/axiosConfig";
+import api from "../api/axiosConfig";
 
 export const fetchAnalyticsData = async (params) => {
   const queryParams = new URLSearchParams(params).toString();

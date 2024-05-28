@@ -11,6 +11,7 @@ import Reload from "./components/pages/Reload";
 import Receipt from "./components/pages/Receipt";
 import Dashboard from "./components/pages/Dashboard";
 import Admin from "./components/pages/Admin";
+import Analytics from "./components/pages/Analytics";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/:username/reload' element={<Reload/>} />
             <Route path='/:username/reload/receipt' element={<Receipt/>} />
             <Route path='/:username/admin' element={<Admin/>} />
+            <Route path='/:username/analytic' element={<Analytics/>} />
         </Routes>
       </Router>
     </>
