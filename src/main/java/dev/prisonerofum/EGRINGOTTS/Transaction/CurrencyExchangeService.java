@@ -1,6 +1,5 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +14,6 @@ public class CurrencyExchangeService {
     private CurrencyGraphRepository currencyGraphRepository;
 
     private CurrencyGraph<String> graph;
-
-    @PostConstruct
-    public void init() {
-        Optional<CurrencyGraph<String>> optionalGraph = currencyGraphRepository.findByGraphId("0312269844554901");
-        if (optionalGraph.isPresent()) {
-            graph = optionalGraph.get();
-        } else {
-            graph = new CurrencyGraph<>("0312269844554901", new ArrayList<>());
-            currencyGraphRepository.save(graph);
-        }
-    }
 
     public CurrencyGraph<String> getGraph() {
         return graph;

@@ -95,7 +95,7 @@ public class TransactionService {
         transaction.setUserID(userId);
         transaction.setReceiverID(userId);
         transaction.setAmount(amount);
-        transaction.setConvertedAmount(amount);
+        transaction.setConvertedAmount(0);
         transaction.setProcessingFee(0); // No processing fee for reload
         transaction.setTransactionType("RELOAD");
         transaction.setCategory(TransactionCategory.RELOAD);
