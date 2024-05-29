@@ -170,7 +170,10 @@ public class AccountService {
     public void update(Goblin goblin){
         goblin.setNumOfCards(countCards());
         goblin.setNumOfUsers(countUsers());
-        goblin.setNumOfTransations(transactionService.countNumOfTransaction());
+        goblin.setNumOfTransactions(transactionService.countNumOfTransaction());
+        goblin.setNumOfTransactionsAmountRange0to100(transactionService.countTransactionsByAmountRange(0,100));
+        goblin.setNumOfTransactionsAmountRange101to1000(transactionService.countTransactionsByAmountRange(101,1000));
+
     }
 
     public double reload(String username, double amount){

@@ -37,12 +37,11 @@ public class TransactionService {
 
     private AccountService accountService;
 
+    //@Lazy is used to delay the instantiation
     @Autowired
     public TransactionService(@Lazy AccountService accountService) {
         this.accountService = accountService;
     }
-
-
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
@@ -240,6 +239,10 @@ public class TransactionService {
         return transactionRepository.findTransactionsByUserIDAndAmountRange(userId, minAmount, maxAmount);
     }
 
+    public long countTransactionsByAmountRange(double minAmount, double maxAmount) {
+        return transactionRepository.countTransactionsByAmountBetween(minAmount, maxAmount);
+    }
+
     // filter  method according to category
     public List<Transaction> getTransactionsByCategory(String userId, TransactionCategory category) {
         return transactionRepository.findByUserIDAndCategory(userId, category);
@@ -327,11 +330,9 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
-    public List<Transaction> getTransactionsByDateRange(Date startDate, Date endDate) {
-        return transactionRepository.findByTransactionDateBetween(startDate, endDate);
-    }
-
     public long countNumOfTransaction() {
         return transactionRepository.count();
     }
+
+
 }
