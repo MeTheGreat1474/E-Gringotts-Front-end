@@ -8,6 +8,7 @@ public enum TransactionCategory {
     ENTERTAINMENT,
     UTILITIES,
     RELOAD,
+    EXCHANGE,
     OTHERS
 
 }

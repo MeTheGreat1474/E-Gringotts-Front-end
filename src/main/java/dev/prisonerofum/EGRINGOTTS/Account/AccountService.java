@@ -3,7 +3,6 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 import dev.prisonerofum.EGRINGOTTS.Card.Card;
 import dev.prisonerofum.EGRINGOTTS.Card.CardRepository;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
-import dev.prisonerofum.EGRINGOTTS.Transaction.Transaction;
 import dev.prisonerofum.EGRINGOTTS.Transaction.TransactionService;
 import dev.prisonerofum.EGRINGOTTS.User.*;
 import org.bson.types.ObjectId;
@@ -111,9 +110,17 @@ public class AccountService {
         return Optional.empty();
     }
 
+    public Optional<Account<User>> getUserAccount(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    public void updateUserAccount(Account<User> account) {
+        accountRepository.save(account);
+    }
+
     public boolean verifyPin(String username, String pin) {
         Optional<Account<User>> account = accountRepository.findByUsername(username);
-        if(account.isPresent()){
+        if (account.isPresent()) {
             return account.get().checkPin(pin);
         }
         return false;

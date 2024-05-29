@@ -15,13 +15,13 @@ import java.text.SimpleDateFormat;
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RestController
 @RequestMapping("/Transaction")
-public class TransactionController{
+public class TransactionController {
 
     @Autowired                                              //Auto intialize accountService
     private TransactionService transactionService;
 
     @PostMapping("/transactions/new")
-    public ResponseEntity<TransactionResponse> makeNewTransaction(
+    public ResponseEntity<String> makeNewTransaction(
             @RequestParam String senderId,
             @RequestParam String receiverId,
             @RequestParam Double amount,
@@ -30,10 +30,10 @@ public class TransactionController{
             @RequestParam String remarks) {
 
         try {
-            TransactionResponse response = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new TransactionResponse(null, e.getMessage()));
+            String transactionId = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
+            return ResponseEntity.ok("Transaction successful. Transaction ID: " + transactionId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -51,12 +51,12 @@ public class TransactionController{
         }
     }
 
-    @GetMapping("/history/{userId}")
-    public ResponseEntity<List<Transaction>> getTransactionsHistory(@PathVariable String userId) {
-        List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
-
-        return new ResponseEntity<>(transactions, HttpStatus.OK);
-    }
+//    @GetMapping("/history/{userId}")
+//    public ResponseEntity<List<Transaction>> getTransactionsHistory(@PathVariable String userId) {
+//        List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
+//
+//        return new ResponseEntity<>(transactions, HttpStatus.OK);
+//    }
 
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
@@ -109,19 +109,34 @@ public class TransactionController{
         return new ResponseEntity<>("Currency pairs added successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/exchange")
-    public ResponseEntity<String> exchangeCurrency(
+    @PostMapping("/exchange")
+    public ResponseEntity<ExchangeResponse> exchangeCurrency(
+            @RequestParam String userId,
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
             @RequestParam double amount) {
 
-        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
-        String result = String.format("%f %s = %f %s, processing fee to charge = %f %s",
-                response.getAmount(), response.getFromCurrency(),
-                response.getExchangedValue(), response.getToCurrency(),
-                response.getProcessingFee(), response.getFromCurrency());
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            ExchangeResponse response = transactionService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
+
+//    @GetMapping("/exchange")
+//    public ResponseEntity<String> exchangeCurrency(
+//            @RequestParam String fromCurrency,
+//            @RequestParam String toCurrency,
+//            @RequestParam double amount) {
+//
+//        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+//        String result = String.format("%f %s = %f %s, processing fee to charge = %f %s",
+//                response.getAmount(), response.getFromCurrency(),
+//                response.getExchangedValue(), response.getToCurrency(),
+//                response.getProcessingFee(), response.getFromCurrency());
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
     @GetMapping("/api/analytics")
     public Map<String, Map<TransactionCategory, Map<String, Double>>> getAnalytics(
