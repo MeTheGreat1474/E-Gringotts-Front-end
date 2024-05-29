@@ -89,20 +89,21 @@ public class AccountService {
             newCard.setCardId(newAccount);
             newAccount.setCard(newCard);
 
-//            email Service is command down to avoid sending email to random email addresses
-            //TODO: edit the text using html
-//            emailService.sendSimpleMessage(email, "Welcome to EGringotts", "Hello " + fullname + ",\n\n" +
-//                    "Thank you for signing up with EGringotts. Your account has been successfully created.\n\n" +
-//                    "Your account details are as follows:\n" +
-//                    "Username: " + username + "\n" +
-//                    "Phone: " + phone + "\n" +
-//                    "Email: " + email + "\n" +
-//                    "DOB: " + DOB + "\n" +
-//                    "Address: " + address + "\n\n" +
-//                    "Please keep your account details safe and do not share them with anyone.\n\n" +
-//                    "Regards,\n" +
-//                    "EGringotts Team" +
-//                    "\n\nThis is an auto-generated email. Please do not reply to this email.");
+            emailService.sendSimpleMessage(email, "Welcome to EGringotts",
+                    "<div style='font-family: Arial, sans-serif;'>" +
+                            "<h1 style='color: #4a4a4a;'>Hello " + fullname + " 👋</h1>" +
+                            "<h2 style='color: #4a4a4a;'>Thank you for signing up with EGringotts. Your account has been successfully created. 🎉</h2>" +
+                            "<h3 style='color: #4a4a4a;'>Your account details are as follows:</h3>" +
+                            "<p style='color: #4a4a4a;'>Username: " + username + " 📛</p>" +
+                            "<p style='color: #4a4a4a;'>Phone: " + phone + " 📞</p>" +
+                            "<p style='color: #4a4a4a;'>Email: " + email + " 📧</p>" +
+                            "<p style='color: #4a4a4a;'>DOB: " + DOB + " 🎂</p>" +
+                            "<p style='color: #4a4a4a;'>Address: " + address + " 🏠</p>" +
+                            "<p style='color: #4a4a4a;'>Please keep your account details safe and do not share them with anyone. 🔒</p>" +
+                            "<p style='color: #4a4a4a;'>Regards,</p>" +
+                            "<p style='color: #4a4a4a;'>EGringotts Team 🏦</p>" +
+                            "<p style='color: #4a4a4a;'>This is an auto-generated email. Please do not reply to this email. 🚫</p>" +
+                            "</div>");
 
             accountRepository.insert(newAccount);
             return Optional.of(newAccount);

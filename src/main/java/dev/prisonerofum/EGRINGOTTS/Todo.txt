@@ -5,7 +5,6 @@ HI everyone this is a todo list to make our lives easier.
 2.@Aqeel : make admin page
 3.@Aqeel  : make change currency
 
-
 --------------FARISYA TODO LIST ----------------
 1. @Taufiq : please add return transaction history in reverse order ( so that we can get list of user by latest transaction first aka Recent )
 2. @Taufiq : Filter for Pensive Past and Marauders Map
@@ -18,7 +17,7 @@ HI everyone this is a todo list to make our lives easier.
 3. @Taufiq : make new transactionType 'RELOAD' ✅
 
 --------------AQEEL TODO LIST ----------------
-1.Make send email using html
+1.send email after new transaction
 2.change user type when user transaction is above threshold
 3.change method countTransactionPerMonth /Day functional --> take farisya function filter by Date .size()
 
