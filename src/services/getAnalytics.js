@@ -20,7 +20,6 @@ export const useGetAnalytics = (username) => {
         const fetchAnalytic= async () => {
             try {
                 const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}`);
-                //const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -52,7 +51,6 @@ export const useGetAnalyticsDate = (username, startDate, endDate) => {
         const fetchAnalytic= async () => {
             try {
                 const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&startDate=${startDate}&endDate=${endDate}`);
-                //const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a&startDate=${startDate}&endDate=${endDate}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -101,8 +99,8 @@ export const useGetAnalyticsFrequency = (username, frequency) => {
     return data;
 };
 
-// For Category
-export const useGetAnalyticsCategory = (username, category) => {
+// For Payment Method (Transaction Type)
+export const useGetAnalyticsPaymentMethod = (username, paymentMethod) => {
 
     const { user, getUser } = useGetUser(username);
     useEffect(() => {
@@ -115,8 +113,8 @@ export const useGetAnalyticsCategory = (username, category) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                const categoryParams = category.map(cat => `category=${cat}`).join("&");
-                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&${categoryParams}`);
+                const paymentMethodParams = paymentMethod.map(cat => `paymentMethod=${cat}`).join("&");
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&${paymentMethodParams}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -129,7 +127,7 @@ export const useGetAnalyticsCategory = (username, category) => {
         };
 
         fetchAnalytic();
-    }, [user, category]);
+    }, [user, paymentMethod]);
 
     return data;
 };

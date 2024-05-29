@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {
     useGetAnalytics,
-    useGetAnalyticsCategory,
+    useGetAnalyticsPaymentMethod,
     useGetAnalyticsDate,
     useGetAnalyticsFrequency
 } from '../../services/getAnalytics';
@@ -19,12 +19,12 @@ function AnalyticContent({username}) {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [frequency, setFrequency] = useState("monthly");
-    const [category, setCategory] = useState([]);
+    const [paymentMethod, setPaymentMethod] = useState([]);
 
     const analyticsDataDefault = useGetAnalytics(username);
     const analyticsDataDate = useGetAnalyticsDate(username, startDate, endDate);
     const analyticsDataFrequency = useGetAnalyticsFrequency(username, frequency);
-    const analyticsDataCategory = useGetAnalyticsCategory(username, category);
+    const analyticsDataPaymentMethod = useGetAnalyticsPaymentMethod(username, paymentMethod);
 
 
     /*console.log('username:', username);
@@ -34,11 +34,11 @@ function AnalyticContent({username}) {
     console.log('startDate:', startDate);
     console.log('endDate:', endDate);
     console.log('frequency:', frequency);
-    console.log('category:', category);
+    console.log('paymentMethod:', paymentMethod);
     console.log('analyticsDataDefault:', analyticsDataDefault);
     console.log('analyticsDataDate:', analyticsDataDate);
     console.log('analyticsDataFrequency:', analyticsDataFrequency);
-    console.log('analyticsDataCategory:', analyticsDataCategory);*/
+    console.log('analyticsDataPaymentMethod:', analyticsDataPaymentMethod);*/
 
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
@@ -52,9 +52,9 @@ function AnalyticContent({username}) {
     const handleFrequencyChange = (e) => {
         setFrequency(e.target.value);
     }
-    const handleCategoryChange = (e) => {
+    const handlePaymentMethodChange = (e) => {
         const value = e.target.value;
-        setCategory(prev =>
+        setPaymentMethod(prev =>
             prev.includes(value) ? prev.filter(cat => cat !== value) : [...prev, value]
         );
     }
@@ -73,8 +73,8 @@ function AnalyticContent({username}) {
             case 'frequency':
                 fetchData = analyticsDataFrequency;
                 break;
-            case 'category':
-                fetchData = analyticsDataCategory;
+            case 'paymentMethod':
+                fetchData = analyticsDataPaymentMethod;
                 break;
             default:
                 fetchData = analyticsDataDefault;
@@ -82,41 +82,44 @@ function AnalyticContent({username}) {
         if (fetchData) {
             setAnalyticsData(fetchData);
         }
-    }, [filterType, startDate, endDate, frequency, category, analyticsDataDefault, analyticsDataDate, analyticsDataFrequency, analyticsDataCategory]);
+    }, [filterType, startDate, endDate, frequency, paymentMethod, analyticsDataDefault, analyticsDataDate, analyticsDataFrequency, analyticsDataPaymentMethod]);
 
     return (
         <div className='analytic-box'>
             <div className="title">
-                <h1>Analytics Of Expenditure</h1>
+                <h1>ANALYTICS OF EXPENDITURE</h1>
             </div>
             <div className="filter-container">
-            <div className="date-filters">
-                    <input type="date" value={startDate} onChange={handleStartDateChange} placeholder="Start Date" />
-                    <input type="date" value={endDate} onChange={handleEndDateChange} placeholder="End Date" />
+                <div className="date-filters">
+                    <div>
+                        <label htmlFor="start-date">Start Date:</label>
+                        <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} placeholder="Start Date" />
+                    </div>
+                    <div>
+                        <label htmlFor="end-date">End Date:</label>
+                        <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} placeholder="End Date" />
+                    </div>
                 </div>
                 <div className="frequency-filter">
-                    <select onChange={handleFrequencyChange} value={frequency}>
+                    <label htmlFor="frequency">Frequency:</label>
+                    <select onChange={handleFrequencyChange} id="frequency" value={frequency}>
                         <option value="daily">Daily</option>
                         <option value="monthly">Monthly</option>
-                        <option value="yearly">Yearly</option>
                     </select>
                 </div>
-                <div className="category-filters">
+                <div className="paymentMethod-filters">
+                    <label htmlFor="payment-method" className="filter-heading">Payment Method:</label>
                     <label>
-                        <input type="checkbox" value="credit-card" onChange={handleCategoryChange} />
+                        <input type="checkbox" id="payment-method" value="credit-card" onChange={handlePaymentMethodChange} />
                         Credit Card
                     </label>
                     <label>
-                        <input type="checkbox" value="debit-card" onChange={handleCategoryChange} />
+                        <input type="checkbox" value="debit-card" onChange={handlePaymentMethodChange} />
                         Debit Card
                     </label>
                     <label>
-                        <input type="checkbox" value="transfer" onChange={handleCategoryChange} />
+                        <input type="checkbox" value="transfer" onChange={handlePaymentMethodChange} />
                         Transfer
-                    </label>
-                    <label>
-                        <input type="checkbox" value="reload" onChange={handleCategoryChange} />
-                        Reload
                     </label>
                 </div>
             </div>

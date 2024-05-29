@@ -6,11 +6,14 @@
     align-items: center;
 }
 
-.title {
+.analytic-box h1 {
     margin-bottom: 20px;
     color: #CDB373;
     font-family: Montaga;
     font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
 }
 
 .filter-container {
@@ -20,13 +23,29 @@
     margin-bottom: 20px;
 }
 
-.date-filters, .frequency-filter, .category-filters {
+.date-filters, .frequency-filter, .paymentMethod-filters {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.category-filters label {
+.date-filters div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/*.frequency-filter .frequency-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}*/
+
+.paymentMethod-filters .filter-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}
+
+.paymentMethod-filters label {
     color: #FFFFFF;
 }
 
