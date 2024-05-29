@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import {useGetUser} from "./getUser";
 
+const toQueryString = (params) => {
+    return '?' + Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+};
+
 export const useGetAnalytics = (username) => {
 
     const { user, getUser } = useGetUser(username);
@@ -15,8 +19,8 @@ export const useGetAnalytics = (username) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                // const response = await api.get(`/Transaction/api/analytics?userId=${username.userId}`);
-                const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a`);
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}`);
+                //const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a`);
 
                 if (response.status === 200) {
                     setData(response.data);

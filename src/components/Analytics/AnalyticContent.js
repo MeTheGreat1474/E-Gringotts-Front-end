@@ -8,8 +8,12 @@ import {
 import AnalyticContentLog from './AnalyticContentLog';
 import './AnalyticContent.css'
 
+function toQueryString(params) {
+    return '?' + Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+}
+
 function AnalyticContent({username}) {
-    const filterRef = React.useRef();
+    //const filterRef = React.useRef();
     const [analyticsData, setAnalyticsData] = useState([]);
     const [filterType, setFilterType] = useState("default");
     const [startDate, setStartDate] = useState("");
@@ -49,6 +53,7 @@ function AnalyticContent({username}) {
         setFrequency(e.target.value);
     }
     const handleCategoryChange = (e) => {
+        const value = e.target.value;
         setCategory(prev =>
             prev.includes(value) ? prev.filter(cat => cat !== value) : [...prev, value]
         );
