@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
 import java.util.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
@@ -61,10 +62,20 @@ public class TransactionController {
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
             @RequestParam("userId") String userId,
-            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-        List<Transaction> transactions = transactionService.getTransactionsByDateRange(userId, startDate, endDate);
-        return new ResponseEntity<>(transactions, HttpStatus.OK);
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String startDateStr,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String endDateStr) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = formatter.parse(startDateStr);
+            Date endDate = formatter.parse(endDateStr);
+
+            List<Transaction> transactions = transactionService.getTransactionsByDateRange(userId, startDate, endDate);
+            return new ResponseEntity<>(transactions, HttpStatus.OK);
+
+        } catch (ParseException e) {
+            // Handle the exception and return an appropriate response
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/amount-range")
