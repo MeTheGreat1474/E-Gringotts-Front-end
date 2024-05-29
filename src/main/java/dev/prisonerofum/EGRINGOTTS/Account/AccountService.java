@@ -32,8 +32,8 @@ public class AccountService {
     public List<Account<User>> createAccount(Account<User> account) {
         return accountRepository.findAll();
     }
-    public Optional<Account<User>> singleAccount(ObjectId id){ //optional is used to avoid null pointer exception
-        return accountRepository.findById(id);
+    public Optional<Account<User>> getAccountByUserId(String userId){ //optional is used to avoid null pointer exception
+        return accountRepository.findByUserId(userId);
     }
 
     public Optional<Account<User>> singleAccount2(String username){ //optional is used to avoid null pointer exception

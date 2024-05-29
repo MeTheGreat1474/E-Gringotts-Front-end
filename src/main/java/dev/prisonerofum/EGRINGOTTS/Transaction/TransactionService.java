@@ -3,10 +3,12 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
+import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
 import dev.prisonerofum.EGRINGOTTS.User.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import dev.prisonerofum.EGRINGOTTS.EmailService;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -28,6 +30,8 @@ public class TransactionService {
     private AccountRepository<User> accountRepository;
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
+    private EmailService emailService;
+    private AccountService accountService;
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
@@ -46,6 +50,11 @@ public class TransactionService {
 
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
+
+
+        String senderEmail = accountService.getAccountByUserId(senderId).get().getEmail();
+        String reveiverEmail = accountService.getAccountByUserId(receiverId).get().getEmail();
+
 
         // Return the generated transaction ID
         return savedTransaction.getId().toString();

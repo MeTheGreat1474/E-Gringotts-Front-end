@@ -72,6 +72,10 @@ public class AccountController {
     public ResponseEntity<Double> reload(@PathVariable String username, @RequestParam double amount){
         return new ResponseEntity<>(accountService.reload(username, amount), HttpStatus.OK);
     }
+    @GetMapping("/userId/{userId}")
+    public ResponseEntity<Optional<Account<User>>> getAccountByUserId(@PathVariable String userId){
+        return new ResponseEntity<>(accountService.getAccountByUserId(userId), HttpStatus.OK);
+    }
 
 
 }
