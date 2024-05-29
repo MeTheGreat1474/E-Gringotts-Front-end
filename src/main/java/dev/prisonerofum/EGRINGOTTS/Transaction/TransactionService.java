@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.context.annotation.Lazy;
+
 
 @Service
 public class TransactionService {
@@ -30,8 +32,17 @@ public class TransactionService {
     private AccountRepository<User> accountRepository;
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
+    @Autowired
     private EmailService emailService;
+
     private AccountService accountService;
+
+    @Autowired
+    public TransactionService(@Lazy AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
@@ -44,6 +55,7 @@ public class TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+        transaction.generateTransactionID();
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
@@ -54,6 +66,19 @@ public class TransactionService {
 
         String senderEmail = accountService.getAccountByUserId(senderId).get().getEmail();
         String reveiverEmail = accountService.getAccountByUserId(receiverId).get().getEmail();
+
+        emailService.sendSimpleMessage(senderEmail,"Alert : Notification on E-Gringotts Transaction", "Dear Valued Customer,<br></br> "+
+
+                "Your E-Gringotts Transfer of" + amount + "to" + receiverId + "o" + savedTransaction.getDate() + "is accepted. To verify your transaction, please log in to your account and check your transaction history." +
+
+                "Please logon to E-Gringotts Website for details." +
+
+                "Security Reminder: Do not respond to any unauthorised or unknown website links, emails or SMSs requesting for Your banking information to stay safe online." +
+
+                "<br></br><br></br>This is an auto-generated message. Please do not reply to this mail.");
+
+        emailService.sendSimpleMessage(reveiverEmail,"Received Transaction","Kindly be informed that you have received" + amount +  "from " + senderId
+        +"<br></br><br></br>This is an auto-generated message. Please do not reply to this mail.");
 
 
         // Return the generated transaction ID
