@@ -17,7 +17,6 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
     List<Transaction> findByUserID(String userId);
 
     List<Transaction> findByUserIDAndTransactionDateBetween(String userId, Date startDate, Date endDate);
-
     // Find transactions within the specified amount range
     @Query("{ 'amount' : { $gte: ?0, $lte: ?1 } }")
     List<Transaction> findTransactionsByUserIDAndAmountRange(String userId, double minAmount, double maxAmount);

@@ -57,6 +57,12 @@ public class TransactionService {
         transaction.setDate(new Date());
         transaction.generateTransactionID();
 
+        // Set transaction date and time
+        String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
+        String transactionTime = new SimpleDateFormat("HH:mm:ss").format(transaction.getDate());
+        transaction.setTransactionDate(transactionDate);
+        transaction.setTransactionTime(transactionTime);
+
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
 
@@ -97,6 +103,12 @@ public class TransactionService {
         transaction.setProcessingFee(processingFee);
         transaction.setExchangedValue(exchangedValue);
         transaction.generateTransactionID();
+
+        // Set transaction date and time
+        String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
+        String transactionTime = new SimpleDateFormat("HH:mm:ss").format(transaction.getDate());
+        transaction.setTransactionDate(transactionDate);
+        transaction.setTransactionTime(transactionTime);
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
