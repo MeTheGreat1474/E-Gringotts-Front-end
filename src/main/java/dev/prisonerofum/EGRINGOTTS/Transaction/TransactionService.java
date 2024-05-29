@@ -39,6 +39,7 @@ public class TransactionService {
         transaction.setCategory(category);
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
+        transaction.setDate(new Date());
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
@@ -149,18 +150,18 @@ public class TransactionService {
     }
 
     // filter method for date in specific range
-    public List<Transaction> getTransactionsByDateRange(String userID, Date startDate, Date endDate) {
-        return transactionRepository.findByUserIDAndTransactionDateBetween(userID, startDate, endDate);
+    public List<Transaction> getTransactionsByDateRange(String userId, Date startDate, Date endDate) {
+        return transactionRepository.findByUserIDAndTransactionDateBetween(userId, startDate, endDate);
     }
 
     // filter method according to amount threshold
-    public List<Transaction> getTransactionsByAmountRange(String userID, double minAmount, double maxAmount) {
-        return transactionRepository.findTransactionsByUserIDAndAmountRange(userID, minAmount, maxAmount);
+    public List<Transaction> getTransactionsByAmountRange(String userId, double minAmount, double maxAmount) {
+        return transactionRepository.findTransactionsByUserIDAndAmountRange(userId, minAmount, maxAmount);
     }
 
     // filter  method according to category
-    public List<Transaction> getTransactionsByCategory(String userID, TransactionCategory category) {
-        return transactionRepository.findByUserIDAndCategory(userID, category);
+    public List<Transaction> getTransactionsByCategory(String userId, TransactionCategory category) {
+        return transactionRepository.findByUserIDAndCategory(userId, category);
     }
 
     // generate receipt method

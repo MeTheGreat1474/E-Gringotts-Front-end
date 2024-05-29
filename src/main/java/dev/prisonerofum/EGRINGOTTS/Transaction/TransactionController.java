@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 @RequestMapping("/Transaction")
 public class TransactionController {
 
-    @Autowired                                              //Auto intialize accountService
+    @Autowired                                              //Auto initialize accountService
     private TransactionService transactionService;
 
     @PostMapping("/transactions/new")
@@ -51,37 +51,37 @@ public class TransactionController {
         }
     }
 
-//    @GetMapping("/history/{userId}")
-//    public ResponseEntity<List<Transaction>> getTransactionsHistory(@PathVariable String userId) {
-//        List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
-//
-//        return new ResponseEntity<>(transactions, HttpStatus.OK);
-//    }
+    @GetMapping("/history/{userId}")
+    public ResponseEntity<List<Transaction>> getTransactionsHistory(@PathVariable String userId) {
+        List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
+
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
 
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
-            @RequestParam("userID") String userID,
+            @RequestParam("userId") String userId,
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-        List<Transaction> transactions = transactionService.getTransactionsByDateRange(userID, startDate, endDate);
+        List<Transaction> transactions = transactionService.getTransactionsByDateRange(userId, startDate, endDate);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/amount-range")
     public ResponseEntity<List<Transaction>> getTransactionsByAmountRange(
-            @RequestParam("userID") String userID,
+            @RequestParam("userId") String userId,
             @RequestParam("minAmount") double minAmount,
             @RequestParam("maxAmount") double maxAmount) {
-        List<Transaction> transactions = transactionService.getTransactionsByAmountRange(userID, minAmount, maxAmount);
+        List<Transaction> transactions = transactionService.getTransactionsByAmountRange(userId, minAmount, maxAmount);
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/category")
     public ResponseEntity<List<Transaction>> getTransactionsByCategory(
-            @RequestParam("userID") String userID,
+            @RequestParam("userId") String userId,
             @RequestParam("category") TransactionCategory category) {
-        List<Transaction> transactions = Collections.unmodifiableList(transactionService.getTransactionsByCategory(userID, category));
+        List<Transaction> transactions = Collections.unmodifiableList(transactionService.getTransactionsByCategory(userId, category));
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 

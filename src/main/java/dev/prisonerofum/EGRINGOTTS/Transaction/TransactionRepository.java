@@ -14,15 +14,15 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends MongoRepository<Transaction, ObjectId> {
 
-    List<Transaction> findByUserID(String userID);
+    List<Transaction> findByUserID(String userId);
 
-    List<Transaction> findByUserIDAndTransactionDateBetween(String userID, Date startDate, Date endDate);
+    List<Transaction> findByUserIDAndTransactionDateBetween(String userId, Date startDate, Date endDate);
 
     // Find transactions within the specified amount range
     @Query("{ 'amount' : { $gte: ?0, $lte: ?1 } }")
-    List<Transaction> findTransactionsByUserIDAndAmountRange(String userID, double minAmount, double maxAmount);
+    List<Transaction> findTransactionsByUserIDAndAmountRange(String userId, double minAmount, double maxAmount);
 
-    List<Transaction> findByUserIDAndCategory(String userID, TransactionCategory category);
+    List<Transaction> findByUserIDAndCategory(String userId, TransactionCategory category);
 
     long countByTransactionDateBetween(Instant instant, Instant instant1);
 
