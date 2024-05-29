@@ -3,6 +3,7 @@ package dev.prisonerofum.EGRINGOTTS.Account;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
 import dev.prisonerofum.EGRINGOTTS.User.User;
 import org.apache.coyote.Response;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,13 @@ public class AccountController {
     @GetMapping("/{username}")
     public ResponseEntity<Optional<Account<User>>> getUser(@PathVariable String username){
         return new ResponseEntity<Optional<Account<User>>>(accountService.singleAccount2(username), HttpStatus.OK);
+    }
+
+    //This use ObjectId not userId
+    @GetMapping("/userById/{id}")
+    public ResponseEntity<Optional<Account<User>>> getUserById(@PathVariable String id){
+        ObjectId objectId = new ObjectId(id);
+        return new ResponseEntity<Optional<Account<User>>>(accountService.singleAccount(objectId), HttpStatus.OK);
     }
 
     @GetMapping("/login")

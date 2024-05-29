@@ -77,3 +77,11 @@ TO BE FIXED :
     b. security pin upon log in ✅
     c. password hashing ✅
     d. email notification
+
+
+--------REPAIRO(URGENT)----------
+
+1. create new transaction: Rosak xleh nak guna, senderId and receiverId WAJIB guna userId not _id dlm database
+2. history transaction user: WAJIB guna userId
+3. transac history date-range, amount-range, category: kena user specific
+4. analytic: WAJIB guna userId not _id
