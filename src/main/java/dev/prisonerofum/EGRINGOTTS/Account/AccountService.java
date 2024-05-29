@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,8 +119,9 @@ public class AccountService {
         return false;
     }
 
-    public Optional<Account<User>> findAccountByContactInfo(String contactInfo) {
-        return accountRepository.findByPhoneOrEmailOrUsername(contactInfo, contactInfo, contactInfo);
+    public List<Account<User>> findAccountsByContactInfo(String contactInfo) {
+        return accountRepository.findByUserIdAndPhoneOrEmailOrUsername(contactInfo,contactInfo, contactInfo, contactInfo)
+                .orElse(Collections.emptyList());
     }
 
     public String getExpiryDate(String username) {

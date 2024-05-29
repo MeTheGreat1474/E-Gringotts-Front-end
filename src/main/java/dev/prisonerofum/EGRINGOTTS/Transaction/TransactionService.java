@@ -108,24 +108,38 @@ public class TransactionService {
     }
 
     // getTransactionHistory method
-    public List<Transaction> getTransactionsHistory(String userID) {
-        return transactionRepository.findByUserID(userID);
+    public List<Transaction> getTransactionsHistory(String userId) {
+        List<Transaction> transactions = transactionRepository.findByUserID(userId);
+        transactions.removeIf(transaction -> transaction.getDate() == null); // Remove transactions with null dates
+        transactions.sort((t1, t2) -> {
+            Date date1 = t1.getDate();
+            Date date2 = t2.getDate();
+            if (date1 == null && date2 == null) {
+                return 0; // Both dates are null, consider them equal
+            } else if (date1 == null) {
+                return 1; // Null dates come after non-null dates
+            } else if (date2 == null) {
+                return -1; // Non-null dates come before null dates
+            } else {
+                return t2.getDate().compareTo(t1.getDate()); // Compare non-null dates normally
+            }
+        });
+        return transactions;
     }
 
-
     // filter method for date in specific range
-    public List<Transaction> getTransactionsByDateRange(Date startDate, Date endDate) {
-        return transactionRepository.findByTransactionDateBetween(startDate, endDate);
+    public List<Transaction> getTransactionsByDateRange(String userID, Date startDate, Date endDate) {
+        return transactionRepository.findByUserIDAndTransactionDateBetween(userID, startDate, endDate);
     }
 
     // filter method according to amount threshold
-    public List<Transaction> getTransactionsByAmountRange(double minAmount, double maxAmount) {
-        return transactionRepository.findTransactionsByAmountRange(minAmount, maxAmount);
+    public List<Transaction> getTransactionsByAmountRange(String userID, double minAmount, double maxAmount) {
+        return transactionRepository.findTransactionsByUserIDAndAmountRange(userID, minAmount, maxAmount);
     }
 
     // filter  method according to category
-    public List<Transaction> getTransactionsByCategory(TransactionCategory category) {
-        return transactionRepository.findByCategory(category);
+    public List<Transaction> getTransactionsByCategory(String userID, TransactionCategory category) {
+        return transactionRepository.findByUserIDAndCategory(userID, category);
     }
 
     // generate receipt method

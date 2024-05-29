@@ -50,17 +50,19 @@ public class AccountController {
         return new ResponseEntity<>(accountService.verifyPin(username, pin), HttpStatus.OK);
     }
 
-    @GetMapping("/exprityDate")
+    @GetMapping("/expiryDate")
     public ResponseEntity<String> getExpiryDate(@RequestParam String username){
         return new ResponseEntity<>(accountService.getExpiryDate(username), HttpStatus.OK);
     }
     //cannot found by email , username OK
     @GetMapping("/accounts/search")
-    public ResponseEntity<Account<User>> findAccountByContactInfo(@RequestParam String contactInfo) {
-        Optional<Account<User>> account = accountService.findAccountByContactInfo(contactInfo);
-        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<Account<User>>> findAccountsByContactInfo(@RequestParam String contactInfo) {
+        List<Account<User>> accounts = accountService.findAccountsByContactInfo(contactInfo);
+        if (accounts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(accounts);
     }
-
 
     @GetMapping("/allAccounts")
     public ResponseEntity<List<Account<User>>> getAllAccount(){

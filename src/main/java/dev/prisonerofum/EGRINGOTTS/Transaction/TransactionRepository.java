@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -15,15 +16,16 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
 
     List<Transaction> findByUserID(String userID);
 
-    List<Transaction> findByTransactionDateBetween(Date startDate, Date endDate);
+    List<Transaction> findByUserIDAndTransactionDateBetween(String userID, Date startDate, Date endDate);
 
     // Find transactions within the specified amount range
     @Query("{ 'amount' : { $gte: ?0, $lte: ?1 } }")
-    List<Transaction> findTransactionsByAmountRange(double minAmount, double maxAmount);
+    List<Transaction> findTransactionsByUserIDAndAmountRange(String userID, double minAmount, double maxAmount);
 
-    List<Transaction> findByCategory(TransactionCategory category);
-
+    List<Transaction> findByUserIDAndCategory(String userID, TransactionCategory category);
 
     long countByTransactionDateBetween(Instant instant, Instant instant1);
+
+    Optional<String> findById(String transactionId);
 }
 
