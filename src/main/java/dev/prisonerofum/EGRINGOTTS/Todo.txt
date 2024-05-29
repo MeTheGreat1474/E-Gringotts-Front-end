@@ -17,14 +17,14 @@ HI everyone this is a todo list to make our lives easier.
 3. @Taufiq : make new transactionType 'RELOAD' ✅
 
 --------------AQEEL TODO LIST ----------------
-1.send email after new transaction
-2.change user type when user transaction is above threshold
-3.change method countTransactionPerMonth /Day functional --> take farisya function filter by Date .size()
+1.make more goblin variable
+
+
 
 --------------BACKEND UPDATE----------------
 TO BE FIXED :
-1. @Farisya , @Shaheila , @Sanjida : the make new transaction is broken somehow , please fix it ✅
-2. @Taufiq : Use userId instead of database auto-assign ObjectId for transaction
+1. @Taufiq : Use userId instead of database auto-assign ObjectId for transaction
+2.@Aqeel : balance should 2 perpuluhan or not ?
 
 ------------CHECKLIST MEETING----------
 1)change github backend and frontend

@@ -42,4 +42,24 @@ public class Transaction {
         }
         this.transactionID = transactionID.toString();
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", userID='" + userID + '\'' +
+                ", receiverID='" + receiverID + '\'' +
+                ", amount=" + amount +
+                ", convertedAmount=" + convertedAmount +
+                ", processingFee=" + processingFee +
+                ", transactionType='" + transactionType + '\'' +
+                ", transactionDate='" + transactionDate + '\'' +
+                ", transactionTime='" + transactionTime + '\'' +
+                ", transactionID='" + transactionID + '\'' +
+                ", exchangedValue=" + exchangedValue +
+                ", category=" + category +
+                ", remarks='" + remarks + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

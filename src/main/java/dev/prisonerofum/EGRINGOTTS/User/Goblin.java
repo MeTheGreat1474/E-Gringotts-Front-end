@@ -19,9 +19,8 @@ public class Goblin implements User{
 
     private long numOfUsers;
     private long numOfCards;
-    private long numOfTransactionsPerDay;
-    private long numOfTransactionsPerMonth;
-    private long numOfTransactionsPerYear;
+    private long numOfTransations;
+
 
 
 

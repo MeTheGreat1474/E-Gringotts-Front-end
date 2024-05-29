@@ -32,6 +32,7 @@ public class AccountService {
     public List<Account<User>> createAccount(Account<User> account) {
         return accountRepository.findAll();
     }
+
     public Optional<Account<User>> getAccountByUserId(String userId){ //optional is used to avoid null pointer exception
         return accountRepository.findByUserId(userId);
     }
@@ -50,9 +51,21 @@ public class AccountService {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(password, account.get().getPassword())){
 
+                //User reward and update admin
                 User user = account.get().getUser();
                 if (user instanceof Goblin goblin) {
-                    update(goblin);}
+                    update(goblin);
+                    accountRepository.save(account.get());}
+                else if(user instanceof SilverSnitch silverSnitch){
+                    account.get().setBalance(account.get().getBalance()* 1.01);
+                }
+                else if(user instanceof GoldenGalleon goldenGalleon){
+                    account.get().setBalance(account.get().getBalance()* 1.02);
+                }
+                else{
+                    account.get().setBalance(account.get().getBalance()* 1.035);
+                }
+                accountRepository.save(account.get());
                 return account;
             }
         }
@@ -77,7 +90,6 @@ public class AccountService {
 
             UserFactory userFactory = new SilverSnitchFactory();
             User user = userFactory.createUser();
-//            newAccount.setCurrency("Knut");
             newAccount.setUser(user);
 
             // Create a new Card object
@@ -141,6 +153,7 @@ public class AccountService {
 
         return null;
     }
+
     public List<Account<User>> getAllAccount(){
         return accountRepository.findAll();
     }
@@ -157,9 +170,7 @@ public class AccountService {
     public void update(Goblin goblin){
         goblin.setNumOfCards(countCards());
         goblin.setNumOfUsers(countUsers());
-        goblin.setNumOfTransactionsPerDay(transactionService.countTransactionsPerDay());
-        goblin.setNumOfTransactionsPerMonth(transactionService.countTransactionsPerMonth());
-        goblin.setNumOfTransactionsPerYear(transactionService.countTransactionsPerYear());
+        goblin.setNumOfTransations(transactionService.countNumOfTransaction());
     }
 
     public double reload(String username, double amount){
@@ -172,6 +183,7 @@ public class AccountService {
         }
         return -1;
     }
+
 
 
 

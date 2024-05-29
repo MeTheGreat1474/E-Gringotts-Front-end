@@ -4,22 +4,24 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
-import dev.prisonerofum.EGRINGOTTS.User.User;
+import dev.prisonerofum.EGRINGOTTS.User.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.context.annotation.Lazy;
+
 
 @Service
 public class TransactionService {
@@ -30,8 +32,17 @@ public class TransactionService {
     private AccountRepository<User> accountRepository;
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
+    @Autowired
     private EmailService emailService;
+
     private AccountService accountService;
+
+    @Autowired
+    public TransactionService(@Lazy AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
@@ -44,16 +55,52 @@ public class TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+        transaction.generateTransactionID();
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
 
+
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
 
-
-        String senderEmail = accountService.getAccountByUserId(senderId).get().getEmail();
+        Account<User> accountSender = accountService.getAccountByUserId(senderId).get();
+        String senderEmail = accountSender.getEmail();
         String reveiverEmail = accountService.getAccountByUserId(receiverId).get().getEmail();
+
+
+        long numberOfTransaction = getTransactionsHistory(senderId).size();
+        User user = accountSender.getUser();
+
+        //Upgrade user from Silver Snitch to Golden Galleon if he makes more than certain transaction
+        if (user instanceof SilverSnitch) {
+            if(numberOfTransaction > 10){
+                UserFactory userFactory = new GoldenGalleonFactory();
+                User newUser = userFactory.createUser();
+                accountSender.setUser(newUser);
+                accountRepository.save(accountSender);}         //save to database
+        }
+
+        if(user instanceof GoldenGalleon){
+            if(numberOfTransaction > 20){
+                UserFactory userFactory = new PlatinumPatronusFactory();
+                User newUser = userFactory.createUser();
+                accountSender.setUser(newUser);
+                accountRepository.save(accountSender);}         //save to database
+        }
+
+        emailService.sendSimpleMessage(senderEmail,"Alert : Notification on E-Gringotts Transaction", "Dear Valued Customer,<br></br> "+
+
+                "Your E-Gringotts Transfer of" + amount + "to" + receiverId + "o" + savedTransaction.getDate() + "is accepted. To verify your transaction, please log in to your account and check your transaction history." +
+
+                "Please logon to E-Gringotts Website for details." +
+
+                "Security Reminder: Do not respond to any unauthorised or unknown website links, emails or SMSs requesting for Your banking information to stay safe online." +
+
+                "<br></br><br></br>This is an auto-generated message. Please do not reply to this mail.");
+
+        emailService.sendSimpleMessage(reveiverEmail,"Received Transaction","Kindly be informed that you have received" + amount +  "from " + senderId
+        +"<br></br><br></br>This is an auto-generated message. Please do not reply to this mail.");
 
 
         // Return the generated transaction ID
@@ -255,20 +302,11 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
-    public long countTransactionsPerDay() {
-        LocalDate today = LocalDate.now();
-        return transactionRepository.countByTransactionDateBetween(today.atStartOfDay(ZoneId.systemDefault()).toInstant(), today.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+    public List<Transaction> getTransactionsByDateRange(Date startDate, Date endDate) {
+        return transactionRepository.findByTransactionDateBetween(startDate, endDate);
     }
 
-    public long countTransactionsPerMonth() {
-        LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
-        LocalDate lastDayOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
-        return transactionRepository.countByTransactionDateBetween(firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant(), lastDayOfMonth.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    public long countTransactionsPerYear() {
-        LocalDate firstDayOfYear = LocalDate.now().withDayOfYear(1);
-        LocalDate lastDayOfYear = LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear());
-        return transactionRepository.countByTransactionDateBetween(firstDayOfYear.atStartOfDay(ZoneId.systemDefault()).toInstant(), lastDayOfYear.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+    public long countNumOfTransaction() {
+        return transactionRepository.count();
     }
 }
