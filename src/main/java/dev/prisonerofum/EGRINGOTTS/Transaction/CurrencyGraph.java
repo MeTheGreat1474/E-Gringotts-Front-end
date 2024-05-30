@@ -2,8 +2,10 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Random;
 @Document(collection = "CurrencyGraph")
 @Data
 @NoArgsConstructor
+@Component
 public class CurrencyGraph<T> implements Serializable {
 
     @Id

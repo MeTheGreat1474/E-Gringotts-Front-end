@@ -24,7 +24,6 @@ HI everyone this is a todo list to make our lives easier.
 ------------CHECKLIST MEETING----------
 1)change github backend and frontend
 
-
 --------------CHECKLIST----------------
 1) Account Creation, Transactions & User Types (3%)
     a. generic class Account ✅

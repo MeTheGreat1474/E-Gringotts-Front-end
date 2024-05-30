@@ -28,7 +28,7 @@ public class Transaction {
     private String transactionDate;
     private String transactionTime;
     private String transactionID;
-    private double exchangedValue;
+    private double balance;
     private TransactionCategory category;
     private String remarks;
     private Date date;
