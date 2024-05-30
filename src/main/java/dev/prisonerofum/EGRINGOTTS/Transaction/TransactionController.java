@@ -7,14 +7,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RequestMapping("/Transaction")
 public class TransactionController {
 
@@ -155,12 +156,12 @@ public class TransactionController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false, defaultValue = "Monthly") String frequency,
-            @RequestParam(required = false) Set<String> paymentMethod) throws Exception {
+            @RequestParam(required = false) List<String> paymentMethod) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end = endDate != null ? sdf.parse(endDate) : new Date();
-        Set<String> methods = paymentMethod != null ? paymentMethod : new HashSet<>(Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER"));
+        List<String> methods = paymentMethod != null ? new ArrayList<>(paymentMethod) : Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER");
 
         // Determine the default start date based on the frequency
         if (startDate != null) {

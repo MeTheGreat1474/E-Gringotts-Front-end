@@ -323,7 +323,7 @@ public class TransactionService {
         return categoryPercentagesByFrequency;
     }
 
-    public List<Transaction> filterTransactions(List<Transaction> transactions, Date startDate, Date endDate, Set<String> paymentMethod) {
+    public List<Transaction> filterTransactions(List<Transaction> transactions, Date startDate, Date endDate, List<String> paymentMethod) {
         return transactions.stream()
                 .filter(t -> !t.getDate().before(startDate) && !t.getDate().after(endDate))
                 .filter(t -> paymentMethod.contains(t.getTransactionType()))
