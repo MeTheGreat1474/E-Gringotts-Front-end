@@ -22,4 +22,8 @@ public interface AccountRepository<User> extends MongoRepository<Account<User>, 
      */
 
     Optional<Account<User>> findByUserId(String id);
+
+
+    Optional<Account> findByUsernameOrFullName(String username, String fullName);
+
 }

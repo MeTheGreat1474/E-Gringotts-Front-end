@@ -59,6 +59,16 @@ public class TransactionController {
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
+
+    @GetMapping("/history/{userId}/withUser")
+    public ResponseEntity<List<Transaction>> getTransactionsWithUser(
+            @PathVariable String userId,
+            @RequestParam String otherUsernameOrFullName) {
+        List<Transaction> transactions = transactionService.getTransactionsWithUser(userId, otherUsernameOrFullName);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
+
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
             @RequestParam("userId") String userId,

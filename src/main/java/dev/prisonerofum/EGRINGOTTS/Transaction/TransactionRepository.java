@@ -28,5 +28,10 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
 
     long countTransactionsByAmountBetween(double minAmount,double maxAmount);
 
+
+    @Query("{$or: [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
+    List<Transaction> findByUserIdAndOtherUserId(String userId, String otherUserId);
+
+
 }
 
