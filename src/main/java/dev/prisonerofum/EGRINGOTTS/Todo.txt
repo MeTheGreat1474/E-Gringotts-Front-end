@@ -16,26 +16,22 @@ HI everyone this is a todo list to make our lives easier.
 2. @Taufiq : make the makeNewTransaction api return transaction id ✅
 3. @Taufiq : make new transactionType 'RELOAD' ✅
 
---------------AQEEL TODO LIST ----------------
-1.make more goblin variable
-
-
-
 --------------BACKEND UPDATE----------------
-TO BE FIXED :
+
 1. @Taufiq : Use userId instead of database auto-assign ObjectId for transaction
 2.@Aqeel : balance should 2 perpuluhan or not ?
 
 ------------CHECKLIST MEETING----------
 1)change github backend and frontend
-2)ask farisya about the date filter
+
+
 --------------CHECKLIST----------------
 1) Account Creation, Transactions & User Types (3%)
     a. generic class Account ✅
     b. class Card  ✅
     c. class Transaction  ✅
     d. class User  ✅
-    e. class Admin
+    e. class Admin ✅
 
 2) Pensieve Past (Transaction History - 1%)
     a. transaction history function
