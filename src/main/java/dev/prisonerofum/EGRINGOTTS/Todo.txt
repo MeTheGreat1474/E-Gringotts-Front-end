@@ -15,7 +15,8 @@ HI everyone this is a todo list to make our lives easier.
 2. @Taufiq : create reload api that take in {amount} parameter and return transaction id ✅
 2. @Taufiq : make the makeNewTransaction api return transaction id ✅
 3. @Taufiq : make new transactionType 'RELOAD' ✅
-
+-------------AQEEL TODO LIST---------------------
+1.adjust Prediction system variable
 --------------BACKEND UPDATE----------------
 
 1. @Taufiq : Use userId instead of database auto-assign ObjectId for transaction
