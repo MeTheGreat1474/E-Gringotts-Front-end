@@ -121,30 +121,35 @@ public class TransactionController {
     }
 
     @PostMapping("/exchange")
-    public ResponseEntity<ExchangeResponse> exchangeCurrency(
+    public ResponseEntity<String> exchangeCurrency(
             @RequestParam String userId,
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
             @RequestParam double amount) {
 
         try {
-            ExchangeResponse response = transactionService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
-            return ResponseEntity.ok(response);
+            // Perform the currency exchange and get the result
+            ExchangeResponse exchangeResponse = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
+
+            // Create the transaction using the result of the currency exchange
+            String transactionId = transactionService.exchangeCurrency(exchangeResponse, userId, fromCurrency, toCurrency, amount);
+            return ResponseEntity.ok("Exchange successful. Transaction ID: " + transactionId);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("Exchange failed: " + e.getMessage());
         }
     }
 
 //    @GetMapping("/exchange")
 //    public ResponseEntity<String> exchangeCurrency(
+//            @RequestParam String userId,
 //            @RequestParam String fromCurrency,
 //            @RequestParam String toCurrency,
 //            @RequestParam double amount) {
 //
-//        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+//        ExchangeResponse response = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
 //        String result = String.format("%f %s = %f %s, processing fee to charge = %f %s",
 //                response.getAmount(), response.getFromCurrency(),
-//                response.getExchangedValue(), response.getToCurrency(),
+//                response.getConvertedAmount(), response.getToCurrency(),
 //                response.getProcessingFee(), response.getFromCurrency());
 //        return new ResponseEntity<>(result, HttpStatus.OK);
 //    }

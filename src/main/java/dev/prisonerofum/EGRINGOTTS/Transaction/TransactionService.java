@@ -26,12 +26,12 @@ import org.springframework.context.annotation.Lazy;
 @Service
 public class TransactionService {
 
-    @Autowired                                  // initialized the EGringottsRepository
+    @Autowired                              // initialized the EGringottsRepository
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository<User> accountRepository;
     @Autowired
-    private CurrencyExchangeService currencyExchangeService;
+    private CurrencyGraph<String> graph;
     @Autowired
     private EmailService emailService;
 
@@ -39,7 +39,8 @@ public class TransactionService {
 
     //@Lazy is used to delay the instantiation
     @Autowired
-    public TransactionService(@Lazy AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository, @Lazy AccountService accountService) {
+        this.transactionRepository = transactionRepository;
         this.accountService = accountService;
     }
 
@@ -125,69 +126,35 @@ public class TransactionService {
         return savedTransaction.getId().toString();
     }
 
-    public String createTransaction(String userId, String fromCurrency, String toCurrency, double amount,
-                                    double exchangedValue, double processingFee) {
+    public String exchangeCurrency(ExchangeResponse result, String userId, String fromCurrency, String toCurrency, double amount) {
+        Account<User> account = result.getUserId();
+        double convertedAmount = result.getConvertedAmount();
+        double processingFee = result.getProcessingFee();
+
         // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(userId);
+        transaction.setReceiverID(null); // For currency exchange, receiverId can be null
         transaction.setAmount(amount);
-        transaction.setCategory(TransactionCategory.EXCHANGE);
-        transaction.setTransactionType("Currency Exchange");
-        transaction.setRemarks(String.format("Exchanged %s to %s", fromCurrency, toCurrency));
+        transaction.setConvertedAmount(convertedAmount);
         transaction.setProcessingFee(processingFee);
-        transaction.setExchangedValue(exchangedValue);
+        transaction.setTransactionType("EXCHANGE");
+        transaction.setCategory(TransactionCategory.EXCHANGE);
+        transaction.setRemarks(String.format("Exchanged %.2f %s to %.2f %s", amount, fromCurrency, convertedAmount, toCurrency));
+        transaction.setDate(new Date());
+        transaction.setBalance(account.getBalance());
         transaction.generateTransactionID();
 
-        // Set transaction date and time
-        String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
-        String transactionTime = new SimpleDateFormat("HH:mm:ss").format(transaction.getDate());
-        transaction.setTransactionDate(transactionDate);
-        transaction.setTransactionTime(transactionTime);
+        transaction = transactionRepository.save(transaction);
 
-        // Save the transaction to the database
-        Transaction savedTransaction = transactionRepository.save(transaction);
-
-        // Return the generated transaction ID
-        return savedTransaction.getTransactionID();
-    }
-
-    public ExchangeResponse exchangeCurrency(String userId, String fromCurrency, String toCurrency, double amount) {
-        // Perform currency exchange
-        ExchangeResponse response = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
-
-        // Deduct the exchanged amount and processing fee from the user's account
-        Account userAccount = accountRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        double totalDeduction = amount + response.getProcessingFee();
-
-        if (userAccount.getBalance() < totalDeduction) {
-            throw new RuntimeException("Insufficient balance");
-        }
-
-        userAccount.setBalance(userAccount.getBalance() - totalDeduction);
-        accountRepository.save(userAccount);
-
-        // Create and save the transaction
-        Transaction transaction = new Transaction();
-        transaction.setUserID(userId);
-        transaction.setReceiverID(null);  // For currency exchange, receiverId can be null
-        transaction.setAmount(totalDeduction);
-        transaction.setCategory(TransactionCategory.EXCHANGE);
-        transaction.setTransactionType("Currency Exchange");
-        transaction.setRemarks(String.format("Exchanged %f %s to %f %s", amount, fromCurrency, response.getExchangedValue(), toCurrency));
-        Transaction savedTransaction = transactionRepository.save(transaction);
-
-        // Update response with transaction details
-        response.setTransactionId(savedTransaction.getId().toString());
-        response.setBalance(userAccount.getBalance());
-
-        return response;
+        return transaction.getId().toString();
     }
 
     // Create a method to handle reloading an account
     public String reloadAccount(String userId, Double amount, String remarks) {
         Optional<Account<User>> optionalAccount = accountRepository.findByUserId(userId);
         if (!optionalAccount.isPresent()) {
-            throw new RuntimeException("Account is not found");
+            throw new RuntimeException("User account is not found");
         }
         Account<User> account = optionalAccount.get();
         account.setBalance(account.getBalance() + amount);
@@ -197,6 +164,7 @@ public class TransactionService {
         transaction.setUserID(userId);
         transaction.setReceiverID(userId);
         transaction.setAmount(amount);
+        transaction.setBalance(account.getBalance());
         transaction.setConvertedAmount(0);
         transaction.setProcessingFee(0); // No processing fee for reload
         transaction.setTransactionType("RELOAD");
