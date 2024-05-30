@@ -1,0 +1,54 @@
+.analytic-filter-box {
+    position: relative;
+    justify-self: left;
+    align-self: flex-start;
+    padding-left: 40px;
+    top: 20%;
+    width: 100%;
+}
+
+.analytic-filter-box h1 {
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.date-filters, .frequency-filter, .paymentMethod-filters, .analytic-filter-button {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.date-filters div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/*.frequency-filter .frequency-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}*/
+
+.paymentMethod-filters .filter-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}
+
+.paymentMethod-filters label {
+    color: #FFFFFF;
+}
+
+

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
-import {useGetUser} from "./getUser";
+
 
 const toQueryString = (params) => {
     return '?' + Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
 };
 
-export const useGetAnalytics = (username) => {
+export const useGetAnalyticsDefault = (userId) => {
 
-    const { user, getUser } = useGetUser(username);
+    /*const { user, getUser } = useGetUser(username);
     useEffect(() => {
         getUser();
-    }, [getUser]);
+    }, [getUser]);*/
     // console.log(user?.userId)
 
     const [data, setData] = useState([]);
@@ -19,7 +19,7 @@ export const useGetAnalytics = (username) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}`);
+                const response = await api.get(`/Transaction/api/analytics?userId=${userId}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -32,12 +32,12 @@ export const useGetAnalytics = (username) => {
         };
 
         fetchAnalytic();
-    }, [user]);
+    }, [userId]);
 
     return data;
 };
 
-export const useGetAnalyticsDate = (username, startDate, endDate) => {
+/*export const useGetAnalyticsDate = (username, startDate, endDate) => {
 
     const { user, getUser } = useGetUser(username);
     useEffect(() => {
@@ -130,4 +130,46 @@ export const useGetAnalyticsPaymentMethod = (username, paymentMethod) => {
     }, [user, paymentMethod]);
 
     return data;
+};*/
+
+
+export const useGetAnalytics = () => {
+    const [analyticsData, setAnalyticsData] = useState([]);
+    //const [fetchDataOnButtonClick, setFetchDataOnButtonClick] = useState(false);
+
+    const getAnalyticsData = async (userId, startDate, endDate, frequency, paymentMethod) => {
+        /*const { user, getUser } = useGetUser(username);
+        useEffect(() => {
+            getUser();
+        }, [getUser]);*/
+        try { 
+            const response = await api.get('/api/analytics', {
+                params: {
+                    userId: userId,
+                    startDate: startDate || null,
+                    endDate: endDate || null,
+                    frequency: frequency || 'Monthly',
+                    paymentMethod: paymentMethod || null
+                }
+            });
+            if (response.status === 200) {
+                setAnalyticsData(response.data);
+            } else {
+                console.log('Oops, something went wrong!');
+            }
+        } catch (error) {
+            console.log('Error fetching analytics data:', error);
+        }
+    };
+
+    /*const handleGetAnalytics = async (username, startDate, endDate, frequency, paymentMethod) => {
+        const { user, getUser } = useGetUser(username);
+        useEffect(() => {
+            getUser();
+        }, [getUser]);
+        //setFetchDataOnButtonClick(true);
+        await getAnalyticsData(user, startDate, endDate, frequency, paymentMethod);
+    };*/
+
+    return { analyticsData, getAnalyticsData };
 };
