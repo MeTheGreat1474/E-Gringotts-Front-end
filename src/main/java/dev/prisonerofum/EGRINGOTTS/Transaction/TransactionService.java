@@ -171,6 +171,7 @@ public class TransactionService {
         transaction.setCategory(TransactionCategory.RELOAD);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+        transaction.generateTransactionID();
 
         transaction = transactionRepository.save(transaction);
 
