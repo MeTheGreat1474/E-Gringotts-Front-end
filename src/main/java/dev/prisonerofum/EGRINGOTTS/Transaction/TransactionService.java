@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
@@ -46,6 +42,25 @@ public class TransactionService {
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
+
+        Optional<Account<User>> senderAccount = accountRepository.findByUserId(senderId);
+        Optional<Account<User>> receiverAccount = accountRepository.findByUserId(receiverId);
+
+        if (!senderAccount.isPresent()) {
+            throw new RuntimeException("Sender account is not found");
+        }
+        if (!receiverAccount.isPresent()) {
+            throw new RuntimeException("Receiver account is not found");
+        }
+
+        Account<User> senderAcc = senderAccount.get();
+        senderAcc.setBalance(senderAcc.getBalance() - amount);
+        accountRepository.save(senderAcc);
+
+        Account<User> receiverAcc = receiverAccount.get();
+        receiverAcc.setBalance(receiverAcc.getBalance() + amount);
+        accountRepository.save(receiverAcc);
+
         // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(senderId);
