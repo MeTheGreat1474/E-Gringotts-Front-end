@@ -155,18 +155,18 @@ public class TransactionController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false, defaultValue = "Monthly") String frequency,
-            @RequestParam(required = false) Set<String> paymentMethods) throws Exception {
+            @RequestParam(required = false) Set<String> paymentMethod) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end = endDate != null ? sdf.parse(endDate) : new Date();
-        Set<String> methods = paymentMethods != null ? paymentMethods : new HashSet<>(Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER", "RELOAD"));
+        Set<String> methods = paymentMethod != null ? paymentMethod : new HashSet<>(Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER"));
 
         // Determine the default start date based on the frequency
         if (startDate != null) {
             start = sdf.parse(startDate);
         } else {
-            if (frequency.equals("Daily")) {
+            if (frequency.equalsIgnoreCase("Daily")) {
                 start = getDefaultStartDateForDaily();
             } else {
                 start = getDefaultStartDateForMonthly();
