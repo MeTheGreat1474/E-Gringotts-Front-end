@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Navbar.css'
 import {useLocation, useNavigate} from "react-router-dom";
+import Chatbot from "./Chatbot/Chatbot";
 
 function Navbar({username, user}) {
     const location = useLocation();
@@ -44,6 +45,7 @@ function Navbar({username, user}) {
                     )}
                 </div>
             </div>
+            <Chatbot/>
         </>
     );
 }

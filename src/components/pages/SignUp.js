@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "../Button";
 import '../../App.css'
 import api from "../../api/axiosConfig";
+import Chatbot from "../Chatbot/Chatbot";
 
 function SignUp() {
 
@@ -191,6 +192,7 @@ function SignUp() {
                 </div>
 
             </div>
+            <Chatbot/>
         </>
 
     );

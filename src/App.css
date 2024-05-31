@@ -84,7 +84,7 @@ body::-webkit-scrollbar {
     bottom: 5%;
     width: 100vw;
     object-fit: cover;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 .login .box, .sign-up .box {
@@ -189,7 +189,7 @@ body::-webkit-scrollbar {
     bottom: 3%;
     width: 100vw;
     object-fit: cover;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 .sign-up .box {
