@@ -20,8 +20,6 @@ public class CurrencyExchangeService {
     @Autowired
     private AccountRepository accountRepository;
 
-    private TransactionRepository transactionRepository;
-
     private CurrencyGraph<String> graph;
 
     @PostConstruct
@@ -36,15 +34,21 @@ public class CurrencyExchangeService {
     }
 
     public CurrencyGraph<String> addCurrencyPairs(List<String[]> currencies) {
+        // Check if the graph already exists in the repository
+        CurrencyGraph<String> graph = currencyGraphRepository.findById("0312269844554901").orElse(null);
+
+        // If the graph does not exist, create a new one
         if (graph == null) {
             graph = new CurrencyGraph<>("0312269844554901", new ArrayList<>());
         }
 
+        // Add new currency pairs to the existing graph
         for (String[] currency : currencies) {
             graph.addCurrency(currency[0], currency[1], Double.parseDouble(currency[2]), Double.parseDouble(currency[3]));
         }
-        graph = currencyGraphRepository.save(graph);
-        return graph;
+
+        // Save the updated graph back to the repository
+        return currencyGraphRepository.save(graph);
     }
 
     public ExchangeResponse exchangeCurrency(String userId, String fromCurrency, String toCurrency, double amount) {

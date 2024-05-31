@@ -1,13 +1,11 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 
-import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
 import java.util.*;
 import java.text.ParseException;
@@ -207,7 +205,6 @@ public class TransactionController {
         cal.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
         return cal.getTime();
     }
-
 }
 
 

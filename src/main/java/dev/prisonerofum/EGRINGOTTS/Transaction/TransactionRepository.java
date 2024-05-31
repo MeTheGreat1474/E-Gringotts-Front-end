@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +14,8 @@ import java.util.Optional;
 public interface TransactionRepository extends MongoRepository<Transaction, ObjectId> {
 
     List<Transaction> findByUserID(String userId);
+
+    Optional<Transaction> findByTransactionID(String transactionId);
 
     List<Transaction> findByUserIDAndTransactionDateBetween(String userId, Date startDate, Date endDate);
 
@@ -28,10 +29,8 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
 
     long countTransactionsByAmountBetween(double minAmount,double maxAmount);
 
-
     @Query("{$or: [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
     List<Transaction> findByUserIdAndOtherUserId(String userId, String otherUserId);
-
 
 }
 
