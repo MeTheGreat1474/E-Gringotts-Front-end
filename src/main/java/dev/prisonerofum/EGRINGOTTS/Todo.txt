@@ -65,14 +65,28 @@ TO BE FIXED :
     a. GUI
         - Login ✅
         - Sign up ✅
-        - Display Account
+        - Display Account ✅
         - Display Balance ✅
         - Transfer
+            : Filter for transfer
+            : Loading need to disable all click
+            : Log display out of bounds
         - Reload
+            : No transactionDate & transactionTime for reload like normal transaction
         - Transaction History
+            : Filter by search name
+                - Postman does not return any data, 200 OK
         - Admin Dashboard
-        - Ai Chat 🆖❌
+            : No API
+        - Analytics
+            : API ERROR 404 NOT FOUND ON POSTMAN
+            : Is not responsive idk why
+        - Currency Conversion
+            : Every
 
     b. security pin upon log in ✅
     c. password hashing ✅
     d. email notification
+        : later
+    e. Ai Chat 🆖❌
+        : later

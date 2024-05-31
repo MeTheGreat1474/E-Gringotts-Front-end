@@ -31,7 +31,7 @@ public class TransactionController {
 
         try {
             String transactionId = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
-            return ResponseEntity.ok("Transaction successful. Transaction ID: " + transactionId);
+            return ResponseEntity.ok(transactionId);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -45,7 +45,7 @@ public class TransactionController {
 
         try {
             String transactionId = transactionService.reloadAccount(userId, amount, remarks);
-            return ResponseEntity.ok("Reload successful. Transaction ID: " + transactionId);
+            return ResponseEntity.ok(transactionId);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
