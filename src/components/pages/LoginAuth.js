@@ -5,6 +5,7 @@ import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons'
 import api from "../../api/axiosConfig";
+import Chatbot from "../Chatbot/Chatbot";
 
 
 function LoginAuth() {
@@ -54,6 +55,7 @@ function LoginAuth() {
                     <p></p>
                 </div>
             </div>
+            <Chatbot/>
 
         </>
     );

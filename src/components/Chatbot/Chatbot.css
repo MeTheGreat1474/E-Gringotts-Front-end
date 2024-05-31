@@ -121,21 +121,22 @@
     cursor: pointer;
     bottom : 0;
     margin : 10px 10px 10px 10px;
+
 }
 
 
-.ai-circle::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #CDB373;
-    transform: translate(-50%, -50%);
-}
+/*.ai-circle::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*    border-left: 10px solid transparent;*/
+/*    border-right: 10px solid transparent;*/
+/*    border-bottom: 10px solid #CDB373;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -151,6 +152,29 @@
     font-size: 14px; /* Adjust this value to make the text smaller or larger */
     border-radius: 10px;
     text-align: center;
+}
+.ai-box button {
+    background-color: #323b6e; /* Change the background color to gold */
+    border: 1px solid #CDB373;
+    color: #CDB373; /* Change the text color to contrast with the gold background */
+    font-size: 14px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Mason Sans OT', sans-serif;
+}
+.ai-box input {
+    background-color: #323b6e;
+    border: 1px solid #CDB373;
+    color: #CDB373;
+    font-size: 14px;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'Mason Sans OT', sans-serif;
+
+}
+
+.ai-box input:focus {
+    outline: none;
 }
 
 

@@ -57,13 +57,14 @@ function Chatbot() {
     return (
         <div>
             <div className={`ai-circle ${isOpen ? 'open' : 'closed'}`} onClick={() => setIsOpen(!isOpen)}>
-                <img src='/images/owl.png' alt="Logo" style={{
+                <img src='/images/wowl.png' alt="Logo" style={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '40px',
-                    height: '40px'
+                    height: '40px',
+                    userSelect: 'none'
                 }}/>
             </div>
             <div className={`ai-box ${isResponsive ? 'ai-box-responsive' : ''} ${isOpen ? 'open' : 'closed'}`}
