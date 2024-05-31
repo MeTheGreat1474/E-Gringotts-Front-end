@@ -2,11 +2,21 @@ import React, {useEffect, useState} from 'react'
 import {
     useGetAnalytics,
     useGetAnalyticsCategory,
-    useGetAnalyticsDate,
+    useGetAnalyticsDate, useGetAnalyticsDefault,
     useGetAnalyticsFrequency
 } from '../../services/getAnalytics';
 import AnalyticContentLog from './AnalyticContentLog';
 import './AnalyticContent.css'
+
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // Months are 0 based so add 1 and format to 2 digits
+const day = ("0" + currentDate.getDate()).slice(-2); // Format to 2 digits
+
+const formattedDate = `${year}-${month}-${day}`;
+
+//TODO FIX DATE FILTER FOR ANALYTIC
+//TODO FIX FILTER CALL BEING NOT RESPONSIVE AND HAVE TO MAKE CHANGES IN CODE FOR IT TO WORK
 
 function AnalyticContent({username}) {
     const filterRef = React.useRef();
@@ -17,11 +27,10 @@ function AnalyticContent({username}) {
     const [frequency, setFrequency] = useState("");
     const [category, setCategory] = useState("");
 
-    const analyticsDataDefault = useGetAnalytics(username);
+    const analyticsDataDefault = useGetAnalyticsDefault(username);
     const analyticsDataDate = useGetAnalyticsDate(username, startDate, endDate);
     const analyticsDataFrequency = useGetAnalyticsFrequency(username, frequency);
     const analyticsDataCategory = useGetAnalyticsCategory(username, category);
-
 
     console.log('username:', username);
     console.log('filterRef:', filterRef);
@@ -31,14 +40,39 @@ function AnalyticContent({username}) {
     console.log('endDate:', endDate);
     console.log('frequency:', frequency);
     console.log('category:', category);
-    console.log('analyticsDataDefault:', analyticsDataDefault);
-    console.log('analyticsDataDate:', analyticsDataDate);
-    console.log('analyticsDataFrequency:', analyticsDataFrequency);
-    console.log('analyticsDataCategory:', analyticsDataCategory);
+    // console.log('analyticsDataDefault:', analyticsDataDefault);
+    // console.log('analyticsDataDate:', analyticsDataDate);
+    // console.log('analyticsDataFrequency:', analyticsDataFrequency);
+    // console.log('analyticsDataCategory:', analyticsDataCategory);
 
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
+        resetFilters(e.target.value);
+
+        if (e.target.value === "category") {
+            setCategory("TRANSFER");
+        }
+        if (e.target.value === "frequency") {
+            setFrequency("daily");
+        }
+        if (e.target.value === "date") {
+            setStartDate("2000-01-01");
+            setEndDate(formattedDate)
+        }
     }
+    const resetFilters = (selectedFilter) => {
+        if (selectedFilter !== "date") {
+            setStartDate(null);
+            setEndDate(null);
+        }
+        if (selectedFilter !== "frequency") {
+            setFrequency(null);
+        }
+        if (selectedFilter !== "category") {
+            setCategory(null);
+        }
+    }
+
     const handleStartDateChange = (e) => {
         setStartDate(e.target.value);
     }
@@ -98,18 +132,18 @@ function AnalyticContent({username}) {
                     </div>
                 )}
                 {filterType === "frequency" && (
-                    <select onChange={handleFrequencyChange}>
+                    <select value={frequency} onChange={handleFrequencyChange}>
                         <option value="daily">Daily</option>
                         <option value="monthly">Monthly</option>
                         <option value="yearly">Yearly</option>
                     </select>
                 )}
                 {filterType === "category" && (
-                    <select onChange={handleCategoryChange}>
-                        <option value="credit-card">Credit Card</option>
-                        <option value="debit-card">Debit Card</option>
-                        <option value="transfer">Transfer</option>
-                        <option value="reload">Reload</option>
+                    <select value={category} onChange={handleCategoryChange}>
+                        <option value="CREDIT CARD">Credit Card</option>
+                        <option value="DEBIT CARD">Debit Card</option>
+                        <option value="TRANSFER">Transfer</option>
+                        <option value="RELOAD">Reload</option>
                     </select>
                 )}
             </div>

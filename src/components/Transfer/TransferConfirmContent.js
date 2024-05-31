@@ -7,18 +7,28 @@ import {Input} from "../Input";
 import CurrencyInput from "react-currency-input-field";
 import MoneyInput from "../MoneyInput";
 import {Button} from "../Button";
+import {postTransfer} from "../../services/transfer";
 
 function TransferConfirmContent({toUser}) {
     const navigate = useNavigate();
     const { username } = useParams();
 
-    const { user, getUser } = useGetUser(toUser);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { user: receiverUser, getUser: getReceiverUser } = useGetUser(toUser);
+    const { user: senderUser, getUser: getSenderUser } = useGetUser(username);
     useEffect(() => {
-        getUser();
-    }, [getUser]);
+        getReceiverUser();
+        getSenderUser();
+    }, [getReceiverUser, getSenderUser]);
+
+    const userBalance = senderUser?.balance
+    const [error, setError] = useState("");
 
     const [amount, setAmount] = useState("");
     const [details, setDetails] = useState("");
+    const [category, setCategory] = useState("OTHERS");
+    const transactionType = "TRANSFER"
 
     const handleDetailsChange = (e) => {
         setDetails(e.target.value)
@@ -36,11 +46,27 @@ function TransferConfirmContent({toUser}) {
         }
     }
 
-    const handleAmountSubmit = () => {
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+        console.log(e.target.value)
+    }
 
-        //TODO: MAKE NEW TRANSFER API AND CREATE RECEIPT PAGE
+    const handleAmountSubmit = async () => {
+        if (amount >= userBalance) {
+            setError("*Transfer amount cannot be larger than your balance");
+            return;
+        }
+        setError("");
+        setIsLoading(true);
 
-        navigate(`/${username}/transfer/receipt`, { state: { amount: amount } });
+        const response = await postTransfer(senderUser?.userId, receiverUser?.userId, amount, category, transactionType, details);
+        setIsLoading(false); // End loading
+        if (response) {
+            console.log( 'in confirm content' , response); // Logs the transactionId to the console
+            navigate(`/${username}/transfer/receipt`, { state: { transactionId: response } });
+        } else {
+            console.log('Transfer failed');
+        }
     }
 
     return (
@@ -49,7 +75,7 @@ function TransferConfirmContent({toUser}) {
                 <h1>TRANSFER TO</h1>
             </div>
             <div className="transfer-confirm-detail-box">
-                <DisplayUserProfile user={user}/>
+                <DisplayUserProfile user={receiverUser}/>
                 <div className="transfer-confirm-container">
                     <div className="transfer-amount-container">
                         <div className="transfer-amount-text">
@@ -64,6 +90,26 @@ function TransferConfirmContent({toUser}) {
                             <div className='currency'>
                                 <h3>Shekel</h3>
                             </div>
+                        </div>
+                        {error && <div className="error-message">
+                            <h4>{error}</h4>
+                        </div>} {/* Display error message when there is an error */}
+                    </div>
+                    <div className="transfer-details-container">
+                        <div className="transfer-details-text">
+                            <h2>Category</h2>
+                        </div>
+                        <div className="dropdown-list">
+                            <select onChange={handleCategoryChange}>
+                                <option value="OTHERS">OTHERS</option>
+                                <option value="FOOD">FOOD</option>
+                                <option value="GROCERY">GROCERY</option>
+                                <option value="MEDICAL">MEDICAL</option>
+                                <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                                <option value="UTILITIES">UTILITIES</option>
+                                <option value="RELOAD">RELOAD</option>
+                                <option value="EXCHANGE">EXCHANGE</option>
+                            </select>
                         </div>
                     </div>
                     <div className="transfer-details-container">
@@ -82,14 +128,12 @@ function TransferConfirmContent({toUser}) {
                         </div>
                     </div>
                     <Button type='submit' onClick={handleAmountSubmit}>Confirm Transfer</Button>
+                    {isLoading &&
+                        <div className="loading-overlay">
+                            <div className="loading-spinner">Transfering...</div>
+                        </div>
+                    }
 
-                    {/*<CurrencyInput*/}
-                    {/*    className="currency-input"*/}
-                    {/*    placeholder="Amount"*/}
-                    {/*    value={amount} // Bind the value prop to the amount state*/}
-                    {/*    fixedDecimalLength={2}*/}
-                    {/*    onValueChange={setAmount}*/}
-                    {/*/>*/}
                 </div>
             </div>
         </div>

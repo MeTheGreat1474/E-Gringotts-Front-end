@@ -33,3 +33,4 @@ export const useGetUser = (username) => {
 //const {variable} = location.state.{variable};
 //if use passing
 //<Pages username={username} />
+//    const { username } = useParams();

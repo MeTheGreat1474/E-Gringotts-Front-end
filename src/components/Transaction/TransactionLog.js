@@ -1,19 +1,44 @@
-import React from 'react'
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import {useNavigate, useParams} from "react-router-dom";
+import {getUserById, getUserByUserId} from "../../services/getUserById";
 
-function TransactionLog({data}) {
+function TransactionLog({ data }) {
+    const { username } = useParams();
     const navigate = useNavigate();
+    const [transactions, setTransactions] = useState([]);
+
     const handleClick = (transactionId) => {
-        navigate(`/:username/transaction/receipt`, { state: { transactionId: transactionId } });
+        navigate(`/${username}/transaction/receipt`, { state: { transactionId: transactionId } });
     }
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const transactionsWithUserData = await Promise.all(data.map(async (transaction) => {
+                const user = await getUserByUserId(transaction.receiverID);
+                if (user) {
+                    return {
+                        ...transaction,
+                        receiverUsername: user.username,
+                        receiverPhone: user.phone
+                    };
+
+                } else {
+                    return transaction;
+                }
+            }));
+            setTransactions(transactionsWithUserData);
+        };
+
+        fetchUserData();
+    }, [data]);
 
     return (
         <div className="log-container">
-            {data.map((item, index) => (
-                <div className="log" key={index} onClick={() => handleClick(item.id)}>
+            {transactions.map((item, index) => (
+                <div className="log" key={index} onClick={() => handleClick(item.transactionID)}>
                     <div className="details">
-                        <h4 className='username'>{item.username}</h4>
-                        <p className='category'>{item.phone}</p>
+                        <h4 className='username'>{item.receiverUsername}</h4>
+                        <p className='phone'>{item.receiverPhone}</p>
                     </div>
                     <p className='amount'>{item.amount}</p>
                 </div>

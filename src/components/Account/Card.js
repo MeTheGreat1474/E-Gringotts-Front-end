@@ -3,6 +3,8 @@ import './Card.css'
 import DisplayInput from "../DisplayInput";
 
 function Cards({ user }) {
+    const expiryDate = new Date(user?.card.cardExpiry);
+    const formattedExpiryDate = `${expiryDate.getMonth() + 1} / ${expiryDate.getFullYear() % 100}`;
     return (
         <>
             <div className="card-box">
@@ -15,14 +17,14 @@ function Cards({ user }) {
                     </div>
                     <div className="card-info-form-container">
                         <div className="row">
-                            <DisplayInput label='User ID' value={user?.id?.timestamp}/>
+                            <DisplayInput label='User ID' value={user?.userId}/>
                         </div>
                         <div className="row">
-                            <DisplayInput label='Card Number' value={user?.cardNumber}/>
+                            <DisplayInput label='Card Number' value={user?.card.cardNumber}/>
                         </div>
                         <div className="row">
-                            <DisplayInput label='CCV' value={user?.ccv}/>
-                            <DisplayInput label='Expiry Date' value={user?.expiryDate}/>
+                            <DisplayInput label='CVV' value={user?.card.cardCVV}/>
+                            <DisplayInput label='Expiry Date' value={formattedExpiryDate}/>
                         </div>
                     </div>
                 </div>

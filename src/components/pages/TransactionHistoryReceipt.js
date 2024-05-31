@@ -1,18 +1,20 @@
 import React, {useEffect} from 'react'
 import {useLocation, useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
-import ReloadReceiptContent from "../Receipt/ReloadReceiptContent";
 import Navbar from "../Navbar";
 import TransferConfirmContent from "../Transfer/TransferConfirmContent";
-import TransactionReceiptContent from "../Receipt/TransactionReceiptContent";
+import ReceiptContent from "../Receipt/ReceiptContent";
 
-function ReloadReceipt() {
+function TransactionHistoryReceipt() {
     const location = useLocation();
-    const amount = location.state.amount;
-    const username = location.state.username;
-    console.log(amount)
+    const transactionId = location.state.transactionId;
+    const { username } = useParams();
 
     const { user, getUser } = useGetUser(username);
+
+    const header = 'TRANSACTION RECEIPT'
+    console.log('TransacHistRec' , transactionId)
+
 
     useEffect(() => {
         getUser();
@@ -24,7 +26,7 @@ function ReloadReceipt() {
                 <Navbar username={username}/>
             </div>
             <div className="middle">
-                <TransactionReceiptContent username={username} amount={amount}/>
+                <ReceiptContent header={header} transactionId={transactionId}/>
             </div>
             <div className="right">
 
@@ -33,4 +35,4 @@ function ReloadReceipt() {
     )
 }
 
-export default ReloadReceipt
+export default TransactionHistoryReceipt

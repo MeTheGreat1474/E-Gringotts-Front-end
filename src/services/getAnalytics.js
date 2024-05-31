@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import {useGetUser} from "./getUser";
 
-export const useGetAnalytics = (username) => {
+export const useGetAnalyticsDefault = (username) => {
 
     const { user, getUser } = useGetUser(username);
     useEffect(() => {
@@ -15,8 +15,10 @@ export const useGetAnalytics = (username) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
-                // const response = await api.get(`/Transaction/api/analytics?userId=${username.userId}`);
-                const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a`);
+                const params = {
+                    userId: user?.userId,
+                };
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -47,8 +49,10 @@ export const useGetAnalyticsDate = (username, startDate, endDate) => {
     useEffect(() => {
         const fetchAnalytic= async () => {
             try {
+                if (startDate && endDate) {
+                    const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&startDate=${startDate}&endDate=${endDate}`);
+                }
                 // const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&startDate=${startDate}&endDate=${endDate}`);
-                const response = await api.get(`/Transaction/api/analytics?userId=663add009dfd4c1f900b6c1a&startDate=${startDate}&endDate=${endDate}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -84,8 +88,7 @@ export const useGetAnalyticsFrequency = (username, frequency) => {
                     userId: user?.userId,
                     frequency: frequency
                 };
-                const queryString = toQueryString(params);
-                const response = await api.get(`/Transaction/api/analytics${queryString}`);
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&frequency=${frequency}`);
 
                 if (response.status === 200) {
                     setData(response.data);
@@ -121,8 +124,7 @@ export const useGetAnalyticsCategory = (username, category) => {
                     userId: user?.userId,
                     category: category
                 };
-                const queryString = toQueryString(params);
-                const response = await api.get(`/Transaction/api/analytics${queryString}`);
+                const response = await api.get(`/Transaction/api/analytics?userId=${user?.userId}&paymentMethods=${category}`);
 
                 if (response.status === 200) {
                     setData(response.data);

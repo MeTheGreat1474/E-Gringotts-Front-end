@@ -16,6 +16,7 @@ import LoginAuth from "./components/pages/LoginAuth";
 import Analytic from "./components/pages/Analytic";
 import TransactionHistory from "./components/Transaction/TransactionHistory";
 import TransactionHistoryReceipt from "./components/pages/TransactionHistoryReceipt";
+import TransferReceipt from "./components/pages/TransferReceipt";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
             <Route path='/:username/account' element={<Account/>} />
             <Route path='/:username/transfer' element={<Transfer/>} />
             <Route path='/:username/transfer/confirm' element={<TransferConfirm/>} />
+            <Route path='/:username/transfer/receipt' element={<TransferReceipt/>} />
             <Route path='/:username/reload' element={<Reload/>} />
             <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
             <Route path='/:username/admin' element={<Admin/>} />

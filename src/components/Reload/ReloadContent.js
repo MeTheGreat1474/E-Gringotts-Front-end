@@ -6,6 +6,7 @@ import {Button} from "../Button";
 import { useNavigate } from 'react-router-dom';
 import {useGetUser} from "../../services/getUser";
 import {reload} from "../../services/reload";
+import {postTransfer} from "../../services/transfer";
 
 function ReloadContent({username}) {
 
@@ -18,10 +19,14 @@ function ReloadContent({username}) {
         getUser();
     }, [getUser]);
 
-    const handleAmountSubmit = () => {
-        reload(username, amount);
-        console.log(`Username: ${username}, Amount: ${amount}`)
-        navigate(`/${username}/reload/receipt`, { state: { amount: amount, username: username } });
+    const remark = 'RELOAD'
+
+
+    const handleAmountSubmit = async () => {
+        //TODO CURRENTLY RESPONSE == OBJECTID, NEED TO PROPERLY CHANGE TO TRANSACTIONID
+        const response = await reload(user?.userId, amount, remark);
+        console.log(response)
+        navigate(`/${username}/reload/receipt`, {state: {transactionId: response}});
     }
 
     return (

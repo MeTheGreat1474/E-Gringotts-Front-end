@@ -1,10 +1,10 @@
 import api from "../api/axiosConfig";
 
-export const reload = async (username, amount) => {
+export const reload = async (userId, amount, remark) => {
     try {
-        const response = await api.get(`/Account/${username}/reload?amount=${amount}`);
+        const response = await api.post(`/Transaction/reload?userId=${userId}&amount=${amount}&remarks=${remark}`);
+        // const response = await api.get(`/Account/${username}/reload?amount=${amount}`);
         if (response.status === 200) {
-            console.log('Reload successful');
             return response.data;
         } else {
             console.log('Oops, something went wrong!');
