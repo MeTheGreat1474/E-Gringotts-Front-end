@@ -1,13 +1,86 @@
-.admin-box {
-    position: relative;
-    justify-self: left;
-    align-content: center;
-    padding-left: 40px;
-    padding-right: 40px;
-    top: 10%;
-    width: 90%;
+.analytic-box {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+.analytic-box h1 {
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.analytic-box h2{
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.analytic-box h3{
+    margin-bottom: 20px;
+    color: #000000;
+    font-family: Montaga;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+    border-bottom: 1px solid #CDB373;
+}
+
+.analytic-box h4{
+    padding: 0px 0px 0px 0px;
+    color: #CDB373;
+    font-family: Montaga;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+
+.analytic-box p{
+    padding: 0px 0px 10px 30px;
+    color: #FFFFFF;
+    font-family: Montaga;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.analytic-content-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 0px 0px 20px;
+    max-height: 77vh;
+    overflow-y: scroll;
+    scrollbar-color: #CDB373 transparent;
+}
+
+.date-container {
+    margin-bottom: 30px;
+}
+
+.analytic-content-container {
+    background-color: #424f94;
+    border-radius: 10px;
+    border: 1px solid #CDB373;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/*background-color: #424f94;
 .admin-content-box{
     display: flex;
     flex-direction: column;
@@ -18,66 +91,43 @@
     scrollbar-color: #CDB373 transparent;
 }
 
-.admin-box h1{
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 20px;
-    color: #CDB373;
-    /*font-family: Montaga;*/
-    font-family: 'Mason Sans OT', sans-serif;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
 }
 
-.admin-box h2{
-    margin-bottom: 20px;
-    color: #CDB373;
-    /*font-family: Montaga;*/
-    font-family: 'Mason Sans OT', sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
+.date-filters, .frequency-filter, .paymentMethod-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.admin-box h3{
-    margin-bottom: 20px;
+.date-filters div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.frequency-filter .frequency-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}
+
+.paymentMethod-filters .filter-heading {
+    margin-bottom: 5px;
+    color: #CDB373;
+}
+
+.paymentMethod-filters label {
     color: #FFFFFF;
-    font-size: 25px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
-    border-bottom: 1px solid #CDB373;
 }
 
-.admin-box h4{
-    padding: 0px 0px 0px 30px;
-    color: #CDB373;
-    font-family: Montaga;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    text-transform: capitalize;
-}
-
-.admin-box p{
-    padding: 0px 0px 10px 30px;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-}
-
-.admin-content-container {
-    margin: 20px 0px 0px 30px;
+.analytic-content-container {
     background-color: #424f94;
     border-radius: 10px;
     border: 1px solid #CDB373;
     padding: 10px;
-}
-
-.admin-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: end;
-}
+}*/
