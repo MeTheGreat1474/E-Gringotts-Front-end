@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import {useGetUser} from "./getUser";
 
-//TODO: REPAIR TRANSACTION HISTORY
-
 export const useGetSingleTransacHistory = (username) => {
     const { user, getUser } = useGetUser(username);
 

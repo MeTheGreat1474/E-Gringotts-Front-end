@@ -3,10 +3,9 @@ import Navbar from "../Navbar";
 import AccountBalance from "../Account/AccountBalance";
 import TransactionHistory from "../Transaction/TransactionHistory";
 import {useParams} from "react-router-dom";
-import AdminContent from "../Admin/AdminContent";
+import ExchangeContent from "../Exchange/ExchangeContent";
 
-
-function Admin() {
+function Exchange() {
     const { username } = useParams();
 
     return (
@@ -16,7 +15,7 @@ function Admin() {
                     <Navbar username={username}/>
                 </div>
                 <div className="middle">
-                    <AdminContent username={username}/>
+                    <ExchangeContent />
                 </div>
                 <div className="right">
 
@@ -26,4 +25,4 @@ function Admin() {
     )
 }
 
-export default Admin
+export default Exchange

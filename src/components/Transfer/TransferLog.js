@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllUsers, useGetAlphabetUsers, useGetFavouriteUsers, useGetNameUsers } from "../../services/getAllUser";
+import {useGetAllUsers, useGetSearchUsers} from "../../services/getAllUser";
 
 function TransferLog({ search, filterType }) {
     const navigate = useNavigate();
     const { username } = useParams();
     const [users, setUsers] = useState([]);
 
-    //TODO: IMPLEMENT PROPER FILTER CALL FOR TRANSFER
     const allUsers = useGetAllUsers(username);
-    const alphabetUsers = useGetAllUsers(username);
-    const favouriteUsers = useGetAllUsers(username);
-    const nameUsers = useGetAllUsers(username);
+    const searchedUsers = useGetSearchUsers(search, username);
+    // const favouriteUsers = useGetAllUsers(username);
+    // const nameUsers = useGetAllUsers(username);
 
     const handleClick = (path, user) => {
         navigate(path, { state: { toUser: user } });
@@ -23,14 +22,14 @@ function TransferLog({ search, filterType }) {
             case 'recent':
                 fetchedUsers = allUsers;
                 break;
-            case 'alphabet':
-                fetchedUsers = alphabetUsers;
+            case 'contact':
+                fetchedUsers = searchedUsers;
                 break;
-            case 'favourite':
-                fetchedUsers = favouriteUsers;
+            case 'email':
+                fetchedUsers = searchedUsers;
                 break;
             case 'name':
-                fetchedUsers = nameUsers;
+                fetchedUsers = searchedUsers;
                 break;
             default:
                 fetchedUsers = allUsers;
@@ -40,7 +39,7 @@ function TransferLog({ search, filterType }) {
 
     useEffect(() => {
         fetchUsers();
-    }, [filterType, username, allUsers, alphabetUsers, favouriteUsers, nameUsers]);
+    }, [filterType, username, allUsers, searchedUsers]);
 
     return (
         <div className="logs-wrapper">
@@ -52,6 +51,9 @@ function TransferLog({ search, filterType }) {
                         </div>
                         <div className="phone">
                             <h4>{item.phone}</h4>
+                        </div>
+                        <div className="email">
+                            <h4>{item.email}</h4>
                         </div>
                     </div>
                 </div>

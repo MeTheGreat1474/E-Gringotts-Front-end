@@ -72,3 +72,26 @@ export const useGetAllTransactionsCategory = (userId, category) => {
 
     return transactions;
 };
+
+export const useGetAllTransactionsName = (userId, name) => {
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const response = await api.get(`/Transaction/history/${userId}/withUser?otherUsernameOrFullName=${name}`);
+                if (response.status === 200) {
+                    setTransactions(response.data);
+                } else {
+                    console.log('Oops, we haven\'t got JSON!');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchTransactions();
+    }, [userId, name]); // Add category to the dependency array
+
+    return transactions;
+};

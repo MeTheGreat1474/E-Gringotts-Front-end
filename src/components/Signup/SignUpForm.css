@@ -6,7 +6,8 @@ label {
 
 label {
     color: rgba(205, 179, 115, 0.90);
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;

@@ -21,6 +21,7 @@
 
  .name .username {
      flex: 50%;
+     font-family: Montaga;
  }
 
  .name .usertype {

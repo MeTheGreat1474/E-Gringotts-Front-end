@@ -1,6 +1,7 @@
 .balance-info-box .text {
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;

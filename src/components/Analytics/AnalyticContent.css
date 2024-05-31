@@ -21,7 +21,8 @@
 .admin-box h1{
     margin-bottom: 20px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
@@ -31,7 +32,8 @@
 .admin-box h2{
     margin-bottom: 20px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 30px;
     font-style: normal;
     font-weight: 400;

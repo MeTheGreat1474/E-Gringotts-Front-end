@@ -70,73 +70,76 @@ function TransferConfirmContent({toUser}) {
     }
 
     return (
-        <div className="transfer-confirm-box">
-            <div className="title">
-                <h1>TRANSFER TO</h1>
-            </div>
-            <div className="transfer-confirm-detail-box">
-                <DisplayUserProfile user={receiverUser}/>
-                <div className="transfer-confirm-container">
-                    <div className="transfer-amount-container">
-                        <div className="transfer-amount-text">
-                            <h2>Amount</h2>
+        <>
+            <div className="transfer-confirm-box">
+                <div className="title">
+                    <h1>TRANSFER TO</h1>
+                </div>
+                <div className="transfer-confirm-detail-box">
+                    <DisplayUserProfile user={receiverUser}/>
+                    <div className="transfer-confirm-container">
+                        <div className="transfer-amount-container">
+                            <div className="transfer-amount-text">
+                                <h2>Amount</h2>
+                            </div>
+                            <div className="transfer-amount-box">
+                                <MoneyInput
+                                    onChange={handleValueChange}
+                                    amount={amount}
+                                    placeholder='0.00'
+                                />
+                                <div className='currency'>
+                                    <h3>Shekel</h3>
+                                </div>
+                            </div>
+                            {error && <div className="error-message">
+                                <h4>{error}</h4>
+                            </div>} {/* Display error message when there is an error */}
                         </div>
-                        <div className="transfer-amount-box">
-                            <MoneyInput
-                                onChange={handleValueChange}
-                                amount={amount}
-                                placeholder='0.00'
-                            />
-                            <div className='currency'>
-                                <h3>Shekel</h3>
+                        <div className="transfer-details-container">
+                            <div className="transfer-details-text">
+                                <h2>Category</h2>
+                            </div>
+                            <div className="dropdown-list">
+                                <select onChange={handleCategoryChange}>
+                                    <option value="OTHERS">OTHERS</option>
+                                    <option value="FOOD">FOOD</option>
+                                    <option value="GROCERY">GROCERY</option>
+                                    <option value="MEDICAL">MEDICAL</option>
+                                    <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                                    <option value="UTILITIES">UTILITIES</option>
+                                    <option value="RELOAD">RELOAD</option>
+                                    <option value="EXCHANGE">EXCHANGE</option>
+                                </select>
                             </div>
                         </div>
-                        {error && <div className="error-message">
-                            <h4>{error}</h4>
-                        </div>} {/* Display error message when there is an error */}
-                    </div>
-                    <div className="transfer-details-container">
-                        <div className="transfer-details-text">
-                            <h2>Category</h2>
+                        <div className="transfer-details-container">
+                            <div className="transfer-details-text">
+                                <h2>Details</h2>
+                            </div>
+                            <div className="transfer-details-box">
+                                <Input
+                                    value={details}
+                                    inputStyle='input--default'
+                                    inputSize='input--large'
+                                    placeholder='What for?'
+                                    type='input'
+                                    onChange={handleDetailsChange}
+                                />
+                            </div>
                         </div>
-                        <div className="dropdown-list">
-                            <select onChange={handleCategoryChange}>
-                                <option value="OTHERS">OTHERS</option>
-                                <option value="FOOD">FOOD</option>
-                                <option value="GROCERY">GROCERY</option>
-                                <option value="MEDICAL">MEDICAL</option>
-                                <option value="ENTERTAINMENT">ENTERTAINMENT</option>
-                                <option value="UTILITIES">UTILITIES</option>
-                                <option value="RELOAD">RELOAD</option>
-                                <option value="EXCHANGE">EXCHANGE</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="transfer-details-container">
-                        <div className="transfer-details-text">
-                            <h2>Details</h2>
-                        </div>
-                        <div className="transfer-details-box">
-                            <Input
-                                value={details}
-                                inputStyle='input--default'
-                                inputSize='input--large'
-                                placeholder='What for?'
-                                type='input'
-                                onChange={handleDetailsChange}
-                            />
-                        </div>
-                    </div>
-                    <Button type='submit' onClick={handleAmountSubmit}>Confirm Transfer</Button>
-                    {isLoading &&
-                        <div className="loading-overlay">
-                            <div className="loading-spinner">Transfering...</div>
-                        </div>
-                    }
+                        <Button type='submit' onClick={handleAmountSubmit}>Confirm Transfer</Button>
 
+                    </div>
                 </div>
             </div>
-        </div>
+            {isLoading &&
+                <div className="loading-overlay">
+                    <div className="loading-spinner"></div>
+                    <h2>Transferring...</h2>
+                </div>
+            }
+        </>
     )
 }
 

@@ -12,7 +12,6 @@ function ReloadReceipt() {
     const transactionId = location.state.transactionId;
     const header = 'RELOAD RECEIPT'
 
-    //TODO RELOAD TRANSACTION HAS NO TRANSACTION DATE AND TRANSACTION TIME
     //TODO ALL RECEIPT HAS NO TRANSFER TYPE AND TRANSFER CATEGORY
 
     useEffect(() => {

@@ -10,7 +10,8 @@
 .card-box h1{
     margin-bottom: 50px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
@@ -44,7 +45,8 @@
 .card-info-form-container h3{
     padding-bottom: 10px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;

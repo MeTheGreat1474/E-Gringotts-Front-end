@@ -15,9 +15,6 @@ const day = ("0" + currentDate.getDate()).slice(-2); // Format to 2 digits
 
 const formattedDate = `${year}-${month}-${day}`;
 
-//TODO FIX DATE FILTER FOR ANALYTIC
-//TODO FIX FILTER CALL BEING NOT RESPONSIVE AND HAVE TO MAKE CHANGES IN CODE FOR IT TO WORK
-
 function AnalyticContent({username}) {
     const filterRef = React.useRef();
     const [analyticsData, setAnalyticsData] = useState([]);

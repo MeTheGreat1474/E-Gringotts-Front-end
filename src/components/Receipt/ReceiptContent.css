@@ -10,7 +10,7 @@
 
 .reload-receipt-content h1 {
     color: #CDB373;
-    font-family: Montaga;
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 48px;
     font-style: normal;
     font-weight: 400;
@@ -26,6 +26,8 @@
 
 .reload-receipt-content .reload-receipt-reference .label{
     color: #CDB373;
+    font-family: 'Mason Sans OT', sans-serif;
+
 }
 
 .reload-receipt-content .reload-receipt-id {

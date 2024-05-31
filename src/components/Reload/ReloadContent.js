@@ -23,7 +23,6 @@ function ReloadContent({username}) {
 
 
     const handleAmountSubmit = async () => {
-        //TODO CURRENTLY RESPONSE == OBJECTID, NEED TO PROPERLY CHANGE TO TRANSACTIONID
         const response = await reload(user?.userId, amount, remark);
         console.log(response)
         navigate(`/${username}/reload/receipt`, {state: {transactionId: response}});
@@ -62,8 +61,8 @@ function ReloadContent({username}) {
                         </div>
                         <div className="reload-amount-button">
                             <Button onClick={() => setAmount(parseFloat(200).toFixed(2))}>200</Button>
-                            <Button onClick={() => setAmount(parseFloat(300).toFixed(2))}>300</Button>
-                            <Button onClick={() => setAmount(parseFloat(400).toFixed(2))}>400</Button>
+                            <Button onClick={() => setAmount(parseFloat(500).toFixed(2))}>500</Button>
+                            <Button onClick={() => setAmount(parseFloat(1000).toFixed(2))}>1000</Button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,27 @@
+
+
+.exchange-box {
+    position: relative;
+    justify-self: left;
+    align-content: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    top: 10%;
+    width: 90%;
+}
+
+.exchange-box h1{
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: 'Mason Sans OT', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.transfer-to-container .title {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}

@@ -7,7 +7,7 @@ import {useGetUser} from "../../services/getUser";
 import {
     useGetAllTransactions,
     useGetAllTransactionsAmount,
-    useGetAllTransactionsCategory
+    useGetAllTransactionsCategory, useGetAllTransactionsName
 } from "../../services/getAllTransaction";
 
 function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount, category}) {
@@ -21,11 +21,10 @@ function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount
     const [transaction, setTransaction] = useState([]);
 
     //TODO OPTIONAL: RETURN LIST OF USERS TRANSACTION AS SENDER AND RECEIVER ALSO
-    //TODO: IMPLEMENT SEARCH FRIENDS FOR TRANSACTION HISTORY FILTER
     const recentTransactions = useGetAllTransactions(user?.userId);
     const categoryTransactions = useGetAllTransactionsCategory(user?.userId, category);
     const amountTransactions = useGetAllTransactionsAmount(user?.userId, minAmount, maxAmount);
-    const nameTransactions = useGetAllTransactions(user?.userId, search);
+    const nameTransactions = useGetAllTransactionsName(user?.userId, search);
 
     // const handleClick = (path, user) => {
     //     navigate(path, { state: { toUser: user } });

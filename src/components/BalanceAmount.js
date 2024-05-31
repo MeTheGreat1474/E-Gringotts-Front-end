@@ -22,7 +22,7 @@ function BalanceAmount() {
                     <h3>{(user?.balance)}</h3>
                 </div>
                 <div className="amount-box-currency">
-                    <h3>Shekel</h3>
+                    <h3>Knut</h3>
                 </div>
             </div>
         </div>

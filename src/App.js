@@ -17,6 +17,7 @@ import Analytic from "./components/pages/Analytic";
 import TransactionHistory from "./components/Transaction/TransactionHistory";
 import TransactionHistoryReceipt from "./components/pages/TransactionHistoryReceipt";
 import TransferReceipt from "./components/pages/TransferReceipt";
+import Exchange from "./components/pages/Exchange";
 
 function App() {
 
@@ -29,17 +30,18 @@ function App() {
         <Routes>
             <Route path="/" exact element={<Login/>} />
             <Route path="/auth" element={<LoginAuth/>} />
-            <Route path="/:username" element={<Home/>} />
             <Route path='/signup' element={<SignUp/>} />
+            <Route path="/:username" element={<Home/>} />
             <Route path='/:username/account' element={<Account/>} />
             <Route path='/:username/transfer' element={<Transfer/>} />
             <Route path='/:username/transfer/confirm' element={<TransferConfirm/>} />
             <Route path='/:username/transfer/receipt' element={<TransferReceipt/>} />
             <Route path='/:username/reload' element={<Reload/>} />
             <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
+            <Route path='/:username/transaction/receipt' element={<TransactionHistoryReceipt/>} />
             <Route path='/:username/admin' element={<Admin/>} />
             <Route path='/:username/analytic' element={<Analytic/>} />
-            <Route path='/:username/transaction/receipt' element={<TransactionHistoryReceipt/>} />
+            <Route path='/:username/exchange' element={<Exchange/>} />
         </Routes>
       </Router>
     </>

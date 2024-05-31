@@ -33,7 +33,7 @@ function TransactionLog({ data }) {
     }, [data]);
 
     return (
-        <div className="log-container">
+        <>
             {transactions.map((item, index) => (
                 <div className="log" key={index} onClick={() => handleClick(item.transactionID)}>
                     <div className="details">
@@ -43,7 +43,7 @@ function TransactionLog({ data }) {
                     <p className='amount'>{item.amount}</p>
                 </div>
             ))}
-        </div>
+        </>
     )
 }
 

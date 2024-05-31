@@ -1,5 +1,6 @@
 .btn {
     cursor: pointer;
+    font-family: 'Mason Sans OT', sans-serif;
 }
 
 .btn--login {

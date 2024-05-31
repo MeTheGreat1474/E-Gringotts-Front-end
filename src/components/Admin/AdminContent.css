@@ -18,7 +18,8 @@
 .admin-box h1{
     margin-bottom: 20px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
@@ -28,7 +29,8 @@
 .admin-box h2{
     margin-bottom: 20px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 35px;
     font-style: normal;
     font-weight: 400;
@@ -43,12 +45,14 @@
     font-weight: 400;
     text-transform: capitalize;
     border-bottom: 1px solid #CDB373;
+    font-family: 'Mason Sans OT', sans-serif;
 }
 
 .admin-box h4{
     padding: 0px 0px 0px 30px;
     color: #CDB373;
-    font-family: Montaga;
+    /*font-family: Montaga;*/
+    font-family: 'Mason Sans OT', sans-serif;
     font-size: 50px;
     font-style: normal;
     font-weight: 400;
