@@ -13,9 +13,10 @@ import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
+@CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RequestMapping("/Transaction")
 public class TransactionController {
 
@@ -150,7 +151,7 @@ public class TransactionController {
 //        return new ResponseEntity<>(result, HttpStatus.OK);
 //    }
 
-    @GetMapping("/api/analytics")
+    @GetMapping("/analytics")
     public Map<String, Map<TransactionCategory, Map<String, Double>>> getAnalytics(
             @RequestParam String userId,
             @RequestParam(required = false) String startDate,
@@ -158,20 +159,28 @@ public class TransactionController {
             @RequestParam(required = false, defaultValue = "Monthly") String frequency,
             @RequestParam(required = false) List<String> paymentMethod) throws Exception {
 
+        String startDateStr = (startDate != null && startDate.equalsIgnoreCase("null")) ? null : startDate;
+        String endDateStr = (endDate != null && endDate.equalsIgnoreCase("null")) ? null : endDate;
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
-        Date end = endDate != null ? sdf.parse(endDate) : new Date();
-        List<String> methods = paymentMethod != null ? new ArrayList<>(paymentMethod) : Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER");
-
+        Date end;
+        List<String> methods = (paymentMethod != null && !paymentMethod.contains("null")) ? new ArrayList<>(paymentMethod) : Arrays.asList("CREDITCARD", "DEBITCARD", "TRANSFER");
+        
         // Determine the default start date based on the frequency
-        if (startDate != null) {
-            start = sdf.parse(startDate);
+        if (Objects.nonNull(startDateStr)) {
+            start = sdf.parse(startDateStr);
         } else {
             if (frequency.equalsIgnoreCase("Daily")) {
                 start = getDefaultStartDateForDaily();
             } else {
                 start = getDefaultStartDateForMonthly();
             }
+        }
+        if (Objects.nonNull(endDateStr)) {
+            end = sdf.parse(endDateStr);
+        } else {
+            end = new Date();
         }
 
         List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
