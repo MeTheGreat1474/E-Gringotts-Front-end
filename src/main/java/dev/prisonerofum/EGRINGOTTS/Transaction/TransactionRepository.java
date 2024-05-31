@@ -16,11 +16,11 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
     List<Transaction> findByUserID(String userId);
 
     Optional<Transaction> findByTransactionID(String transactionId);
-
+    @Query("{ 'userID' : ?0, 'date' : { $gte: ?1, $lte: ?2 } }")
     List<Transaction> findByUserIDAndTransactionDateBetween(String userId, Date startDate, Date endDate);
 
     // Find transactions within the specified amount range
-    @Query("{ 'amount' : { $gte: ?0, $lte: ?1 } }")
+    @Query("{ 'userID' : ?0, 'amount' : { $gte: ?1, $lte: ?2 } }")
     List<Transaction> findTransactionsByUserIDAndAmountRange(String userId, double minAmount, double maxAmount);
 
     List<Transaction> findByUserIDAndCategory(String userId, TransactionCategory category);
@@ -29,8 +29,11 @@ public interface TransactionRepository extends MongoRepository<Transaction, Obje
 
     long countTransactionsByAmountBetween(double minAmount,double maxAmount);
 
-    @Query("{$or: [{'senderId': ?0, 'receiverId': ?1}, {'senderId': ?1, 'receiverId': ?0}]}")
-    List<Transaction> findByUserIdAndOtherUserId(String userId, String otherUserId);
+//    @Query("{$or: [{'userID': ?0, 'receiverID': ?1}, {'senderID': ?1, 'userID': ?0}]}")
+//    List<Transaction> findTransactionsByUserIDAndReceiverID(String userID, String receiverID);
+
+    @Query("{'userID': ?0, 'receiverID': ?1}")
+    List<Transaction> findTransactionsByUserIDAndReceiverID(String userID, String receiverID);
 
 }
 

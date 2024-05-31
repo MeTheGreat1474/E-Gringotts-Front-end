@@ -56,13 +56,13 @@ public class AccountService {
                     update(goblin);
                     accountRepository.save(account.get());}
                 else if(user instanceof SilverSnitch silverSnitch){
-                    account.get().setBalance(account.get().getBalance()* 1.01);
+                    account.get().setBalance(account.get().getBalance()* 1.00981);
                 }
                 else if(user instanceof GoldenGalleon goldenGalleon){
-                    account.get().setBalance(account.get().getBalance()* 1.02);
+                    account.get().setBalance(account.get().getBalance()* 1.0314);
                 }
                 else{
-                    account.get().setBalance(account.get().getBalance()* 1.035);
+                    account.get().setBalance(account.get().getBalance()* 1.0662);
                 }
                 accountRepository.save(account.get());
                 return account;
@@ -139,7 +139,7 @@ public class AccountService {
     }
 
     public List<Account<User>> findAccountsByContactInfo(String contactInfo) {
-        return accountRepository.findByUserIdAndPhoneOrEmailOrUsername(contactInfo,contactInfo, contactInfo, contactInfo)
+        return accountRepository.findByPhoneOrEmailOrUsername(contactInfo, contactInfo, contactInfo)
                 .orElse(Collections.emptyList());
     }
 

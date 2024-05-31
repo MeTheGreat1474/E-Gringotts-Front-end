@@ -14,6 +14,7 @@ public class PredictionOutput {
     private String version;
     private Input input;
     private String logs;
+    @JsonProperty("output")
     private List<String> output;
     @JsonProperty("data_removed")
     private boolean dataRemoved;

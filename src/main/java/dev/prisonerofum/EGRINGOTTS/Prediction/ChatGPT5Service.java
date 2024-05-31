@@ -31,7 +31,8 @@ public class ChatGPT5Service {
         predictionRequest.getInput().setPrompt(prompt);
 
         predictionResponse = webClient.post()
-                .uri("/v1/models/meta/llama-2-70b-chat/predictions")
+                .uri("/v1/models/meta/llama-2-13b-chat/predictions")
+//                .uri("/v1/models/meta/llama-2-7b-chat/predictions")
                 .header("Authorization", "Bearer " + replicateApiToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(predictionRequest))
@@ -39,12 +40,28 @@ public class ChatGPT5Service {
                 .bodyToMono(PredictionResponse.class)
                 .block();
 
+//        try {
+//            // Pause for 4 seconds
+//            Thread.sleep(4000);
+//        } catch (InterruptedException e) {
+//            // This part is executed when an exception (in this case InterruptedException) occurs
+//            System.out.println("Got interrupted!");
+//        }
+
         predictionOutput = webClient.get()
                 .uri(predictionResponse.getUrls().getGet())
                 .header("Authorization", "Bearer " + replicateApiToken)
                 .retrieve()
                 .bodyToMono(PredictionOutput.class)
                 .block();
+
+//        try {
+//            // Pause for 4 seconds
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            // This part is executed when an exception (in this case InterruptedException) occurs
+//            System.out.println("Got interrupted!");
+//        }
 
         return String.join(" ",predictionOutput.getOutput());
     }

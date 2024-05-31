@@ -219,28 +219,10 @@ public class TransactionService {
             throw new IllegalArgumentException("User not found with given username or fullName: " + otherUsernameOrFullName);
         }
 
-        String otherUserId = String.valueOf(otherAccount.get().getId());
+        String otherUserId = String.valueOf(otherAccount.get().getUserId());
 
         // Fetch the transactions
-        List<Transaction> transactions = transactionRepository.findByUserIdAndOtherUserId(userId, otherUserId);
-
-        // Remove transactions with null dates
-        transactions.removeIf(transaction -> transaction.getDate() == null);
-
-        // Sort transactions by date, most recent first
-        transactions.sort((t1, t2) -> {
-            Date date1 = t1.getDate();
-            Date date2 = t2.getDate();
-            if (date1 == null && date2 == null) {
-                return 0;
-            } else if (date1 == null) {
-                return 1;
-            } else if (date2 == null) {
-                return -1;
-            } else {
-                return t2.getDate().compareTo(t1.getDate());
-            }
-        });
+        List<Transaction> transactions = transactionRepository.findTransactionsByUserIDAndReceiverID(userId, otherUserId);
 
         return transactions;
     }

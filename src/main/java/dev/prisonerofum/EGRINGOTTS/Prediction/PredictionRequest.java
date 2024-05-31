@@ -13,33 +13,32 @@ import java.util.Scanner;
 public class PredictionRequest {
 
     @JsonProperty("input")
-    @Autowired
     private Input input = new Input();
 
-
-
-    public PredictionRequest() {}
+    public PredictionRequest() {
+        this.input = new Input();
+    }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Data
     public static class Input {
-        @JsonProperty("maxNewTokens")
+        @JsonProperty("max_new_tokens")
         private int maxNewTokens;
         @JsonProperty("prompt")
         private String prompt;
-        @JsonProperty("systemPrompt")
+        @JsonProperty("system_prompt")
         private String systemPrompt;
         @JsonProperty("temperature")
         private double temperature;
-        @JsonProperty("topP")
+        @JsonProperty("top_p")
         private double topP;
 
         public Input(){
-            this.maxNewTokens = 100;
+            this.maxNewTokens = 10;
             this.prompt = "";
             this.systemPrompt = readFile();
-            this.temperature = 0.8;
-            this.topP = 0.9;
+            this.temperature = 0.5;
+            this.topP = 1;
         }
     }
     public static String readFile(){

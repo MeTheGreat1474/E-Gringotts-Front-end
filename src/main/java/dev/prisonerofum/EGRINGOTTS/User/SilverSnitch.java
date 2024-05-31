@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class SilverSnitch implements User{
 
-    //TODO: replace someOtherField
     @JsonProperty
     private String accountType = "Silver Snitch";
 
