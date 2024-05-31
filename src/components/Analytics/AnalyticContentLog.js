@@ -1,6 +1,9 @@
 import React from 'react';
 
 function AnalyticContentLog({ analyticsData }) {
+    if (!analyticsData) {
+        return <div>Analytics data is undefined or null: {analyticsData}</div>; // Return analyticsData for debugging
+    }
     return (
         <>
             {Object.entries(analyticsData).map(([date, data]) => (

@@ -1,4 +1,53 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
+import AnalyticContentLog from './AnalyticContentLog';
+import './AnalyticContent.css'
+
+function toQueryString(params) {
+    return '?' + Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&');
+}
+
+function AnalyticContent({analyticsData}) {
+
+    return (
+        <div className='analytic-box'>
+            <div className="title">
+                <h1>ANALYTICS OF EXPENDITURE</h1>
+            </div>
+            <div className="analytic-content-box">
+                <AnalyticContentLog analyticsData={analyticsData}/>
+            </div>
+        </div>
+    );
+}
+
+export default AnalyticContent
+
+/*import React from 'react';
+import AnalyticContentLog from './AnalyticContentLog';
+import './AnalyticContent.css';
+
+function AnalyticContent({ analyticsData }) {
+    if (!analyticsData) {
+        return <div>Loading...</div>;
+    }
+    
+    return (
+        <div className="analytic-box">
+            <div className="title">
+                <h1>ANALYTICS OF EXPENDITURE</h1>
+            </div>
+            <div className="analytic-content-box">
+                <AnalyticContentLog analyticsData={analyticsData} />
+            </div>
+        </div>
+    );
+}
+
+export default AnalyticContent;*/
+
+
+
+/*import React, {useEffect, useState} from 'react'
 import { useGetAnalyticsDefault } from '../../services/getAnalytics';
 import AnalyticContentLog from './AnalyticContentLog';
 import './AnalyticContent.css'
@@ -20,10 +69,32 @@ function AnalyticContent({username}) {
         }
     }, [user]);
 
-    //const filterRef = React.useRef();
-    //const [analyticsData, setAnalyticsData] = useState([]);
-    //const [filterType, setFilterType] = useState("default");
-    /*const [startDate, setStartDate] = useState("");
+    const analyticsData = useGetAnalyticsDefault(userId);
+
+    if (!userId) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className='analytic-box'>
+            <div className="title">
+                <h1>ANALYTICS OF EXPENDITURE</h1>
+            </div>
+            <div className="analytic-content-box">
+                <AnalyticContentLog analyticsData={analyticsData}/>
+            </div>
+        </div>
+    );
+}
+
+export default AnalyticContent*/
+
+
+
+/*const filterRef = React.useRef();
+    const [analyticsData, setAnalyticsData] = useState([]);
+    const [filterType, setFilterType] = useState("default");
+    const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [frequency, setFrequency] = useState("monthly");
     const [paymentMethod, setPaymentMethod] = useState([]);
@@ -31,10 +102,9 @@ function AnalyticContent({username}) {
     const analyticsDataDefault = useGetAnalytics(username);
     const analyticsDataDate = useGetAnalyticsDate(username, startDate, endDate);
     const analyticsDataFrequency = useGetAnalyticsFrequency(username, frequency);
-    const analyticsDataPaymentMethod = useGetAnalyticsPaymentMethod(username, paymentMethod);*/
+    const analyticsDataPaymentMethod = useGetAnalyticsPaymentMethod(username, paymentMethod);
 
-
-    /*console.log('username:', username);
+    console.log('username:', username);
     console.log('filterRef:', filterRef);
     console.log('analyticsData:', analyticsData);
     console.log('filterType:', filterType);
@@ -45,12 +115,11 @@ function AnalyticContent({username}) {
     console.log('analyticsDataDefault:', analyticsDataDefault);
     console.log('analyticsDataDate:', analyticsDataDate);
     console.log('analyticsDataFrequency:', analyticsDataFrequency);
-    console.log('analyticsDataPaymentMethod:', analyticsDataPaymentMethod);*/
-
-    /*const handleFilterChange = (e) => {
+    console.log('analyticsDataPaymentMethod:', analyticsDataPaymentMethod);
+    const handleFilterChange = (e) => {
         setFilterType(e.target.value);
-    }*/
-    /*const handleStartDateChange = (e) => {
+    }
+    const handleStartDateChange = (e) => {
         setStartDate(e.target.value);
     }
     const handleEndDateChange = (e) => {
@@ -89,9 +158,8 @@ function AnalyticContent({username}) {
         if (fetchData) {
             setAnalyticsData(fetchData);
         }
-    }, [filterType, startDate, endDate, frequency, paymentMethod, analyticsDataDefault, analyticsDataDate, analyticsDataFrequency, analyticsDataPaymentMethod]);*/
-
-    /*return (
+    }, [filterType, startDate, endDate, frequency, paymentMethod, analyticsDataDefault, analyticsDataDate, analyticsDataFrequency, analyticsDataPaymentMethod]);
+    return (
         <div className='analytic-box'>
             <div className="title">
                 <h1>ANALYTICS OF EXPENDITURE</h1>
@@ -134,8 +202,8 @@ function AnalyticContent({username}) {
                 <AnalyticContentLog analyticsData={analyticsData}/>
             </div>
         </div>
-    );*/
-    /*const [analyticsData, setAnalyticsData] = useState([]);
+    );
+    const [analyticsData, setAnalyticsData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -144,28 +212,8 @@ function AnalyticContent({username}) {
         };
 
         fetchData();
-    }, [userId]);*/      // Only re-run effect if username changes
-    //const [analyticsData, setAnalyticsData] = useState([]);
-    //const analyticsDataDefault = useGetAnalyticsDefault(username);
-    //setAnalyticsData(analyticsDataDefault);
-    //const { analyticsData } = useGetAnalyticsDefault(username); // Import and use the hook here
-
-    const analyticsData = useGetAnalyticsDefault(userId);
-
-    if (!userId) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div className='analytic-box'>
-            <div className="title">
-                <h1>ANALYTICS OF EXPENDITURE</h1>
-            </div>
-            <div className="analytic-content-box">
-                <AnalyticContentLog analyticsData={analyticsData}/>
-            </div>
-        </div>
-    );
-}
-
-export default AnalyticContent
+    }, [userId]);     // Only re-run effect if username changes
+    const [analyticsData, setAnalyticsData] = useState([]);
+    const analyticsDataDefault = useGetAnalyticsDefault(username);
+    setAnalyticsData(analyticsDataDefault);
+    const { analyticsData } = useGetAnalyticsDefault(username); // Import and use the hook here*/
