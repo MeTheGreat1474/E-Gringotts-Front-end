@@ -34,7 +34,7 @@ public class PredictionRequest {
         private double topP;
 
         public Input(){
-            this.maxNewTokens = 10;
+            this.maxNewTokens = 100;
             this.prompt = "";
             this.systemPrompt = readFile();
             this.temperature = 0.5;

@@ -183,6 +183,12 @@ public class TransactionService {
         transaction.setCategory(TransactionCategory.RELOAD);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+
+        String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
+        String transactionTime = new SimpleDateFormat("HH:mm:ss").format(transaction.getDate());
+        transaction.setTransactionDate(transactionDate);
+        transaction.setTransactionTime(transactionTime);
+
         String transactionId = transaction.generateTransactionID();
 
         transactionRepository.save(transaction);
