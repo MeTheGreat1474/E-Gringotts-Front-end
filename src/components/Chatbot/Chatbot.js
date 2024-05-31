@@ -37,7 +37,9 @@ function Chatbot() {
                 const newMessages = [...prevMessages, {text: response, sender: 'ai'}];
                 console.log('Messages : ', newMessages);
                 return newMessages;
+
             });
+            setMessages(prevMessages => [...prevMessages, {text: "\n", sender: ''}]);
         }
     }, [response]);
 
