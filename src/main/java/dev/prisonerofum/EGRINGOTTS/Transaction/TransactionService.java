@@ -5,16 +5,12 @@ import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
 import dev.prisonerofum.EGRINGOTTS.User.*;
-import org.bson.types.ObjectId;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Date;
 import java.util.Optional;
@@ -26,12 +22,10 @@ import org.springframework.context.annotation.Lazy;
 @Service
 public class TransactionService {
 
-    @Autowired                                  // initialized the EGringottsRepository
+    @Autowired                              // initialized the EGringottsRepository
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository<User> accountRepository;
-    @Autowired
-    private CurrencyExchangeService currencyExchangeService;
     @Autowired
     private EmailService emailService;
 
@@ -39,12 +33,32 @@ public class TransactionService {
 
     //@Lazy is used to delay the instantiation
     @Autowired
-    public TransactionService(@Lazy AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository, @Lazy AccountService accountService) {
+        this.transactionRepository = transactionRepository;
         this.accountService = accountService;
     }
 
     public String makeNewTransaction(String senderId, String receiverId, Double amount,
                                      TransactionCategory category, String transactionType, String remarks) {
+
+        Optional<Account<User>> senderAccount = accountRepository.findByUserId(senderId);
+        Optional<Account<User>> receiverAccount = accountRepository.findByUserId(receiverId);
+
+        if (!senderAccount.isPresent()) {
+            throw new RuntimeException("Sender account is not found");
+        }
+        if (!receiverAccount.isPresent()) {
+            throw new RuntimeException("Receiver account is not found");
+        }
+
+        Account<User> senderAcc = senderAccount.get();
+        senderAcc.setBalance(senderAcc.getBalance() - amount);
+        accountRepository.save(senderAcc);
+
+        Account<User> receiverAcc = receiverAccount.get();
+        receiverAcc.setBalance(receiverAcc.getBalance() + amount);
+        accountRepository.save(receiverAcc);
+
         // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(senderId);
@@ -54,7 +68,7 @@ public class TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
-        transaction.generateTransactionID();
+        String transactionId = transaction.generateTransactionID();
 
         // Set transaction date and time
         String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
@@ -64,7 +78,6 @@ public class TransactionService {
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
-
 
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
@@ -122,72 +135,38 @@ public class TransactionService {
 
 
         // Return the generated transaction ID
-        return savedTransaction.getId().toString();
+        return transactionId;
     }
 
-    public String createTransaction(String userId, String fromCurrency, String toCurrency, double amount,
-                                    double exchangedValue, double processingFee) {
+    public String exchangeCurrency(ExchangeResponse result, String userId, String fromCurrency, String toCurrency, double amount) {
+        Account<User> account = result.getUserId();
+        double convertedAmount = result.getConvertedAmount();
+        double processingFee = result.getProcessingFee();
+
         // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(userId);
+        transaction.setReceiverID(null); // For currency exchange, receiverId can be null
         transaction.setAmount(amount);
-        transaction.setCategory(TransactionCategory.EXCHANGE);
-        transaction.setTransactionType("Currency Exchange");
-        transaction.setRemarks(String.format("Exchanged %s to %s", fromCurrency, toCurrency));
+        transaction.setConvertedAmount(convertedAmount);
         transaction.setProcessingFee(processingFee);
-        transaction.setExchangedValue(exchangedValue);
-        transaction.generateTransactionID();
-
-        // Set transaction date and time
-        String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
-        String transactionTime = new SimpleDateFormat("HH:mm:ss").format(transaction.getDate());
-        transaction.setTransactionDate(transactionDate);
-        transaction.setTransactionTime(transactionTime);
-
-        // Save the transaction to the database
-        Transaction savedTransaction = transactionRepository.save(transaction);
-
-        // Return the generated transaction ID
-        return savedTransaction.getTransactionID();
-    }
-
-    public ExchangeResponse exchangeCurrency(String userId, String fromCurrency, String toCurrency, double amount) {
-        // Perform currency exchange
-        ExchangeResponse response = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
-
-        // Deduct the exchanged amount and processing fee from the user's account
-        Account userAccount = accountRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        double totalDeduction = amount + response.getProcessingFee();
-
-        if (userAccount.getBalance() < totalDeduction) {
-            throw new RuntimeException("Insufficient balance");
-        }
-
-        userAccount.setBalance(userAccount.getBalance() - totalDeduction);
-        accountRepository.save(userAccount);
-
-        // Create and save the transaction
-        Transaction transaction = new Transaction();
-        transaction.setUserID(userId);
-        transaction.setReceiverID(null);  // For currency exchange, receiverId can be null
-        transaction.setAmount(totalDeduction);
+        transaction.setTransactionType("EXCHANGE");
         transaction.setCategory(TransactionCategory.EXCHANGE);
-        transaction.setTransactionType("Currency Exchange");
-        transaction.setRemarks(String.format("Exchanged %f %s to %f %s", amount, fromCurrency, response.getExchangedValue(), toCurrency));
-        Transaction savedTransaction = transactionRepository.save(transaction);
+        transaction.setRemarks(String.format("Exchanged %.2f %s to %.2f %s", amount, fromCurrency, convertedAmount, toCurrency));
+        transaction.setDate(new Date());
+        transaction.setBalance(account.getBalance());
+        String transactionId = transaction.generateTransactionID();
 
-        // Update response with transaction details
-        response.setTransactionId(savedTransaction.getId().toString());
-        response.setBalance(userAccount.getBalance());
+        transactionRepository.save(transaction);
 
-        return response;
+        return transactionId;
     }
 
     // Create a method to handle reloading an account
     public String reloadAccount(String userId, Double amount, String remarks) {
         Optional<Account<User>> optionalAccount = accountRepository.findByUserId(userId);
         if (!optionalAccount.isPresent()) {
-            throw new RuntimeException("Account is not found");
+            throw new RuntimeException("User account is not found");
         }
         Account<User> account = optionalAccount.get();
         account.setBalance(account.getBalance() + amount);
@@ -197,16 +176,18 @@ public class TransactionService {
         transaction.setUserID(userId);
         transaction.setReceiverID(userId);
         transaction.setAmount(amount);
+        transaction.setBalance(account.getBalance());
         transaction.setConvertedAmount(0);
         transaction.setProcessingFee(0); // No processing fee for reload
         transaction.setTransactionType("RELOAD");
         transaction.setCategory(TransactionCategory.RELOAD);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
+        String transactionId = transaction.generateTransactionID();
 
-        transaction = transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
 
-        return transaction.getId().toString();
+        return transactionId;
     }
 
     // getTransactionHistory method
@@ -226,6 +207,41 @@ public class TransactionService {
                 return t2.getDate().compareTo(t1.getDate()); // Compare non-null dates normally
             }
         });
+        return transactions;
+    }
+
+    // filter by username
+    public List<Transaction> getTransactionsWithUser(String userId, String otherUsernameOrFullName) {
+        // Fetch the other user's account
+        Optional<Account> otherAccount = accountRepository.findByUsernameOrFullName(otherUsernameOrFullName, otherUsernameOrFullName);
+
+        if (!otherAccount.isPresent()) {
+            throw new IllegalArgumentException("User not found with given username or fullName: " + otherUsernameOrFullName);
+        }
+
+        String otherUserId = String.valueOf(otherAccount.get().getId());
+
+        // Fetch the transactions
+        List<Transaction> transactions = transactionRepository.findByUserIdAndOtherUserId(userId, otherUserId);
+
+        // Remove transactions with null dates
+        transactions.removeIf(transaction -> transaction.getDate() == null);
+
+        // Sort transactions by date, most recent first
+        transactions.sort((t1, t2) -> {
+            Date date1 = t1.getDate();
+            Date date2 = t2.getDate();
+            if (date1 == null && date2 == null) {
+                return 0;
+            } else if (date1 == null) {
+                return 1;
+            } else if (date2 == null) {
+                return -1;
+            } else {
+                return t2.getDate().compareTo(t1.getDate());
+            }
+        });
+
         return transactions;
     }
 
@@ -261,10 +277,6 @@ public class TransactionService {
         Account<User> sender = accountRepository.findByUserId(senderUserId).orElse(null);
         Account<User> recipient =  accountRepository.findByUserId(recipientUserId).orElse(null);
 
-//        // Format transaction date
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String formattedDate = dateFormat.format(transactionDate);
-
         // Generate receipt
         StringBuilder receiptBuilder = new StringBuilder();
         receiptBuilder.append("Transaction ID: ").append(transactionId).append("\n");
@@ -282,7 +294,13 @@ public class TransactionService {
     }
 
     public Transaction getTransactionById(String transactionId) {
-        return transactionRepository.findById(new ObjectId(transactionId)).orElse(null);
+        Optional<Transaction> transactionOptional = transactionRepository.findByTransactionID(transactionId);
+
+        if (transactionOptional.isPresent()) {
+            return transactionOptional.get(); // Returns the Transaction if found
+        } else {
+            throw new EntityNotFoundException("Transaction not found with ID: " + transactionId);
+        }
     }
 
     public Map<TransactionCategory, Map<String, Double>> calculateCategoryPercentages(List<Transaction> transactions) {
@@ -333,6 +351,4 @@ public class TransactionService {
     public long countNumOfTransaction() {
         return transactionRepository.count();
     }
-
-
 }

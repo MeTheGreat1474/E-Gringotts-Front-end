@@ -8,12 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
-
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
@@ -60,6 +57,16 @@ public class TransactionController {
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
+
+
+    @GetMapping("/history/{userId}/withUser")
+    public ResponseEntity<List<Transaction>> getTransactionsWithUser(
+            @PathVariable String userId,
+            @RequestParam String otherUsernameOrFullName) {
+        List<Transaction> transactions = transactionService.getTransactionsWithUser(userId, otherUsernameOrFullName);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
 
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
@@ -123,30 +130,35 @@ public class TransactionController {
     }
 
     @PostMapping("/exchange")
-    public ResponseEntity<ExchangeResponse> exchangeCurrency(
+    public ResponseEntity<String> exchangeCurrency(
             @RequestParam String userId,
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
             @RequestParam double amount) {
 
         try {
-            ExchangeResponse response = transactionService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
-            return ResponseEntity.ok(response);
+            // Perform the currency exchange and get the result
+            ExchangeResponse exchangeResponse = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
+
+            // Create the transaction using the result of the currency exchange
+            String transactionId = transactionService.exchangeCurrency(exchangeResponse, userId, fromCurrency, toCurrency, amount);
+            return ResponseEntity.ok("Exchange successful. Transaction ID: " + transactionId);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("Exchange failed: " + e.getMessage());
         }
     }
 
 //    @GetMapping("/exchange")
 //    public ResponseEntity<String> exchangeCurrency(
+//            @RequestParam String userId,
 //            @RequestParam String fromCurrency,
 //            @RequestParam String toCurrency,
 //            @RequestParam double amount) {
 //
-//        ExchangeResponse response = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
+//        ExchangeResponse response = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
 //        String result = String.format("%f %s = %f %s, processing fee to charge = %f %s",
 //                response.getAmount(), response.getFromCurrency(),
-//                response.getExchangedValue(), response.getToCurrency(),
+//                response.getConvertedAmount(), response.getToCurrency(),
 //                response.getProcessingFee(), response.getFromCurrency());
 //        return new ResponseEntity<>(result, HttpStatus.OK);
 //    }
@@ -161,12 +173,12 @@ public class TransactionController {
 
         String startDateStr = (startDate != null && startDate.equalsIgnoreCase("null")) ? null : startDate;
         String endDateStr = (endDate != null && endDate.equalsIgnoreCase("null")) ? null : endDate;
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end;
         List<String> methods = (paymentMethod != null && !paymentMethod.contains("null")) ? new ArrayList<>(paymentMethod) : Arrays.asList("CREDITCARD", "DEBITCARD", "TRANSFER");
-        
+
         // Determine the default start date based on the frequency
         if (Objects.nonNull(startDateStr)) {
             start = sdf.parse(startDateStr);
@@ -202,7 +214,6 @@ public class TransactionController {
         cal.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
         return cal.getTime();
     }
-
 }
 
 

@@ -1,14 +1,10 @@
 package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import java.io.Serializable;
-import java.util.*;
 import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 
 // Utility class to represent a pair of elements
 @Data

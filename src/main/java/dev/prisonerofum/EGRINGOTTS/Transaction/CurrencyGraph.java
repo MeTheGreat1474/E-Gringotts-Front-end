@@ -2,8 +2,10 @@ package dev.prisonerofum.EGRINGOTTS.Transaction;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Random;
 @Document(collection = "CurrencyGraph")
 @Data
 @NoArgsConstructor
+@Component
 public class CurrencyGraph<T> implements Serializable {
 
     @Id
@@ -34,11 +37,29 @@ public class CurrencyGraph<T> implements Serializable {
         CurrencyNode<T> node1 = getNode(fromCurrency);
         CurrencyNode<T> node2 = getNode(toCurrency);
 
-        ExchangeRate<T> rate1 = new ExchangeRate<>(node2.getCurrency(), value, processingFee);
-        ExchangeRate<T> rate2 = new ExchangeRate<>(node1.getCurrency(), 1.0 / value, processingFee);
+        // Check if the exchange rate already exists
+        ExchangeRate<T> existingRate1 = findExchangeRate(node1, toCurrency);
+        ExchangeRate<T> existingRate2 = findExchangeRate(node2, fromCurrency);
 
-        node1.addExchangeRate(rate1);
-        node2.addExchangeRate(rate2);
+        if (existingRate1 != null) {
+            // Update the existing exchange rate
+            existingRate1.setValue(value);
+            existingRate1.setProcessingFee(processingFee);
+        } else {
+            // Add the new exchange rate
+            ExchangeRate<T> rate1 = new ExchangeRate<>(node2.getCurrency(), value, processingFee);
+            node1.addExchangeRate(rate1);
+        }
+
+        if (existingRate2 != null) {
+            // Update the existing exchange rate
+            existingRate2.setValue(1.0 / value);
+            existingRate2.setProcessingFee(processingFee);
+        } else {
+            // Add the new exchange rate
+            ExchangeRate<T> rate2 = new ExchangeRate<>(node1.getCurrency(), 1.0 / value, processingFee);
+            node2.addExchangeRate(rate2);
+        }
     }
 
     private CurrencyNode<T> getNode(T currency) {
@@ -54,6 +75,15 @@ public class CurrencyGraph<T> implements Serializable {
         CurrencyNode<T> newNode = new CurrencyNode<>(currency);
         nodes.add(newNode);
         return newNode;
+    }
+
+    private ExchangeRate<T> findExchangeRate(CurrencyNode<T> node, T targetCurrency) {
+        for (ExchangeRate<T> rate : node.getExchangeRates()) {
+            if (rate.getTargetNodeIdentifier().equals(targetCurrency)) {
+                return rate;
+            }
+        }
+        return null;
     }
 
     public double exchange(T fromCurrency, T toCurrency, double amount) {

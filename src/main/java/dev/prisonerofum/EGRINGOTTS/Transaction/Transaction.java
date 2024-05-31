@@ -28,12 +28,12 @@ public class Transaction {
     private String transactionDate;
     private String transactionTime;
     private String transactionID;
-    private double exchangedValue;
+    private double balance;
     private TransactionCategory category;
     private String remarks;
     private Date date;
 
-    public void generateTransactionID() {
+    public String generateTransactionID() {
         Random random = new Random();
         StringBuilder transactionID = new StringBuilder();
         for (int i = 0; i < 16; i++) {
@@ -41,5 +41,6 @@ public class Transaction {
             transactionID.append(digit);
         }
         this.transactionID = transactionID.toString();
+        return this.transactionID;
     }
 }
