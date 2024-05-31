@@ -10,7 +10,7 @@ function AccountContent({ user }) {
         <>
             <div className="account-box">
                 <div className="title">
-                    <h1>USER ACCOUNT</h1>
+                    <h1>ACCIO ACCOUNT</h1>
                 </div>
                 <div className="account-detail-box">
                     <DisplayUserProfile user={user}/>

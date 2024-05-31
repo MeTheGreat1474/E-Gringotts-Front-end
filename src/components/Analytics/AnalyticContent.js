@@ -11,7 +11,7 @@ function AnalyticContent({analyticsData}) {
     return (
         <div className='analytic-box'>
             <div className="title">
-                <h1>ANALYTICS OF EXPENDITURE</h1>
+                <h1>DIVINATION DATA</h1>
             </div>
             <div className="analytic-content-box">
                 <AnalyticContentLog analyticsData={analyticsData}/>

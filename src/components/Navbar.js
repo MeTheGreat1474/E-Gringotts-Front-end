@@ -26,20 +26,20 @@ function Navbar({username, user}) {
                         <h2 onClick={() => handleNavigation(`/${username}`)}>Home</h2>
                     </div>
                     <div className={location.pathname === `/${username}/transfer` ? "content-alt" : "content"}>
-                        <h2 onClick={() => handleNavigation(`/${username}/transfer`)}>Portkey Pay</h2>
+                        <h2 onClick={() => handleNavigation(`/${username}/transfer`)}>Transfer</h2>
                     </div>
                     <div className={location.pathname === `/${username}/exchange` ? "content-alt" : "content"}>
-                        <h2 onClick={() => handleNavigation(`/${username}/exchange`)}>Gringgott's Exchange</h2>
+                        <h2 onClick={() => handleNavigation(`/${username}/exchange`)}>Exchange</h2>
                     </div>
                     <div className={location.pathname === `/${username}/account` ? "content-alt" : "content"}>
-                        <h2 onClick={() => handleNavigation(`/${username}/account`)}>Accio Account</h2>
+                        <h2 onClick={() => handleNavigation(`/${username}/account`)}>Account</h2>
                     </div>
                     <div className={location.pathname === `/${username}/analytic` ? "content-alt" : "content"}>
-                        <h2 onClick={() => handleNavigation(`/${username}/analytic`)}>Divination Data</h2>
+                        <h2 onClick={() => handleNavigation(`/${username}/analytic`)}>Data</h2>
                     </div>
                     {location.pathname.startsWith(`/Goblin`) && (
                         <div className={location.pathname === `/${username}/admin` ? "content-alt" : "content"}>
-                            <h2 onClick={() => handleNavigation(`/${username}/admin`)}>Admin Aparecium</h2>
+                            <h2 onClick={() => handleNavigation(`/${username}/admin`)}>Admin</h2>
                         </div>
                     )}
                 </div>

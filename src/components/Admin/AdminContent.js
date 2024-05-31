@@ -13,7 +13,7 @@ function AdminContent({username}) {
     return (
         <div className='admin-box'>
             <div className="title">
-                <h1>ADMIN</h1>
+                <h1>ADMIN APARECIUM</h1>
             </div>
             <div className="admin-content-box">
                 <h2>Statistics</h2>

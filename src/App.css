@@ -247,6 +247,7 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 50vw;
 }
 
 .dashboard .right {
@@ -325,9 +326,10 @@ body::-webkit-scrollbar {
 
 .transac-history-box .filter-container {
     display: flex;
+    flex-direction: row;
     align-self: flex-start;
     justify-content: left;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     /*padding-bottom: 10px;*/
 }

@@ -44,7 +44,7 @@ function TransferContent({ user }) {
         <>
             <div className="transfer-box">
                 <div className="title">
-                    <h1>PORTKEY PAY</h1>
+                    <h1>PORTKEY TRANSFER</h1>
                 </div>
                 <div className="transfer-detail-box">
                     <BalanceAmount/>
