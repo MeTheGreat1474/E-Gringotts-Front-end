@@ -35,6 +35,7 @@ export const useGetAllTransactionsAmount = (userId, min, max) => {
                 //TODO: LATER REPAIR TRANSACTION FILTER API
                 const response = await api.get(`/Transaction/amount-range?minAmount=${min}&maxAmount=${max}&userId=${userId}`);
                 if (response.status === 200) {
+                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
@@ -45,7 +46,7 @@ export const useGetAllTransactionsAmount = (userId, min, max) => {
         };
 
         fetchTransactions();
-    }, [userId]);
+    }, [userId,min,max]);
 
     return transactions;
 };
@@ -58,6 +59,7 @@ export const useGetAllTransactionsCategory = (userId, category) => {
             try {
                 const response = await api.get(`/Transaction/category?category=${category}&userId=${userId}`);
                 if (response.status === 200) {
+                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
@@ -81,6 +83,7 @@ export const useGetAllTransactionsName = (userId, name) => {
             try {
                 const response = await api.get(`/Transaction/history/${userId}/withUser?otherUsernameOrFullName=${name}`);
                 if (response.status === 200) {
+                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');

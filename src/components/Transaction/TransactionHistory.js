@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button} from "../Button";
 import {Input} from "../Input";
 import TransactionFilterLogContainer from "./TransactionFilterLogContainer";
@@ -22,8 +22,10 @@ function TransactionHistory() {
 
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
-        setFilterType("name");
-        filterRef.current.value = "name";
+        if (e.key === 'Enter') {
+            setFilterType("name");
+            filterRef.current.value = "name";
+        }
     }
 
     const handleMinAmountChange = (e) => {
@@ -38,7 +40,7 @@ function TransactionHistory() {
         setCategory(e.target.value);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         console.log(`Filter ${filterType}, Search ${search}, minAmount=${minAmount} maxAmount=${maxAmount}  category=${category}`);
     }, [filterType, search, category, minAmount, maxAmount]);
 
@@ -84,7 +86,7 @@ function TransactionHistory() {
                         <div className="search-container">
                             <Input inputStyle='input--filter' inputSize='input--medium' type='text'
                                    placeholder="Search by Name..." value={search}
-                                   onChange={handleSearchChange}/>
+                                   onChange={handleSearchChange} onKeyPress={handleSearchChange}/>
                         </div>
                     )}
                 </div>

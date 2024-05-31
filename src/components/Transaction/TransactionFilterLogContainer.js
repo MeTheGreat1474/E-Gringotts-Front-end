@@ -42,7 +42,7 @@ function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount
             case 'category':
                 fetchedTransactions = categoryTransactions;
                 break;
-            case 'user':
+            case 'name':
                 fetchedTransactions = nameTransactions;
                 break;
             default:
