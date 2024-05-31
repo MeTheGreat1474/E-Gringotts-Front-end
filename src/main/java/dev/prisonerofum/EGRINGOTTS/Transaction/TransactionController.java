@@ -7,14 +7,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import dev.prisonerofum.EGRINGOTTS.Transaction.CurrencyGraphRepository;
 
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")           //CrossOrigin is used to handle the request from a different origin
 @RequestMapping("/Transaction")
 public class TransactionController {
 
@@ -32,7 +31,7 @@ public class TransactionController {
 
         try {
             String transactionId = transactionService.makeNewTransaction(senderId, receiverId, amount, category, transactionType, remarks);
-            return ResponseEntity.ok("Transaction successful. Transaction ID: " + transactionId);
+            return ResponseEntity.ok(transactionId);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -46,7 +45,7 @@ public class TransactionController {
 
         try {
             String transactionId = transactionService.reloadAccount(userId, amount, remarks);
-            return ResponseEntity.ok("Reload successful. Transaction ID: " + transactionId);
+            return ResponseEntity.ok(transactionId);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -58,6 +57,16 @@ public class TransactionController {
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
+
+
+    @GetMapping("/history/{userId}/withUser")
+    public ResponseEntity<List<Transaction>> getTransactionsWithUser(
+            @PathVariable String userId,
+            @RequestParam String otherUsernameOrFullName) {
+        List<Transaction> transactions = transactionService.getTransactionsWithUser(userId, otherUsernameOrFullName);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
 
     @GetMapping("/date-range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
@@ -154,28 +163,36 @@ public class TransactionController {
 //        return new ResponseEntity<>(result, HttpStatus.OK);
 //    }
 
-    @GetMapping("/api/analytics")
+    @GetMapping("/analytics")
     public Map<String, Map<TransactionCategory, Map<String, Double>>> getAnalytics(
             @RequestParam String userId,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false, defaultValue = "Monthly") String frequency,
-            @RequestParam(required = false) Set<String> paymentMethods) throws Exception {
+            @RequestParam(required = false) List<String> paymentMethod) throws Exception {
+
+        String startDateStr = (startDate != null && startDate.equalsIgnoreCase("null")) ? null : startDate;
+        String endDateStr = (endDate != null && endDate.equalsIgnoreCase("null")) ? null : endDate;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
-        Date end = endDate != null ? sdf.parse(endDate) : new Date();
-        Set<String> methods = paymentMethods != null ? paymentMethods : new HashSet<>(Arrays.asList("CREDIT CARD", "DEBIT CARD", "TRANSFER", "RELOAD"));
+        Date end;
+        List<String> methods = (paymentMethod != null && !paymentMethod.contains("null")) ? new ArrayList<>(paymentMethod) : Arrays.asList("CREDITCARD", "DEBITCARD", "TRANSFER");
 
         // Determine the default start date based on the frequency
-        if (startDate != null) {
-            start = sdf.parse(startDate);
+        if (Objects.nonNull(startDateStr)) {
+            start = sdf.parse(startDateStr);
         } else {
-            if (frequency.equals("Daily")) {
+            if (frequency.equalsIgnoreCase("Daily")) {
                 start = getDefaultStartDateForDaily();
             } else {
                 start = getDefaultStartDateForMonthly();
             }
+        }
+        if (Objects.nonNull(endDateStr)) {
+            end = sdf.parse(endDateStr);
+        } else {
+            end = new Date();
         }
 
         List<Transaction> transactions = transactionService.getTransactionsHistory(userId);
@@ -197,7 +214,6 @@ public class TransactionController {
         cal.add(Calendar.DAY_OF_MONTH, -6); // Subtract 6 days to include the last 7 days
         return cal.getTime();
     }
-
 }
 
 

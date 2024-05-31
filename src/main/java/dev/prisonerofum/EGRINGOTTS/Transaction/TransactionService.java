@@ -5,7 +5,7 @@ import dev.prisonerofum.EGRINGOTTS.Account.Account;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountRepository;
 import dev.prisonerofum.EGRINGOTTS.Account.AccountService;
 import dev.prisonerofum.EGRINGOTTS.User.*;
-import org.bson.types.ObjectId;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.prisonerofum.EGRINGOTTS.EmailService;
@@ -26,8 +26,6 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository<User> accountRepository;
-    @Autowired
-    private CurrencyGraph<String> graph;
     @Autowired
     private EmailService emailService;
 
@@ -70,7 +68,7 @@ public class TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
-        transaction.generateTransactionID();
+        String transactionId = transaction.generateTransactionID();
 
         // Set transaction date and time
         String transactionDate = new SimpleDateFormat("yyyy-MM-dd").format(transaction.getDate());
@@ -80,7 +78,6 @@ public class TransactionService {
 
         // Save the transaction to the database
         Transaction savedTransaction = transactionRepository.save(transaction);
-
 
         // Generate receipt
         String receipt = generateReceipt(savedTransaction);
@@ -138,7 +135,7 @@ public class TransactionService {
 
 
         // Return the generated transaction ID
-        return savedTransaction.getId().toString();
+        return transactionId;
     }
 
     public String exchangeCurrency(ExchangeResponse result, String userId, String fromCurrency, String toCurrency, double amount) {
@@ -158,11 +155,11 @@ public class TransactionService {
         transaction.setRemarks(String.format("Exchanged %.2f %s to %.2f %s", amount, fromCurrency, convertedAmount, toCurrency));
         transaction.setDate(new Date());
         transaction.setBalance(account.getBalance());
-        transaction.generateTransactionID();
+        String transactionId = transaction.generateTransactionID();
 
-        transaction = transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
 
-        return transaction.getId().toString();
+        return transactionId;
     }
 
     // Create a method to handle reloading an account
@@ -186,11 +183,11 @@ public class TransactionService {
         transaction.setCategory(TransactionCategory.RELOAD);
         transaction.setRemarks(remarks);
         transaction.setDate(new Date());
-        transaction.generateTransactionID();
+        String transactionId = transaction.generateTransactionID();
 
-        transaction = transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
 
-        return transaction.getId().toString();
+        return transactionId;
     }
 
     // getTransactionHistory method
@@ -210,6 +207,41 @@ public class TransactionService {
                 return t2.getDate().compareTo(t1.getDate()); // Compare non-null dates normally
             }
         });
+        return transactions;
+    }
+
+    // filter by username
+    public List<Transaction> getTransactionsWithUser(String userId, String otherUsernameOrFullName) {
+        // Fetch the other user's account
+        Optional<Account> otherAccount = accountRepository.findByUsernameOrFullName(otherUsernameOrFullName, otherUsernameOrFullName);
+
+        if (!otherAccount.isPresent()) {
+            throw new IllegalArgumentException("User not found with given username or fullName: " + otherUsernameOrFullName);
+        }
+
+        String otherUserId = String.valueOf(otherAccount.get().getId());
+
+        // Fetch the transactions
+        List<Transaction> transactions = transactionRepository.findByUserIdAndOtherUserId(userId, otherUserId);
+
+        // Remove transactions with null dates
+        transactions.removeIf(transaction -> transaction.getDate() == null);
+
+        // Sort transactions by date, most recent first
+        transactions.sort((t1, t2) -> {
+            Date date1 = t1.getDate();
+            Date date2 = t2.getDate();
+            if (date1 == null && date2 == null) {
+                return 0;
+            } else if (date1 == null) {
+                return 1;
+            } else if (date2 == null) {
+                return -1;
+            } else {
+                return t2.getDate().compareTo(t1.getDate());
+            }
+        });
+
         return transactions;
     }
 
@@ -245,10 +277,6 @@ public class TransactionService {
         Account<User> sender = accountRepository.findByUserId(senderUserId).orElse(null);
         Account<User> recipient =  accountRepository.findByUserId(recipientUserId).orElse(null);
 
-//        // Format transaction date
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String formattedDate = dateFormat.format(transactionDate);
-
         // Generate receipt
         StringBuilder receiptBuilder = new StringBuilder();
         receiptBuilder.append("Transaction ID: ").append(transactionId).append("\n");
@@ -266,7 +294,13 @@ public class TransactionService {
     }
 
     public Transaction getTransactionById(String transactionId) {
-        return transactionRepository.findById(new ObjectId(transactionId)).orElse(null);
+        Optional<Transaction> transactionOptional = transactionRepository.findByTransactionID(transactionId);
+
+        if (transactionOptional.isPresent()) {
+            return transactionOptional.get(); // Returns the Transaction if found
+        } else {
+            throw new EntityNotFoundException("Transaction not found with ID: " + transactionId);
+        }
     }
 
     public Map<TransactionCategory, Map<String, Double>> calculateCategoryPercentages(List<Transaction> transactions) {
@@ -307,16 +341,14 @@ public class TransactionService {
         return categoryPercentagesByFrequency;
     }
 
-    public List<Transaction> filterTransactions(List<Transaction> transactions, Date startDate, Date endDate, Set<String> paymentMethods) {
+    public List<Transaction> filterTransactions(List<Transaction> transactions, Date startDate, Date endDate, List<String> paymentMethod) {
         return transactions.stream()
                 .filter(t -> !t.getDate().before(startDate) && !t.getDate().after(endDate))
-                .filter(t -> paymentMethods.contains(t.getTransactionType()))
+                .filter(t -> paymentMethod.contains(t.getTransactionType()))
                 .collect(Collectors.toList());
     }
 
     public long countNumOfTransaction() {
         return transactionRepository.count();
     }
-
-
 }
