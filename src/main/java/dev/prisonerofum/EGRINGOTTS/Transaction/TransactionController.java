@@ -130,7 +130,7 @@ public class TransactionController {
     }
 
     @PostMapping("/exchange")
-    public ResponseEntity<String> exchangeCurrency(
+    public ResponseEntity<ExchangeResult> exchangeCurrency(
             @RequestParam String userId,
             @RequestParam String fromCurrency,
             @RequestParam String toCurrency,
@@ -141,10 +141,10 @@ public class TransactionController {
             ExchangeResponse exchangeResponse = currencyExchangeService.exchangeCurrency(userId, fromCurrency, toCurrency, amount);
 
             // Create the transaction using the result of the currency exchange
-            String transactionId = transactionService.exchangeCurrency(exchangeResponse, userId, fromCurrency, toCurrency, amount);
-            return ResponseEntity.ok("Exchange successful. Transaction ID: " + transactionId);
+            ExchangeResult result = transactionService.exchangeCurrency(exchangeResponse, userId, fromCurrency, toCurrency, amount);
+            return ResponseEntity.ok(result);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Exchange failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(null);
         }
     }
 

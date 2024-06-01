@@ -17,3 +17,12 @@ public class ExchangeResponse {
     private double processingFee;
 }
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class ExchangeResult {
+    private String transactionId;
+    private double convertedAmount;
+    private double processingFee;
+}
+

@@ -138,7 +138,7 @@ public class TransactionService {
         return transactionId;
     }
 
-    public String exchangeCurrency(ExchangeResponse result, String userId, String fromCurrency, String toCurrency, double amount) {
+    public ExchangeResult exchangeCurrency(ExchangeResponse result, String userId, String fromCurrency, String toCurrency, double amount) {
         Account<User> account = result.getUserId();
         double convertedAmount = result.getConvertedAmount();
         double processingFee = result.getProcessingFee();
@@ -159,7 +159,7 @@ public class TransactionService {
 
         transactionRepository.save(transaction);
 
-        return transactionId;
+        return new ExchangeResult(transactionId, convertedAmount, processingFee);
     }
 
     // Create a method to handle reloading an account
