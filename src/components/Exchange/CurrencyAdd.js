@@ -3,8 +3,14 @@ import {Input} from "../Input";
 import {Button} from "../Button";
 import {postAddCurrency} from "../../services/currencyPair";
 import './CurrencyAdd.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
 function CurrencyAdd() {
+
+    const [isAdded, setIsAdded] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
 
     const [newFromCurrency, setNewFromCurrency] = useState("")
     const [newToCurrency, setNewToCurrency] = useState("")
@@ -28,8 +34,12 @@ function CurrencyAdd() {
     const handleCurrencySubmit = async () => {
         const response = await postAddCurrency([[newFromCurrency, newToCurrency, exchangeRate, processingFee]]);
         if (response) {
+            setHasError(false)
+            setIsAdded(true);
             console.log('in confirm content', response);
         } else {
+            setIsAdded(false);
+            setHasError(true)
             console.log('Adding currency pair failed');
         }
     }
@@ -39,6 +49,20 @@ function CurrencyAdd() {
             <div className="currency-add-box">
                 <div className="title">
                     <h1>CURRENCY</h1>
+                </div>
+                <div className='message'>
+                    {isAdded &&
+                        <div className="currency-added-message">
+                            <FontAwesomeIcon icon={faCheckCircle} className="currency-added-icon" size="2x"/>
+                            <h2>Currency added Successfully</h2>
+                        </div>
+                    }
+                    {hasError &&
+                        <div className="currency-error-message">
+                            <FontAwesomeIcon icon={faTimesCircle} className="currency-error-icon" size="2x"/>
+                            <h2>Error Adding Currency</h2>
+                        </div>
+                    }
                 </div>
                 <div className="currency-add-content-box">
                     <div className="currency-detail-box">
@@ -70,6 +94,7 @@ function CurrencyAdd() {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

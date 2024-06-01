@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 50px 10px 50px 10px;
+    padding: 30px 10px 50px 10px;
 }
 
 .currency-detail-box {
@@ -34,5 +34,38 @@
 
 .currency-detail-input-box label{
     margin-bottom: 10px;
+}
+
+.currency-add-box .currency-added-message h2{
+    color: #04d711;
+    font-family: 'Mason Sans OT', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+.currency-add-box .currency-added-message, .currency-add-box .currency-error-message{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.currency-added-icon {
+    color: #04d711;
+    margin-right: 10px;
+}
+
+.currency-add-box .currency-error-message h2{
+    color: #c70909;
+    font-family: 'Mason Sans OT', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+.currency-error-icon {
+    color: #c70909;
+    margin-right: 10px;
+}
+
+.message{
+    height: 45px;
 }
 
