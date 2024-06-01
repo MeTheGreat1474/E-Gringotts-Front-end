@@ -21,7 +21,6 @@ import Exchange from "./components/pages/Exchange";
 
 function App() {
 
-    //TODO: CREATE CUSTOM CURSOR
     //TODO: CREATE APP DEPLOYMENT FOR WEBSITE
 
   return (

@@ -16,6 +16,7 @@ function Home() {
 
     return (
         <div className="dashboard">
+
             <div className="left">
                 <Navbar username={username} user={user}/>
             </div>

@@ -32,7 +32,6 @@ export const useGetAllTransactionsAmount = (userId, min, max) => {
         const fetchTransactions = async () => {
             try {
                 // const response = await api.get(`/Transaction/history/${userId}`);
-                //TODO: LATER REPAIR TRANSACTION FILTER API
                 const response = await api.get(`/Transaction/amount-range?minAmount=${min}&maxAmount=${max}&userId=${userId}`);
                 if (response.status === 200) {
                     console.log(response.data);

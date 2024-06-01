@@ -4,6 +4,15 @@
     /*font-family: 'Mason Sans OT', sans-serif;*/
 }
 
+html {
+    /*cursor: url("http://www.rw-designer.com/cursor-extern.php?id=26747"), default;*/
+    cursor: url("/public/images/Harry Potter Cursor Normal Wand.png"), default;
+}
+
+.btn{
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,6 +24,10 @@
 body::-webkit-scrollbar {
     display: none;
     background-color: #323b6e;
+}
+
+body{
+
 }
 
 .login {
@@ -358,11 +371,15 @@ body::-webkit-scrollbar {
     font-size: 20px;
     border-radius: 10px;
     text-align: center;
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
+
 }
 
 .transac-history-box .dropdown-list option {
     font-size: 15px;
     background-color: #424f94;
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
+
 }
 
 .transac-history-box .input {
@@ -413,7 +430,8 @@ body::-webkit-scrollbar {
 }
 
 .log-container .log-box :hover{
-    cursor: pointer;
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
+
     /*background-color: rgba(37, 44, 81, 0.77);*/
     background-color: #004990;
     border-radius:10px;
@@ -421,7 +439,7 @@ body::-webkit-scrollbar {
 }
 
 .log-container .log :hover{
-    cursor: pointer;
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
 }
 
 .log .details {

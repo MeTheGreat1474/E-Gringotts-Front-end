@@ -84,7 +84,8 @@
 
 .navbar .content, .content-alt {
     text-decoration: none;
-    cursor: pointer;
+    cursor: url("/public/images/frame_15_delay-0.01s.png"), pointer;
+
 }
 
 @media screen and (max-width: 960px) {
