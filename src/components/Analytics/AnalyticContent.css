@@ -80,6 +80,50 @@
     margin-bottom: 10px;
 }
 
+.date-select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center align horizontally */
+    margin-bottom: 20px; /* Add some space below */
+}
+
+.date-select-container label {
+    margin-right: 10px; /* Space between label and select */
+    font-size: 1.2em; /* Adjust font size if needed */
+}
+
+.date-select-container select {
+    padding: 5px; /* Add some padding for better look */
+    font-size: 1.2em; /* Adjust font size if needed */
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+}
+
+/* ORI CODEE
+.date-select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; // Center align horizontally
+    margin-bottom: 20px; // Add some space below
+}
+
+.date-select-container label {
+    margin-right: 10px; // Space between label and select
+    font-size: 1.2em; // Adjust font size if needed
+}
+
+.date-select-container select {
+    padding: 5px; // Add some padding for better look
+    font-size: 1.2em; // Adjust font size if needed
+}
+*/
+
+
 /*background-color: #424f94;
 .admin-content-box{
     display: flex;

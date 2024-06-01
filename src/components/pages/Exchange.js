@@ -4,6 +4,7 @@ import AccountBalance from "../Account/AccountBalance";
 import TransactionHistory from "../Transaction/TransactionHistory";
 import {useParams} from "react-router-dom";
 import ExchangeContent from "../Exchange/ExchangeContent";
+import CurrencyAdd from "../Exchange/CurrencyAdd";
 
 function Exchange() {
     const { username } = useParams();
@@ -18,7 +19,7 @@ function Exchange() {
                     <ExchangeContent />
                 </div>
                 <div className="right">
-
+                    <CurrencyAdd />
                 </div>
             </div>
         </>

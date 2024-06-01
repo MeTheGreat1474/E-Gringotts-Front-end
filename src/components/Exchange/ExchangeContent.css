@@ -25,3 +25,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.exchange-convert-result .input{
+    border-bottom: 2px solid #CDB373;
+    margin-bottom: 20px;
+}

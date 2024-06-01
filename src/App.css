@@ -352,7 +352,7 @@ body::-webkit-scrollbar {
 .transac-history-box .dropdown-list select{
     width: 100%;
     align-items: center;
-    background-color: #323b6e; /* Replace with your desired color */
+    background-color: #323b6e;
     border: 1px solid #CDB373;
     color: white;
     font-size: 20px;
@@ -378,7 +378,7 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-height: 70vh;
+    max-height: 50vh;
     overflow: scroll;
     scrollbar-color: #CDB373 transparent;
     overflow-x: hidden;
@@ -403,7 +403,6 @@ body::-webkit-scrollbar {
     padding-left: 30px;
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
 }
 
 .log-container .log {
@@ -413,8 +412,21 @@ body::-webkit-scrollbar {
     border-bottom: 1px solid #CDB373;
 }
 
+.log-container .log-box :hover{
+    cursor: pointer;
+    /*background-color: rgba(37, 44, 81, 0.77);*/
+    background-color: #004990;
+    border-radius:10px;
+
+}
+
+.log-container .log :hover{
+    cursor: pointer;
+}
+
 .log .details {
     flex: 70%;
+    margin-left:10px;
 }
 
 .log .details > * {

@@ -35,12 +35,14 @@ function TransactionLog({ data }) {
     return (
         <>
             {transactions.map((item, index) => (
-                <div className="log" key={index} onClick={() => handleClick(item.transactionID)}>
-                    <div className="details">
-                        <h4 className='username'>{item.receiverUsername}</h4>
-                        <p className='phone'>{item.receiverPhone}</p>
+                <div className="log-box">
+                    <div className="log" key={index} onClick={() => handleClick(item.transactionID)}>
+                        <div className="details">
+                            <h4 className='username'>{item.receiverUsername}</h4>
+                            <p className='phone'>{item.receiverPhone}</p>
+                        </div>
+                        <p className='amount'>{item.amount}</p>
                     </div>
-                    <p className='amount'>{item.amount}</p>
                 </div>
             ))}
         </>

@@ -57,7 +57,6 @@
 }
 
 .transfer-to-container .search-container{
-    flex: 1;
     width: 100%;
     display: flex;
     justify-self: flex-start;
