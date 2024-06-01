@@ -229,7 +229,7 @@ function AnalyticContentLog({ analyticsData }) {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                            <Tooltip formatter={(value, name, props) => [`Expenditure: ${props.payload.expenditure}`, `Percentage: ${value}%`]} />
+                            <Tooltip formatter={(value, name, props) => [`Expenditure: ${props.payload.expenditure}`, `Percentage: ${value.toFixed(2)}%`]} />
                             <Legend />
                         </PieChart>
                     ) : (

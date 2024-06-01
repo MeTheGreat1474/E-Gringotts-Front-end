@@ -1,0 +1,38 @@
+
+.currency-add-box {
+    position: relative;
+    justify-self: left;
+    align-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    top: 5%;
+    width: 100%;
+}
+
+.currency-add-content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 10px 50px 10px;
+}
+
+.currency-detail-box {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.currency-add-box h1{
+    margin-bottom: 20px;
+    color: #CDB373;
+    font-family: 'Mason Sans OT', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.currency-detail-input-box label{
+    margin-bottom: 10px;
+}
+

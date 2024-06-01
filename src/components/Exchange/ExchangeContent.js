@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import {useGetUser} from "../../services/getUser";
 import {exchange, postExchange} from "../../services/exchange";
 import DisplayInput from "../DisplayInput";
+import {Input} from "../Input";
 
 function ExchangeContent() {
     const { username } = useParams();
@@ -20,8 +21,8 @@ function ExchangeContent() {
     const [fromCurrency, setFromCurrency] = useState("Knut");
     const [toCurrency, setToCurrency] = useState("Sickle");
     const [amount, setAmount] = useState("");
-    const [convertedAmount, setConvertedAmount] = useState("");
-    const [processingFee, setProcessingFee] = useState("");
+    const [convertedAmount, setConvertedAmount] = useState("0");
+    const [processingFee, setProcessingFee] = useState("0");
 
 
     const handleFromCurrencyChange = (e) => {
@@ -52,9 +53,8 @@ function ExchangeContent() {
         // setIsLoading(false); // End loading
         console.log( 'fromCurrency: ' , fromCurrency, ' toCurrency: ', toCurrency, ' amount: ', amount);
         if (response) {
-            console.log( 'in confirm content' , response); // Logs the transactionId to the console
-            // navigate(`/${username}/transfer/receipt`, { state: { transactionId: response } });
-
+            setConvertedAmount(response?.convertedAmount)
+            setProcessingFee(response?.processingFee)
         } else {
             console.log('Transfer failed');
         }
@@ -66,31 +66,36 @@ function ExchangeContent() {
                 <div className="title">
                     <h1>GRINGGOTT'S EXCHANGE</h1>
                 </div>
-                <div className="exchange-detail-box">
-                    <select className="exchange-select" value={fromCurrency} onChange={handleFromCurrencyChange}>
-                        <option value="Knut">Knut</option>
-                        <option value="Sickle">Sickle</option>
-                        <option value="Galleon">Galleon</option>
-                    </select>
-                    <select className="exchange-select" value={toCurrency} onChange={handleToCurrencyChange}>
-                        <option value="Knut">Knut</option>
-                        <option value="Sickle">Sickle</option>
-                        <option value="Galleon">Galleon</option>
-                    </select>
-                </div>
-                <div className="exchange-amount-box">
-                    <MoneyInput
-                        onChange={handleValueChange}
-                        amount={amount}
-                        placeholder='0.00'
-                    />
-                </div>
-                <div className="exchange-convert-amount-button">
-                    <Button type='submit' onClick={handleAmountSubmit}>Convert</Button>
-                </div>
-                <div className="exchange-convert-result">
-                    <DisplayInput value={convertedAmount} label='Converted Amount'/>
-                    <DisplayInput value={processingFee} label='Processing Fee' />
+                <div className="exchange-content-box">
+                    <div className="exchange-detail-box">
+                        <div className="exchange-detail-container">
+                            <label>From</label>
+                            <Input className="exchange-select" type='input' value={fromCurrency}
+                                   onChange={handleFromCurrencyChange} inputStyle='input--default'
+                                   placeholder='From Currency'/>
+                        </div>
+                        <div className="exchange-detail-container">
+                            <label>To</label>
+                            <Input className="exchange-select" type='input' value={toCurrency}
+                                   onChange={handleToCurrencyChange}
+                                   inputStyle='input--default' placeholder='To Currency'/>
+                        </div>
+                    </div>
+                    <div className="exchange-amount-box">
+                        <label>Amount</label>
+                        <MoneyInput
+                            onChange={handleValueChange}
+                            amount={amount}
+                            placeholder='0.00'
+                        />
+                    </div>
+                    <div className="exchange-convert-amount-button">
+                        <Button type='submit' onClick={handleAmountSubmit}>Convert</Button>
+                    </div>
+                    <div className="exchange-convert-result">
+                        <DisplayInput value={convertedAmount} label='Converted Amount'/>
+                        <DisplayInput value={processingFee} label='Processing Fee'/>
+                    </div>
                 </div>
             </div>
         </>
