@@ -146,7 +146,7 @@ public class TransactionService {
         // Create and save the transaction
         Transaction transaction = new Transaction();
         transaction.setUserID(userId);
-        transaction.setReceiverID(null); // For currency exchange, receiverId can be null
+        transaction.setReceiverID("0242353358216343"); // For currency exchange, receiverId can be null
         transaction.setAmount(amount);
         transaction.setConvertedAmount(convertedAmount);
         transaction.setProcessingFee(processingFee);
