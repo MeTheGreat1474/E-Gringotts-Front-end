@@ -1,6 +1,6 @@
 {
-  "short_name": "Your App",
-  "name": "Your App Name",
+  "short_name": "E-Gringotts",
+  "name": "E-Gringotts Banking App",
   "icons": [
     {
       "src": "icon/lowres.webp",
