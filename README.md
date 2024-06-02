@@ -43,6 +43,35 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+
+## Connect to local network
+
+1. npm run build
+2. npm install -g serve
+3. serve -s build
+
+### Firewall
+
+1. Open Windows Defender Firewall
+2. Advanced settings
+3. Inbound Rules
+4. New Rule
+5. Port 3000
+6. Allow the connection
+7. Name the rule
+8. Finish
+
+### Wifi 
+1. Open Wifi Settings
+2. click wifi property
+3. Change network profile to private
+
+### Open on your device
+1. Check your IP address :
+    Open your terminal and type ipconfig for windows or ifconfig for linux
+2. Open your other device browser and type your IP address followed by :3000
+    Example : 192.168.30.252:3000
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
