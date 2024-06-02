@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import './Input.css'
 
+//component for styling our input box
+
 const STYLE =['input--login','input--filter','input--signUp','input--default'];
 const SIZE = ['input--large','input--medium','input--small']
 

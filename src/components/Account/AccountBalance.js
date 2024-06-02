@@ -3,6 +3,7 @@ import {Button} from "../Button";
 import {Link, useNavigate} from "react-router-dom";
 import BalanceAmount from "../BalanceAmount";
 
+//component to display the current user's account balance for home page
 function AccountBalance({user}) {
     const navigate = useNavigate();
 

@@ -19,10 +19,10 @@ import TransactionHistoryReceipt from "./components/pages/TransactionHistoryRece
 import TransferReceipt from "./components/pages/TransferReceipt";
 import Exchange from "./components/pages/Exchange";
 
+//The root component of our website that connected w/ all pages
 function App() {
 
-    //TODO: CREATE APP DEPLOYMENT FOR WEBSITE
-
+    //Enable App deployment for website
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
@@ -33,28 +33,30 @@ function App() {
         });
     }
 
-  return (
-    <>
-      <Router>
-        <Routes>
-            <Route path="/" exact element={<Login/>} />
-            <Route path="/auth" element={<LoginAuth/>} />
-            <Route path='/signup' element={<SignUp/>} />
-            <Route path="/:username" element={<Home/>} />
-            <Route path='/:username/account' element={<Account/>} />
-            <Route path='/:username/transfer' element={<Transfer/>} />
-            <Route path='/:username/transfer/confirm' element={<TransferConfirm/>} />
-            <Route path='/:username/transfer/receipt' element={<TransferReceipt/>} />
-            <Route path='/:username/reload' element={<Reload/>} />
-            <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
-            <Route path='/:username/transaction/receipt' element={<TransactionHistoryReceipt/>} />
-            <Route path='/:username/admin' element={<Admin/>} />
-            <Route path='/:username/analytic' element={<Analytic/>} />
-            <Route path='/:username/exchange' element={<Exchange/>} />
-        </Routes>
-      </Router>
-    </>
-  );
+    //hold all our pages in a Router function and specify their path in url
+    return (
+        <>
+            <Router>
+                <Routes>
+                    {/*our landing page for the website*/}
+                    <Route path="/" exact element={<Login/>} />
+                    <Route path="/auth" element={<LoginAuth/>} />
+                    <Route path='/signup' element={<SignUp/>} />
+                    <Route path="/:username" element={<Home/>} />
+                    <Route path='/:username/account' element={<Account/>} />
+                    <Route path='/:username/transfer' element={<Transfer/>} />
+                    <Route path='/:username/transfer/confirm' element={<TransferConfirm/>} />
+                    <Route path='/:username/transfer/receipt' element={<TransferReceipt/>} />
+                    <Route path='/:username/reload' element={<Reload/>} />
+                    <Route path='/:username/reload/receipt' element={<ReloadReceipt/>} />
+                    <Route path='/:username/transaction/receipt' element={<TransactionHistoryReceipt/>} />
+                    <Route path='/:username/admin' element={<Admin/>} />
+                    <Route path='/:username/analytic' element={<Analytic/>} />
+                    <Route path='/:username/exchange' element={<Exchange/>} />
+                </Routes>
+            </Router>
+        </>
+    );
 }
 
 export default App;

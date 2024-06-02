@@ -10,6 +10,7 @@ import {
     useGetAllTransactionsCategory, useGetAllTransactionsName
 } from "../../services/getAllTransaction";
 
+//component that retrieve and display the relevant data based on the filter
 function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount, category}) {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);
@@ -18,18 +19,16 @@ function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount
         getUser();
     }, [getUser]);
 
+    //hold the list of transactions
     const [transaction, setTransaction] = useState([]);
 
-    //TODO OPTIONAL: RETURN LIST OF USERS TRANSACTION AS SENDER AND RECEIVER ALSO
+    //call the relevant transactions based on the filter
     const recentTransactions = useGetAllTransactions(user?.userId);
     const categoryTransactions = useGetAllTransactionsCategory(user?.userId, category);
     const amountTransactions = useGetAllTransactionsAmount(user?.userId, minAmount, maxAmount);
     const nameTransactions = useGetAllTransactionsName(user?.userId, search);
 
-    // const handleClick = (path, user) => {
-    //     navigate(path, { state: { toUser: user } });
-    // };
-
+    //display the transactions list the user set as
     const fetchTransactions = async () => {
         let fetchedTransactions;
         switch (filterType) {
@@ -51,11 +50,11 @@ function TransactionFilterLogContainer({search, filterType, maxAmount, minAmount
         setTransaction(fetchedTransactions);
     }
 
+    //constantly check for updates in variables
     useEffect(() => {
         fetchTransactions();
     }, [filterType, username, recentTransactions, amountTransactions, categoryTransactions, nameTransactions]);
 
-    // Filter -> Filter's Log -> Log
     return (
         <div className="filter-log">
             <div className="log-container">

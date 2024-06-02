@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import {useGetAllUsers, useGetSearchUsers} from "../../services/getAllUser";
 
+//component for fetching list of user and displaying the list based on filter
 function TransferLog({ search, filterType }) {
     const navigate = useNavigate();
     const { username } = useParams();
@@ -9,8 +10,6 @@ function TransferLog({ search, filterType }) {
 
     const allUsers = useGetAllUsers(username);
     const searchedUsers = useGetSearchUsers(search, username);
-    // const favouriteUsers = useGetAllUsers(username);
-    // const nameUsers = useGetAllUsers(username);
 
     const handleClick = (path, user) => {
         navigate(path, { state: { toUser: user } });
@@ -45,6 +44,7 @@ function TransferLog({ search, filterType }) {
         <div className="logs-wrapper">
             {users.map((item, index) => (
                 <div className="logs-box" key={index}>
+                    {/*go to transfer confirm page and pass in the clicked user's username*/}
                     <div onClick={() => handleClick(`/${username}/transfer/confirm`, item.username)} className="log">
                         <div className="username">
                             <h3>{item.username}</h3>

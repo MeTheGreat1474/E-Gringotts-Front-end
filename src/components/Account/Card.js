@@ -2,7 +2,9 @@ import React from 'react'
 import './Card.css'
 import DisplayInput from "../DisplayInput";
 
+//display the user's card info
 function Cards({ user }) {
+    //retrieve the card's cvv date and convert into mm/yy format
     const expiryDate = new Date(user?.card.cardExpiry);
     const formattedExpiryDate = `${expiryDate.getMonth() + 1} / ${expiryDate.getFullYear() % 100}`;
     return (

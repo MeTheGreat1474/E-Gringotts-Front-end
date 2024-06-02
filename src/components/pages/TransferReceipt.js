@@ -3,6 +3,7 @@ import Navbar from "../Navbar";
 import {useLocation, useParams} from "react-router-dom";
 import ReceiptContent from "../Receipt/ReceiptContent";
 
+//displaying receipt after transferring
 function TransferReceipt() {
     const { username } = useParams();
 

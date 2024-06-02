@@ -6,6 +6,7 @@ import {useLocation, useParams} from "react-router-dom";
 import TransferConfirmContent from "../Transfer/TransferConfirmContent";
 import {useGetUser} from "../../services/getUser";
 
+//page that handle transferring to another user
 function TransferConfirm() {
     const { username } = useParams();
 

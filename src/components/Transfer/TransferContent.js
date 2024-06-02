@@ -7,6 +7,7 @@ import BalanceAmount from "../BalanceAmount";
 import TransferLog from "./TransferLog";
 import {useLocation, useNavigate} from "react-router-dom";
 
+//component for handling filter for transfer
 function TransferContent({ user }) {
     const [nameSearch, setNameSearch] = useState("");
     const [contactSearch, setContactSearch] = useState("");

@@ -8,6 +8,7 @@ import {useGetUser} from "../../services/getUser";
 import {reload} from "../../services/reload";
 import {postTransfer} from "../../services/transfer";
 
+//handle logic when user relaod money
 function ReloadContent({username}) {
 
     const [amount, setAmount] = useState(0.00);

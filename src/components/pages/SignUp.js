@@ -6,6 +6,7 @@ import '../../App.css'
 import api from "../../api/axiosConfig";
 import Chatbot from "../Chatbot/Chatbot";
 
+//component for our user's sign up
 function SignUp() {
 
     const navigate = useNavigate();
@@ -39,9 +40,9 @@ function SignUp() {
 
     const [pinError, setPinError] = useState(false);
 
+    //post the param into the relevant api
     const signup = async (username, email, password, address, DOB, phone, pin, fullName) => {
         try {
-            console.log(`Name: ${username}, Email: ${email}, Password: ${password}, Address: ${address}, Phone=${phone}, Pin=${pin}, Fullname=${fullName}, DOB=${DOB}`)
             const response = await api.post(`/Account/signup?username=${username}&password=${password}&email=${email}&address=${address}&pin=${pin}&fullname=${fullName}&phone=${phone}&DOB=${DOB}`);
             return response.data;
         } catch (error) {
@@ -50,19 +51,16 @@ function SignUp() {
         }
     }
 
-    // Handling the username change
     const handleName = (e) => {
         setUsername(e.target.value);
         setSubmitted(false);
     };
 
-    // Handling the email change
     const handleEmail = (e) => {
         setEmail(e.target.value);
         setSubmitted(false);
     };
 
-    // Handling the password change
     const handlePassword = (e) => {
         setPassword(e.target.value);
         setSubmitted(false);
@@ -96,8 +94,7 @@ function SignUp() {
         setSubmitted(false);
     };
 
-    // Handling the form submission
-    // Handling the form submission
+    // Handling the sign up form submission on button click
     const handleOnSubmit = async (e) => {
         e.preventDefault();
 
@@ -129,9 +126,9 @@ function SignUp() {
         <>
             <img className='star-png' alt='star' src='/images/star2.png'/>
             <div className="sign-up">
-                {/*<div className="logo-box">*/}
-                {/*    <img className='logo' alt='hogwart' src='/images/logo.png'/>*/}
-                {/*</div>*/}
+                <div className="logo-box">
+                    <img className='logo' alt='hogwart' src='/images/logo.png'/>
+                </div>
                 <div className="sign-up-container">
                     <form className='sign-up-form' onSubmit={handleOnSubmit}>
                         <div className="form-col-fullName">

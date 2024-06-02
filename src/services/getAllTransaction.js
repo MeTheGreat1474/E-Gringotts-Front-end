@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 
+//contain our components to fetch the transaction list from the relevant api
+
 export const useGetAllTransactions = (userId) => {
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                // const response = await api.get(`/Transaction/history/${userId}`);
                 const response = await api.get(`/Transaction/history/${userId}`);
                 if (response.status === 200) {
                     setTransactions(response.data);
@@ -31,10 +32,8 @@ export const useGetAllTransactionsAmount = (userId, min, max) => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                // const response = await api.get(`/Transaction/history/${userId}`);
                 const response = await api.get(`/Transaction/amount-range?minAmount=${min}&maxAmount=${max}&userId=${userId}`);
                 if (response.status === 200) {
-                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
@@ -58,7 +57,6 @@ export const useGetAllTransactionsCategory = (userId, category) => {
             try {
                 const response = await api.get(`/Transaction/category?category=${category}&userId=${userId}`);
                 if (response.status === 200) {
-                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');
@@ -82,7 +80,6 @@ export const useGetAllTransactionsName = (userId, name) => {
             try {
                 const response = await api.get(`/Transaction/history/${userId}/withUser?otherUsernameOrFullName=${name}`);
                 if (response.status === 200) {
-                    console.log(response.data);
                     setTransactions(response.data);
                 } else {
                     console.log('Oops, we haven\'t got JSON!');

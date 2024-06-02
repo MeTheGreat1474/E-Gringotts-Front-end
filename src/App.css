@@ -1,3 +1,5 @@
+/*contain css for our main react page, login page, sign up page and transaction history*/
+
 @font-face {
     font-family: 'Mason Sans OT';
     src: url('/public/masonalternatebold.otf') format('opentype');
@@ -5,7 +7,6 @@
 }
 
 html {
-    /*cursor: url("http://www.rw-designer.com/cursor-extern.php?id=26747"), default;*/
     cursor: url("/public/images/Harry Potter Cursor Normal Wand.png"), default;
 }
 
@@ -153,6 +154,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 90vh;
 }
 
 .sign-up .sign-up-form {
@@ -193,8 +195,8 @@ body{
 }
 
 
-.sign-up .image-box {
-    width: 100vw;
+.sign-up .logo-box {
+    padding-right: 10%;
 }
 
 .sign-up .hogwart-art {

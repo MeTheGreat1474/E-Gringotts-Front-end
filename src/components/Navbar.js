@@ -3,6 +3,7 @@ import './Navbar.css'
 import {useLocation, useNavigate} from "react-router-dom";
 import Chatbot from "./Chatbot/Chatbot";
 
+//navbar component that is called by all pages
 function Navbar({username, user}) {
     const location = useLocation();
     const navigate = useNavigate();

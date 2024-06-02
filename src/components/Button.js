@@ -2,6 +2,7 @@ import React from "react";
 import './Button.css'
 import {Link} from 'react-router-dom';
 
+//button function designed in consistent format and colour
 
 const STYLES = ['btn--login', 'btn--outline', 'btn--rectangle'];
 const SIZES = ['btn--large', 'btn--small'];

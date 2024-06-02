@@ -6,6 +6,7 @@ import TransactionHistory from "../Transaction/TransactionHistory";
 import api from "../../api/axiosConfig";
 import {useGetUser} from "../../services/getUser";
 
+//page that contain layout and call the content for home page
 function Home() {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);

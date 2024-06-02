@@ -1,8 +1,8 @@
 import React from 'react'
 import './DisplayUserProfile.css'
 
+//display the user's profile info
 function DisplayUserProfile({user}) {
-
 
     return (
         <div className="user-info-box">

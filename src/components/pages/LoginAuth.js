@@ -7,14 +7,16 @@ import {faLock, faUser} from '@fortawesome/free-solid-svg-icons'
 import api from "../../api/axiosConfig";
 import Chatbot from "../Chatbot/Chatbot";
 
-
+//login authentication where user enter their 6 digit pin
 function LoginAuth() {
+    //component to retrieve variable from navigation
     const location = useLocation();
     const username = location.state.username;
 
     const [pin, setPin] = useState("");
     const [error, setError] = useState("");
 
+    //api for verifying our pin
     const loginAuth = async (username, pin) => {
         const response = await api.post(`/Account/verifyPin?username=${username}&pin=${pin}`);
         console.log(`Username: ${username}, Pin: ${pin}`)
@@ -24,7 +26,6 @@ function LoginAuth() {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
         const response = await loginAuth(username, pin);
-        console.log(`Response: ${response}`);
         // Navigate to dashboard if login is successful
         if (response) {
             navigate(`/${username}`);

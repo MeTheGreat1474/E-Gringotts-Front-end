@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 import TransferConfirmContent from "../Transfer/TransferConfirmContent";
 import ReceiptContent from "../Receipt/ReceiptContent";
 
+//for displaying the transaction history receipt
 function TransactionHistoryReceipt() {
     const location = useLocation();
     const transactionId = location.state.transactionId;
@@ -13,8 +14,6 @@ function TransactionHistoryReceipt() {
     const { user, getUser } = useGetUser(username);
 
     const header = 'TRANSACTION RECEIPT'
-    console.log('TransacHistRec' , transactionId)
-
 
     useEffect(() => {
         getUser();

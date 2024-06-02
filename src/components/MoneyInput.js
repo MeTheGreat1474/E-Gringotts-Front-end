@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import CurrencyInput from "react-currency-input-field";
 
+//display an input for type money
 function MoneyInput({amount, placeholder, onChange}) {
 
     return (

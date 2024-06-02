@@ -3,6 +3,7 @@ import './BalanceAmount.css'
 import {useGetUser} from "../services/getUser";
 import {useParams} from "react-router-dom";
 
+//component that display the user's account balance
 function BalanceAmount() {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);
@@ -11,7 +12,7 @@ function BalanceAmount() {
         getUser();
     }, [getUser]);
 
-
+    //retrieve user's info and take the balance for displaying
     return (
         <div className="balance-info-box">
             <div className="text-container">

@@ -6,6 +6,7 @@ import './SignUpForm.css'
 
 const TYPE = ['input', 'textarea'];
 
+//component for user to enter sign up details
 function SignUpForm({label, type, value, onChange, className, rows, cols, maxlength}) {
 
     return (

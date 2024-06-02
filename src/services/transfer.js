@@ -2,6 +2,7 @@ import {useState, useCallback, useEffect} from "react";
 import api from "../api/axiosConfig";
 import {useNavigate} from "react-router-dom";
 
+//component for posting data to transfer api
 export const postTransfer = async (senderId, receiverId, amount, category, transactionType, remarks) => {
 
     try {

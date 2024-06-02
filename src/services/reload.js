@@ -1,5 +1,6 @@
 import api from "../api/axiosConfig";
 
+//post data to reload api
 export const reload = async (userId, amount, remark) => {
     try {
         const response = await api.post(`/Transaction/reload?userId=${userId}&amount=${amount}&remarks=${remark}`);

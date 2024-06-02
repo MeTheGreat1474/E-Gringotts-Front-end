@@ -9,12 +9,15 @@ import MoneyInput from "../MoneyInput";
 import {Button} from "../Button";
 import {postTransfer} from "../../services/transfer";
 
+//display the content for transferring amount to another user
 function TransferConfirmContent({toUser}) {
     const navigate = useNavigate();
     const { username } = useParams();
 
+    //set a boolean that display when transferring is processing
     const [isLoading, setIsLoading] = useState(false);
 
+    //defined two user
     const { user: receiverUser, getUser: getReceiverUser } = useGetUser(toUser);
     const { user: senderUser, getUser: getSenderUser } = useGetUser(username);
     useEffect(() => {
@@ -22,6 +25,7 @@ function TransferConfirmContent({toUser}) {
         getSenderUser();
     }, [getReceiverUser, getSenderUser]);
 
+    //get current user balance
     const userBalance = senderUser?.balance
     const [error, setError] = useState("");
 
@@ -52,6 +56,7 @@ function TransferConfirmContent({toUser}) {
     }
 
     const handleAmountSubmit = async () => {
+        //check if user have enough money
         if (amount >= userBalance) {
             setError("*Transfer amount cannot be larger than your balance");
             return;
@@ -59,10 +64,11 @@ function TransferConfirmContent({toUser}) {
         setError("");
         setIsLoading(true);
 
+        //call the component for transferring
         const response = await postTransfer(senderUser?.userId, receiverUser?.userId, amount, category, transactionType, details);
         setIsLoading(false); // End loading
         if (response) {
-            console.log( 'in confirm content' , response); // Logs the transactionId to the console
+            //go to transfer receipt page
             navigate(`/${username}/transfer/receipt`, { state: { transactionId: response } });
         } else {
             console.log('Transfer failed');
@@ -89,7 +95,7 @@ function TransferConfirmContent({toUser}) {
                                     placeholder='0.00'
                                 />
                                 <div className='currency'>
-                                    <h3>Shekel</h3>
+                                    <h3>Knut</h3>
                                 </div>
                             </div>
                             {error && <div className="error-message">
@@ -133,6 +139,7 @@ function TransferConfirmContent({toUser}) {
                     </div>
                 </div>
             </div>
+            {/*display the loading animation when loading*/}
             {isLoading &&
                 <div className="loading-overlay">
                     <div className="loading-spinner"></div>

@@ -4,6 +4,7 @@ import {useGetTransactionReceipt} from "../../services/getTransactionReceipt";
 import {useNavigate, useParams} from "react-router-dom";
 import './ReceiptContent.css'
 
+//multipurpose component for displaying for transaction history, reload, transfer and exchange
 function ReceiptContent({header, transactionId }) {
     //call the getTransactionReceipt function
     const { transactionReceipt, getTransactionReceipt } = useGetTransactionReceipt(transactionId);

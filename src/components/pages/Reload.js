@@ -4,6 +4,7 @@ import {useGetUser} from "../../services/getUser";
 import Navbar from "../Navbar";
 import ReloadContent from "../Reload/ReloadContent";
 
+//page for reloading account
 function Reload() {
     const { username } = useParams();
     const { user, getUser } = useGetUser(username);

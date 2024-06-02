@@ -3,8 +3,7 @@ import './AccountContent.css'
 import DisplayInput from "../DisplayInput";
 import DisplayUserProfile from "../DisplayUserProfile";
 
-//TODO: MAKE THE USER IMAGE AND INFO CHANGEABLE
-
+//component for displaying user's account info
 function AccountContent({ user }) {
     return (
         <>

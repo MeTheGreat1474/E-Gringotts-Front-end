@@ -3,7 +3,10 @@ import {Button} from "../Button";
 import {Input} from "../Input";
 import TransactionFilterLogContainer from "./TransactionFilterLogContainer";
 
+//display the transaction history component in home page
+//handle the filtering logic
 function TransactionHistory() {
+    //useState our variables
     const [search, setSearch] = useState("");
     const [filterType, setFilterType] = useState("recent");
     const [minAmount, setMinAmount] = useState("");
@@ -11,9 +14,9 @@ function TransactionHistory() {
     const [category, setCategory] = useState("");
     const filterRef = React.useRef();
 
+    //handle when there is change in our filter
     const handleFilterChange = (e) => {
         setFilterType(e.target.value);
-        // Reset other filters
         setSearch("");
         setMinAmount("");
         setMaxAmount("");
@@ -40,8 +43,8 @@ function TransactionHistory() {
         setCategory(e.target.value);
     }
 
+    //check when there is an update on our variables
     useEffect(() => {
-        console.log(`Filter ${filterType}, Search ${search}, minAmount=${minAmount} maxAmount=${maxAmount}  category=${category}`);
     }, [filterType, search, category, minAmount, maxAmount]);
 
     return (
@@ -57,6 +60,7 @@ function TransactionHistory() {
                             <option value="name">Name</option>
                         </select>
                     </div>
+                    {/*appear only when the filterType is equal to ...*/}
                     {filterType === "amount" && (
                         <div className="amount-inputs">
                             <Input inputStyle='input--filter' inputSize='input--small' type='number'
@@ -91,6 +95,7 @@ function TransactionHistory() {
                     )}
                 </div>
                 <div className="transac-log-container">
+                    {/*call in the component and pass in the param*/}
                     <TransactionFilterLogContainer search={search} filterType={filterType} minAmount={minAmount}
                                                    maxAmount={maxAmount} category={category}/>
                 </div>
