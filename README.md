@@ -1,6 +1,6 @@
 # E-Gringotts
-<p align="center">
-  <img src="[[https://capsule-render.vercel.app/api?text=Hey Everyone!🕹️&animation=fadeIn&type=waving&color=gradient&height=100](https://www.google.com/imgres?q=hogwarts%20art&imgurl=https%3A%2F%2Fcdn.openart.ai%2Fstable_diffusion%2Fc985dc5ac734af8815d4db82064660de8d10a07f_2000x2000.webp&imgrefurl=https%3A%2F%2Fopenart.ai%2Fdiscovery%2Fsd-1006837099460304906&docid=IF-cGVpea-iM8M&tbnid=bArJ9umVgf7MlM&vet=12ahUKEwiuvPWrxLyGAxVcbWwGHREhDhEQM3oFCIQBEAA..i&w=1216&h=512&hcb=2&ved=2ahUKEwiuvPWrxLyGAxVcbWwGHREhDhEQM3oFCIQBEAA)](https://images.app.goo.gl/BctXGXdKtE3nHeJCA)"/>
+<p align=”center”>
+<img width=”200" height=”200" src=”https://user-images.blahblah/75753187/123358567-aac7b900-d539-11eb-8275-0b380264bb4c.png" alt=”my banner”>
 </p>
 Within the enchanted corridors of Diagon Alley and beyond, the absence of a digital banking solution tailored to the needs of wizards and witches has been keenly felt. Enlist yourself into our magical banking website themed around the mystifying universe of the Wizarding World and expose yourself to the wonder of Muggle's Magic called the Internet
 
