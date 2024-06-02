@@ -1,8 +1,8 @@
 # E-Gringotts
 <p align=”center”>
-<img width=”200" height=”200" src=”https://user-images.blahblah/75753187/123358567-aac7b900-d539-11eb-8275-0b380264bb4c.png" alt=”my banner”>
+<img src="/public/images/wallpaperflare-cropped.jpg">
 </p>
-Within the enchanted corridors of Diagon Alley and beyond, the absence of a digital banking solution tailored to the needs of wizards and witches has been keenly felt. Enlist yourself into our magical banking website themed around the mystifying universe of the Wizarding World and expose yourself to the wonder of Muggle's Magic called the Internet
+Within the enchanted corridors of Diagon Alley and beyond, the absence of a digital banking solution tailored to the needs of Wizards and Witches has been keenly felt. Enlist yourself into our Magical Banking Website themed around the mystifying universe of the Wizarding World and expose yourself to the wonders of Muggle's Magic called the Internet.<br></br>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
