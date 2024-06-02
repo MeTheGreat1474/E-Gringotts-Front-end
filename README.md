@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# E-Gringotts
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?text=Hey Everyone!🕹️&animation=fadeIn&type=waving&color=gradient&height=100"/>
+</p>
+Within the enchanted corridors of Diagon Alley and beyond, the absence of a digital banking solution tailored to the needs of wizards and witches has been keenly felt. Enlist yourself into our magical banking website themed around the mystifying universe of the Wizarding World and expose yourself to the wonder of Muggle's Magic called the Internet
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
