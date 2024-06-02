@@ -18,7 +18,7 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": "/",
+  "start_url": "/E-Gringotts-Front-end/",
   "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/",
