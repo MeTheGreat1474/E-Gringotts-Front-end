@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/E-Gringotts-Front-end/static/css/main.400b7487.css",
-    "main.js": "/E-Gringotts-Front-end/static/js/main.87abc0bf.js",
+    "main.js": "/E-Gringotts-Front-end/static/js/main.0fa533a8.js",
     "static/media/masonalternatebold.otf": "/E-Gringotts-Front-end/static/media/masonalternatebold.c426a6ca8d05d3b3abca.otf",
     "index.html": "/E-Gringotts-Front-end/index.html",
     "main.400b7487.css.map": "/E-Gringotts-Front-end/static/css/main.400b7487.css.map",
-    "main.87abc0bf.js.map": "/E-Gringotts-Front-end/static/js/main.87abc0bf.js.map"
+    "main.0fa533a8.js.map": "/E-Gringotts-Front-end/static/js/main.0fa533a8.js.map"
   },
   "entrypoints": [
     "static/css/main.400b7487.css",
-    "static/js/main.87abc0bf.js"
+    "static/js/main.0fa533a8.js"
   ]
 }
