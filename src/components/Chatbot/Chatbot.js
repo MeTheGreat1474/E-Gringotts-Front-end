@@ -59,7 +59,7 @@ function Chatbot() {
     return (
         <div>
             <div className={`ai-circle ${isOpen ? 'open' : 'closed'}`} onClick={() => setIsOpen(!isOpen)}>
-                <img src='/images/wowl.png' alt="Logo" style={{
+                <img src={process.env.PUBLIC_URL +'/images/wowl.png'} alt="Logo" style={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',

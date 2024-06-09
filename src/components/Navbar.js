@@ -17,7 +17,7 @@ function Navbar({username, user}) {
             <div className='navbar'>
                 <div className="logo-box">
                     <div className="logo">
-                        <img className='gringgots-logo-png' src='/images/logo.png'/>
+                        <img className='gringgots-logo-png' src={process.env.PUBLIC_URL +'/images/logo.png'}/>
                     </div>
                     <div className="text">
                         <h2>E-Gringgots</h2>

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import api from './api/axiosConfig'
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/pages/Login'
 import SignUp from "./components/pages/SignUp";
 import Home from "./components/pages/Home";
@@ -25,7 +25,7 @@ function App() {
     //Enable App deployment for website
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            navigator.serviceWorker.register(process.env.PUBLIC_URL + '/service-worker.js').then(function(registration) {
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             }, function(err) {
                 console.log('ServiceWorker registration failed: ', err);

@@ -39,9 +39,9 @@ function LoginAuth() {
 
     return (
         <>
-            <img className='star-png' alt='star' src='/images/star2.png'/>
+            <img className='star-png' alt='star' src={process.env.PUBLIC_URL +'/images/star2.png'}/>
             <div className='login'>
-                <img className='logo' alt='hogwart' src='/images/logo.png'/>
+                <img className='logo' alt='hogwart' src={process.env.PUBLIC_URL +'/images/logo.png'}/>
                 <p className='flavor-text'>SINCE 1447</p>
                 <form className='login-form-auth'>
                     <h2>Enter Pin</h2>
@@ -50,7 +50,7 @@ function LoginAuth() {
                     {error && <p className="error">{error}</p>}
                 </form>
                 <div className='image-box'>
-                    <img className='hogwart-art' alt='hogwart' src='/images/hogwarts-vector-art5.png'/>
+                    <img className='hogwart-art' alt='hogwart' src={process.env.PUBLIC_URL +'/images/hogwarts-vector-art5.png'}/>
                 </div>
                 <div className='box'>
                     <p></p>

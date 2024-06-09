@@ -20,10 +20,11 @@ function BalanceAmount() {
             </div>
             <div className="amount-box-acc-balance">
                 <div className="amount-box-money">
-                    <h3>{(user?.balance.toFixed(2))}</h3>
+                    {/*<h3>{(user?.balance.toFixed(2))}</h3>*/}
+                    <h3>{(user?.balance)}</h3>
                 </div>
                 <div className="amount-box-currency">
-                    <h3>Knut</h3>
+                <h3>Knut</h3>
                 </div>
             </div>
         </div>

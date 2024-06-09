@@ -47,23 +47,28 @@ function Login() {
 
     return (
         <>
-            <img className='star-png' alt='star' src='/images/star2.png'/>
+            <img className='star-png' alt='star' src={process.env.PUBLIC_URL + '/images/star2.jpg'}/>
+            {/*<img className='star-png' alt='star' src='/images/star2.png'/>*/}
             <div className='login'>
-                <img className='logo' alt='hogwart' src='/images/logo.png'/>
+                <img className='logo' alt='hogwart' src={process.env.PUBLIC_URL +'/images/logo.png'}/>
+                {/*<img className='logo' alt='hogwart' src='/images/logo.png'/>*/}
                 <p className='flavor-text'>SINCE 1447</p>
                 <form className='login-form'>
                     {/*use icon from FontAwesome*/}
                     <FontAwesomeIcon className='icon' icon={faUser}/>
-                    <Input type='text' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <Input type='text' placeholder="Username" value={username}
+                           onChange={(e) => setUsername(e.target.value)}/>
                     <FontAwesomeIcon className='icon' icon={faLock}/>
-                    <Input type='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Input type='password' placeholder="Password" value={password}
+                           onChange={(e) => setPassword(e.target.value)}/>
                     <Button type='submit' onClick={handleOnSubmit}>Log In</Button>
                     <Button onClick={onSignUp}>Sign Up</Button>
                     {/*error message displayed only when true*/}
                     {error && <p className="error">{error}</p>}
                 </form>
                 <div className='image-box'>
-                    <img className='hogwart-art' alt='hogwart' src='/images/hogwarts-vector-art5.png'/>
+                    <img className='hogwart-art' alt='hogwart' src={process.env.PUBLIC_URL + '/images/hogwarts-vector-art5.png'}/>
+                    {/*<img className='hogwart-art' alt='hogwart' src='/images/hogwarts-vector-art5.png'/>*/}
                 </div>
                 <div className='box'>
                     <p></p>

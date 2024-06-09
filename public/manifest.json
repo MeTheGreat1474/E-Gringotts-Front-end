@@ -1,26 +1,26 @@
 {
-  "short_name": "Your App",
-  "name": "Your App Name",
+  "short_name": "E-Gringotts",
+  "name": "E-Gringotts Banking App",
   "icons": [
     {
-      "src": "icon/lowres.webp",
-      "sizes": "48x48",
-      "type": "image/webp"
-    },
-    {
-      "src": "icon/lowres.png",
-      "sizes": "48x48",
+      "src": "%PUBLIC_URL%/images/bank-of-gringotts-logo-C4A7E180F1-seeklogo.com2_1 - Copy.ico",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon/hd_hi.ico",
+      "src": "%PUBLIC_URL%/images/bank-of-gringotts-logo-C4A7E180F1-seeklogo.com2_1 - Copy.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "%PUBLIC_URL%/images/bank-of-gringotts-logo-C4A7E180F1-seeklogo.com2_1 - Copy.ico",
       "sizes": "72x72 96x96 128x128 256x256",
       "type": "image/x-icon"
     }
   ],
-  "start_url": "/",
+  "start_url": "/E-Gringotts-Front-end/",
   "background_color": "#3367D6",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "/",
   "theme_color": "#3367D6"
 }

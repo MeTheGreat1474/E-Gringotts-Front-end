@@ -15,7 +15,7 @@ function Cards({ user }) {
                 </div>
                 <div className="card-detail-box">
                     <div className="card-image">
-                        <img src="/images/card.jpg" alt="card"/>
+                        <img src={process.env.PUBLIC_URL +"/images/card.jpg"} alt="card"/>
                     </div>
                     <div className="card-info-form-container">
                         <div className="row">

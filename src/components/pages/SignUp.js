@@ -124,10 +124,10 @@ function SignUp() {
 
     return (
         <>
-            <img className='star-png' alt='star' src='/images/star2.png'/>
+            <img className='star-png' alt='star' src={process.env.PUBLIC_URL +'/images/star2.png'}/>
             <div className="sign-up">
                 <div className="logo-box">
-                    <img className='logo' alt='hogwart' src='/images/logo.png'/>
+                    <img className='logo' alt='hogwart' src={process.env.PUBLIC_URL +'/images/logo.png'}/>
                 </div>
                 <div className="sign-up-container">
                     <form className='sign-up-form' onSubmit={handleOnSubmit}>
