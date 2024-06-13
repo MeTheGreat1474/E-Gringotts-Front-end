@@ -51,7 +51,7 @@ function ReloadContent({username}) {
                             onValueChange={setAmount}
                         />
                         <div className='currency'>
-                            <h3>Shekel</h3>
+                            <h3>Knut</h3>
                         </div>
                     </div>
                     <div className="reload-amount-button-container">
