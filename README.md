@@ -4,7 +4,27 @@
 </p>
 Within the enchanted universe of Wizarding World and beyond, the absence of a digital banking solution tailored to the needs of Wizards and Witches has been keenly felt. Enlist yourself into our Magical Banking Website themed around the mystifying universe of the Harry Potter and expose yourself to the wonders of Muggle's Magic called the Internet.<br></br>
 
-This project front-end was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Core Functions
+
+ 5 Core functions :- 
+- Account creation
+- Fund transfers
+- Multi-currency exchange
+- Data visualization dashboards
+- Secure data storing using salting and hashing
+- AI chatbot using Llama3 API for in-app support
+
+### Showcase
+
+#### Login
+<img src="https://github.com/user-attachments/assets/1e030cb1-a86a-422c-a22e-dd1e3244907f" width="500">
+
+
+#### Dashboard
+<img src="https://github.com/user-attachments/assets/2ff7a786-7459-40d6-a2c8-e1d34c65895d" width="500">
+
+#### Transaction
+<img src="https://github.com/user-attachments/assets/9b868ef1-bed3-479d-8c1b-147e66d762a0" width="500">
 
 ## Available Scripts
 
@@ -52,14 +72,5 @@ You may also see any lint errors in the console.
 3. npm start frontend
 4. use kasim123, 123456 for login
 
-### Showcase
+This project front-end was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-#### Login
-<img src="https://github.com/user-attachments/assets/1e030cb1-a86a-422c-a22e-dd1e3244907f" width="500">
-
-
-#### Dashboard
-<img src="https://github.com/user-attachments/assets/2ff7a786-7459-40d6-a2c8-e1d34c65895d" width="500">
-
-#### Transaction
-<img src="https://github.com/user-attachments/assets/9b868ef1-bed3-479d-8c1b-147e66d762a0" width="500">
